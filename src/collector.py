@@ -14,9 +14,8 @@ def get_date_range(weeks=12, start_str=None, end_str=None):
         start_dt = datetime.strptime(start_str, "%Y-%m-%d").replace(hour=0, minute=0, second=0, tzinfo=EDT)
         end_dt = datetime.strptime(end_str, "%Y-%m-%d").replace(hour=23, minute=59, second=59, tzinfo=EDT)
     else:
-        # 12 weeks back from 2026-09-05
-        end_dt = datetime(2026, 9, 5, 23, 59, 59, tzinfo=EDT)
-        start_dt = (end_dt - timedelta(weeks=weeks)).replace(hour=0, minute=0, second=0)
+        end_dt = datetime.now(EDT).replace(hour=23, minute=59, second=59, microsecond=0)
+        start_dt = (end_dt - timedelta(weeks=weeks)).replace(hour=0, minute=0, second=0, microsecond=0)
     return start_dt, end_dt
 
 def detect_language(file_path):

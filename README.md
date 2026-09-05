@@ -63,6 +63,32 @@ python cli.py --weeks 12 --refresh
 python cli.py --weeks 12 --json-out "data/audit-q3-metrics.json"
 ```
 
+## Publishing to GitHub Pages
+
+The report publishes as a single page at the site root (`index.html`).
+A scheduled workflow (`.github/workflows/pages.yml`) rebuilds it every
+Monday at 08:00 EDT / 07:00 EST and deploys via Actions artifact. Manual runs are
+available from the Actions tab.
+
+### One-time setup
+
+1. Create a fine-grained PAT with read access to Contents, Issues, and
+   Pull requests on HemSoft repositories
+   and save it as the `REPORTS_PAT` repo secret. The workflow stops if this
+   secret is missing or a repository cannot be cloned.
+2. Enable Pages: repo Settings -> Pages -> Build and deployment ->
+   Source: GitHub Actions.
+3. Run the workflow once via Actions -> Publish report to GitHub Pages ->
+   Run workflow, then open the Pages URL.
+
+The workflow clones all HemSoft repos into `checkouts/`, runs
+`python cli.py --weeks 12 --base-dir ./checkouts --output ./public/index.html`,
+and uploads `public/` as the Pages artifact. Both `public/` and
+`checkouts/` are gitignored build outputs.
+
+The repository remains private, but the Pages site and its exported metrics
+are public. Private repository visibility does not restrict access to the site.
+
 ## Running tests
 
 ```powershell

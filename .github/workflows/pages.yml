@@ -1,0 +1,65 @@
+name: Publish report to GitHub Pages
+
+on:
+  schedule:
+    # Mondays at 08:00 EDT / 07:00 EST. Regenerates the 12-week report.
+    - cron: "0 12 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout reports repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Clone HemSoft repos for commit scanning
+        env:
+          # Read access to Contents, Issues, and Pull requests on HemSoft repositories.
+          GH_TOKEN: ${{ secrets.REPORTS_PAT }}
+        run: |
+          test -n "$GH_TOKEN" || { echo "REPORTS_PAT is required to include private repositories."; exit 1; }
+          gh auth setup-git
+          mkdir -p checkouts public
+          gh repo list HemSoft --limit 100 --json name --jq '.[].name' | while read -r repo; do
+            echo "Cloning HemSoft/$repo ..."
+            gh repo clone "HemSoft/$repo" "checkouts/$repo" -- --quiet
+          done
+
+      - name: Generate report to public/index.html
+        env:
+          GH_TOKEN: ${{ secrets.REPORTS_PAT }}
+        run: |
+          python cli.py --weeks 12 --base-dir ./checkouts --output ./public/index.html --json-out ./public/metrics.json
+          touch ./public/.nojekyll
+          ls -lh ./public/
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

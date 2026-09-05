@@ -5,3 +5,5 @@ data/cache_*.json
 Thumbs.db
 node_modules/
 dist/
+public/
+checkouts/
