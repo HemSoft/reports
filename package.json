@@ -1,0 +1,21 @@
+{
+  "name": "@hemsoft/reports",
+  "version": "1.0.0",
+  "description": "Productivity audit engine and 3D reporting dashboard for HemSoft repositories",
+  "main": "cli.py",
+  "scripts": {
+    "report": "python cli.py --weeks 12 --output D:\\hemsoft-productivity.html",
+    "report:refresh": "python cli.py --weeks 12 --refresh --output D:\\hemsoft-productivity.html",
+    "test": "python -m unittest discover tests"
+  },
+  "keywords": [
+    "productivity",
+    "audit",
+    "github",
+    "metrics",
+    "threejs",
+    "visualization"
+  ],
+  "author": "Franz Hemmer <franz_hemmer@hotmail.com>",
+  "license": "MIT"
+}
