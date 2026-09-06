@@ -7,8 +7,19 @@ The tool generates standalone interactive HTML dashboards with Three.js 3D bar m
 ## Output
 
 - Primary report location: `D:\hemsoft-productivity.html`
-- Standalone HTML with embedded CSS and WebGL renderers.
+- Single HTML file with embedded report data and CSS; chart libraries load from CDNs.
 - No local server required. Open directly in any modern browser.
+
+Interactive charts require access to `cdn.jsdelivr.net` (Chart.js and OrbitControls)
+and `cdnjs.cloudflare.com` (Three.js). Google Fonts and GitHub avatars are optional
+network resources; browser fonts and report text remain usable without them.
+3D views also require WebGL. The generated file is not a fully bundled offline app.
+
+If a visualization library is blocked or graphics initialization fails, each affected
+view displays an unavailable notice. A failed scene or chart leaves the independent
+views running; unavailable 3D controls are disabled. With networking disabled,
+embedded metrics, repository/PR/commit tables, tab navigation, and filtering still
+work. Outbound GitHub links require connectivity.
 
 ## Features
 
@@ -206,6 +217,10 @@ network calls. Tests use temporary Git repositories and synthetic JSON fixtures.
 The browser smoke test supplies pinned local copies of the existing chart libraries,
 initializes both WebGL scenes and seven charts, and exercises table tabs and search.
 Browser failures retain screenshots and traces under `test-results/browser/`.
+Browser regression cases block each graphics dependency, disable WebGL, inject one
+scene/chart failure, and open the local HTML with networking disabled. The dedicated
+walkthrough test records a short video showing 3D fallback notices, working 2D charts,
+and table filtering under `test-results/browser/`.
 
 `.github/workflows/validate.yml` runs on pull requests, main pushes, and as a reusable
 workflow. Its stable `Validation` status succeeds only if both platform test jobs

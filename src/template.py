@@ -459,6 +459,26 @@ def build_html_report(analytics_data):
       cursor: grabbing;
     }}
 
+    .visualization-unavailable {{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: default;
+    }}
+
+    .visualization-fallback {{
+      max-width: 34rem;
+      padding: 1.5rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      text-align: center;
+    }}
+
+    .three-btn:disabled {{
+      opacity: 0.45;
+      cursor: not-allowed;
+    }}
+
     .three-hint {{
       position: absolute;
       bottom: 12px;
@@ -1180,7 +1200,7 @@ def build_html_report(analytics_data):
   // ==========================================
   // THREE.JS SCENE 1: 3D WEEKLY VELOCITY BARS
   // ==========================================
-  let velScene, velCamera, velRenderer, velControls, velBars = [];
+  let velScene, velCamera, velRenderer, velControls, velFrame, velBars = [];
   let velAutoRotate = true;
 
   function initVelocity3D() {{
@@ -1320,7 +1340,7 @@ def build_html_report(analytics_data):
     }});
 
     function animate() {{
-      requestAnimationFrame(animate);
+      velFrame = requestAnimationFrame(animate);
       if (velAutoRotate) {{
         velScene.rotation.y += 0.003;
       }}
@@ -1341,7 +1361,7 @@ def build_html_report(analytics_data):
   // ========================================================
   // THREE.JS SCENE 2: 3D CADENCE LANDSCAPE (7 DAYS x 24 HOURS)
   // ========================================================
-  let cadScene, cadCamera, cadRenderer, cadControls, cadBars = [];
+  let cadScene, cadCamera, cadRenderer, cadControls, cadFrame, cadBars = [];
   let cadAutoRotate = true;
 
   function initCadence3D() {{
@@ -1449,7 +1469,7 @@ def build_html_report(analytics_data):
     }});
 
     function animate() {{
-      requestAnimationFrame(animate);
+      cadFrame = requestAnimationFrame(animate);
       if (cadAutoRotate) {{
         cadScene.rotation.y += 0.003;
       }}
@@ -1492,7 +1512,63 @@ def build_html_report(analytics_data):
   // ==========================================
   // CHART.JS INITIALIZATION
   // ==========================================
+  function showVisualizationFallback(container, message) {{
+    const notice = document.createElement('p');
+    notice.className = 'visualization-fallback';
+    notice.setAttribute('role', 'status');
+    notice.textContent = message;
+    container.replaceChildren(notice);
+    container.classList.add('visualization-unavailable');
+  }}
+
+  function initializeScene(containerId, initialize, resources) {{
+    try {{
+      initialize();
+    }} catch (error) {{
+      const container = document.getElementById(containerId);
+      const {{ renderer, controls, frame }} = resources();
+      if (frame !== undefined) cancelAnimationFrame(frame);
+      try {{
+        controls?.dispose();
+        renderer?.dispose();
+        renderer?.forceContextLoss();
+      }} catch (cleanupError) {{
+        // A failed graphics context must not prevent the fallback.
+      }}
+      container.closest('.three-card').querySelectorAll('button').forEach(button => {{
+        button.disabled = true;
+        button.classList.remove('active');
+      }});
+      showVisualizationFallback(container,
+        '3D view unavailable. Its graphics library could not load or WebGL could not start. Report metrics and tables remain available.');
+    }}
+  }}
+
+  function createChart(canvas, config) {{
+    try {{
+      const chart = new Chart(canvas, config);
+      if (!chart.ctx) throw new Error('Canvas context unavailable');
+      return chart;
+    }} catch (error) {{
+      try {{ Chart.getChart(canvas)?.destroy(); }} catch (cleanupError) {{}}
+      showVisualizationFallback(canvas.parentElement,
+        'Chart unavailable. The chart could not initialize. Report metrics and tables remain available.');
+      return null;
+    }}
+  }}
+
+  function showChartLibraryFallbacks() {{
+    document.querySelectorAll('.chart-canvas-wrap canvas').forEach(canvas => {{
+      showVisualizationFallback(canvas.parentElement,
+        'Chart unavailable. The chart library could not load. Report metrics and tables remain available.');
+    }});
+  }}
+
   function initCharts() {{
+    if (typeof Chart === 'undefined') {{
+      showChartLibraryFallbacks();
+      return;
+    }}
     Chart.defaults.color = '#94a3b8';
     Chart.defaults.font.family = "'Inter', sans-serif";
 
@@ -1508,7 +1584,7 @@ def build_html_report(analytics_data):
       return cum;
     }});
 
-    new Chart(document.getElementById('chart-weekly-combo'), {{
+    createChart(document.getElementById('chart-weekly-combo'), {{
       type: 'bar',
       data: {{
         labels: weeklyLabels,
@@ -1567,7 +1643,7 @@ def build_html_report(analytics_data):
     }});
 
     // 2. Day of Week Distribution
-    new Chart(document.getElementById('chart-day-distribution'), {{
+    createChart(document.getElementById('chart-day-distribution'), {{
       type: 'bar',
       data: {{
         labels: Object.keys(temporalData.day_counts),
@@ -1600,7 +1676,7 @@ def build_html_report(analytics_data):
     // 3. Hour of Day Distribution
     const hourLabels = Array.from({{length: 24}}, (_, i) => `${{i}}:00`);
     const hourValues = Object.values(temporalData.hour_counts);
-    new Chart(document.getElementById('chart-hour-distribution'), {{
+    createChart(document.getElementById('chart-hour-distribution'), {{
       type: 'line',
       data: {{
         labels: hourLabels,
@@ -1629,7 +1705,7 @@ def build_html_report(analytics_data):
 
     // 4. Repo Contribution Share
     const topRepos = repoData.slice(0, 8);
-    new Chart(document.getElementById('chart-repo-share'), {{
+    createChart(document.getElementById('chart-repo-share'), {{
       type: 'doughnut',
       data: {{
         labels: topRepos.map(r => r.name),
@@ -1654,7 +1730,7 @@ def build_html_report(analytics_data):
 
     // 5. PR Cycle Turnaround
     const cycleData = kpiData.pr_cycle_distribution;
-    new Chart(document.getElementById('chart-pr-cycle'), {{
+    createChart(document.getElementById('chart-pr-cycle'), {{
       type: 'polarArea',
       data: {{
         labels: ['< 1 Hour', '1 - 4 Hours', '4 - 24 Hours', '1 - 3 Days', '> 3 Days'],
@@ -1677,7 +1753,7 @@ def build_html_report(analytics_data):
     }});
 
     // 6. Commit Category Radar
-    new Chart(document.getElementById('chart-commit-categories'), {{
+    createChart(document.getElementById('chart-commit-categories'), {{
       type: 'radar',
       data: {{
         labels: Object.keys(catData),
@@ -1705,7 +1781,7 @@ def build_html_report(analytics_data):
 
     // 7. Languages Churn
     const topLangs = langData.slice(0, 7);
-    new Chart(document.getElementById('chart-languages'), {{
+    createChart(document.getElementById('chart-languages'), {{
       type: 'bar',
       data: {{
         labels: topLangs.map(l => l.language),
@@ -1764,9 +1840,11 @@ def build_html_report(analytics_data):
   }}
 
   window.addEventListener('DOMContentLoaded', () => {{
-    initVelocity3D();
-    initCadence3D();
-    initCharts();
+    initializeScene('viewport-velocity', initVelocity3D,
+      () => ({{ renderer: velRenderer, controls: velControls, frame: velFrame }}));
+    initializeScene('viewport-cadence', initCadence3D,
+      () => ({{ renderer: cadRenderer, controls: cadControls, frame: cadFrame }}));
+    try {{ initCharts(); }} catch (error) {{ showChartLibraryFallbacks(); }}
   }});
 </script>
 

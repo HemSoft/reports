@@ -64,6 +64,14 @@ jobs:
         run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser
+      - name: Preserve visual walkthrough
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-walkthrough
+          path: test-results/browser/**/video.webm
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Preserve browser failure evidence
         if: failure()
         uses: actions/upload-artifact@v4
