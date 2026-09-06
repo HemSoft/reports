@@ -20,10 +20,12 @@ const matrix = full
 const repeats = probe ? 1 : full ? 5 : 3;
 const cycles = full ? 5 : 3;
 
-async function processes(browserSession) {
+async function processes(browserSession, timed = false) {
   const { processInfo } = await browserSession.send('SystemInfo.getProcessInfo');
-  return JSON.parse(execFileSync(process.env.PYTHON || 'python',
+  const sampledAt = performance.now();
+  const rows = JSON.parse(execFileSync(process.env.PYTHON || 'python',
     [path.join(root, 'scripts/process_resources.py'), JSON.stringify(processInfo)], { encoding: 'utf8' }));
+  return timed ? { rows, sampledAt } : rows;
 }
 
 async function snapshot(page, session, browserSession) {
@@ -93,8 +95,7 @@ async function sample(browser, browserSession, scenario, index) {
     await page.waitForTimeout(1500);
     const baseline = await snapshot(page, session, browserSession);
     const before = Object.fromEntries((await session.send('Performance.getMetrics')).metrics.map(m => [m.name, m.value]));
-    const processBefore = await processes(browserSession);
-    const idleStart = performance.now();
+    const processBefore = await processes(browserSession, true);
     const frames = await page.evaluate(() => new Promise((resolve, reject) => {
       const times = [];
       let first, previous;
@@ -108,12 +109,12 @@ async function sample(browser, browserSession, scenario, index) {
       }
       requestAnimationFrame(tick);
     }));
-    const idleSeconds = (performance.now() - idleStart) / 1000;
     const after = Object.fromEntries((await session.send('Performance.getMetrics')).metrics.map(m => [m.name, m.value]));
-    const processAfter = await processes(browserSession);
-    const processCpu = processAfter.map(item => {
-      const previous = processBefore.find(p => p.id === item.id);
-      return { type: item.type, id: item.id, cpuSecondsPerSecond: previous ? (item.cpuTime - previous.cpuTime) / idleSeconds : null };
+    const processAfter = await processes(browserSession, true);
+    const processWindowSeconds = (processAfter.sampledAt - processBefore.sampledAt) / 1000;
+    const processCpu = processAfter.rows.map(item => {
+      const previous = processBefore.rows.find(p => p.id === item.id);
+      return { type: item.type, id: item.id, cpuSecondsPerSecond: previous ? (item.cpuTime - previous.cpuTime) / processWindowSeconds : null };
     });
     const retained = [];
     for (let cycle = 0; cycle < cycles; cycle++) {
@@ -127,7 +128,7 @@ async function sample(browser, browserSession, scenario, index) {
     if (errors.length) throw new Error(`Browser errors: ${errors.join('; ')}`);
     return { readyMs, frameIntervalsMs: frames, frameP95Ms: quantile(frames, 0.95),
       taskMsPerSecond: (after.TaskDuration - before.TaskDuration) * 1000 / (after.Timestamp - before.Timestamp),
-      processCpu, baseline, retained };
+      processCpu, processWindowSeconds, baseline, retained };
   } finally { await context.close(); }
 }
 
