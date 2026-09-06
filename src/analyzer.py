@@ -1,11 +1,20 @@
 import os
 import sys
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from collections import defaultdict, Counter
 
 EDT = ZoneInfo("America/New_York")
+
+
+def _in_interval(timestamp, start, end):
+    if not timestamp:
+        return False
+    event = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    return (start.astimezone(timezone.utc) <= event.astimezone(timezone.utc)
+            <= end.astimezone(timezone.utc))
+
 
 def analyze_data(data):
     commits = data.get("commits", [])
@@ -14,8 +23,10 @@ def analyze_data(data):
     repo_meta = data.get("repo_meta", {})
     range_info = data.get("range", {})
     
-    start_dt = datetime.fromisoformat(range_info["start_iso"])
-    end_dt = datetime.fromisoformat(range_info["end_iso"])
+    start_dt = datetime.fromisoformat(range_info["start_iso"]).astimezone(EDT)
+    end_dt = datetime.fromisoformat(range_info["end_iso"]).astimezone(EDT)
+    if start_dt > end_dt:
+        raise ValueError("start date must not be after end date")
     
     # 1. Commits aggregates
     total_commits = len(commits)
@@ -138,20 +149,21 @@ def analyze_data(data):
     peak_hour = max(hour_counts.items(), key=lambda x: x[1])[0]
     peak_day_name = max(day_counts.items(), key=lambda x: x[1])[0]
     
-    # 5. Weekly Buckets (Weeks 1 to 12)
-    weeks_count = range_info.get("weeks", 12)
+    # 5. Calendar-week buckets, including the final partial week.
     weekly_data = []
     
     w_start = start_dt
-    for w in range(1, weeks_count + 1):
-        w_end = min(w_start + timedelta(days=6, hours=23, minutes=59, seconds=59), end_dt)
+    w = 1
+    while w_start <= end_dt:
+        next_start = w_start + timedelta(days=7)
+        w_end = min(next_start - timedelta(microseconds=1), end_dt)
         w_start_str = w_start.strftime("%Y-%m-%d")
         w_end_str = w_end.strftime("%Y-%m-%d")
         
-        w_commits = [c for c in commits if w_start.isoformat() <= c["author_date"] <= w_end.isoformat()]
-        w_prs_merged = [p for p in merged_prs if p.get("mergedAt") and w_start.isoformat() <= p["mergedAt"] <= w_end.isoformat()]
-        w_prs_opened = [p for p in all_prs if p.get("createdAt") and w_start.isoformat() <= p["createdAt"] <= w_end.isoformat()]
-        w_issues_closed = [i for i in closed_issues if i.get("closedAt") and w_start.isoformat() <= i["closedAt"] <= w_end.isoformat()]
+        w_commits = [c for c in commits if _in_interval(c["author_date"], w_start, w_end)]
+        w_prs_merged = [p for p in merged_prs if _in_interval(p.get("mergedAt"), w_start, w_end)]
+        w_prs_opened = [p for p in all_prs if _in_interval(p.get("createdAt"), w_start, w_end)]
+        w_issues_closed = [i for i in closed_issues if _in_interval(i.get("closedAt"), w_start, w_end)]
         
         w_adds = sum(c["additions"] for c in w_commits)
         w_dels = sum(c["deletions"] for c in w_commits)
@@ -180,7 +192,8 @@ def analyze_data(data):
             "ai_commits": sum(1 for c in w_commits if "AI" in c["author_category"]),
         })
         
-        w_start = w_start + timedelta(days=7)
+        w_start = next_start
+        w += 1
         
     # 6. Repository Profiles
     repo_groups = defaultdict(list)

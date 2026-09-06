@@ -10,12 +10,18 @@ from collections import defaultdict
 EDT = ZoneInfo("America/New_York")
 
 def get_date_range(weeks=12, start_str=None, end_str=None):
-    if start_str and end_str:
+    if weeks <= 0:
+        raise ValueError("weeks must be positive")
+    if (start_str is None) != (end_str is None):
+        raise ValueError("--start and --end must be supplied together")
+    if start_str is not None:
         start_dt = datetime.strptime(start_str, "%Y-%m-%d").replace(hour=0, minute=0, second=0, tzinfo=EDT)
         end_dt = datetime.strptime(end_str, "%Y-%m-%d").replace(hour=23, minute=59, second=59, tzinfo=EDT)
     else:
         end_dt = datetime.now(EDT).replace(hour=23, minute=59, second=59, microsecond=0)
         start_dt = (end_dt - timedelta(weeks=weeks)).replace(hour=0, minute=0, second=0, microsecond=0)
+    if start_dt > end_dt:
+        raise ValueError("start date must not be after end date")
     return start_dt, end_dt
 
 def detect_language(file_path):

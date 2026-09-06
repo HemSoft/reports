@@ -1,4 +1,5 @@
 import unittest
+import copy
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from src.analyzer import analyze_data
@@ -115,6 +116,76 @@ class TestAnalyzer(unittest.TestCase):
         self.assertEqual(kpis["day_parts"]["night_owl"], 1)
         self.assertEqual(kpis["day_parts"]["afternoon"], 1)
         self.assertEqual(kpis["night_owl_ratio"], 50.0)
+
+    def test_weekly_buckets_include_each_day_and_event_once(self):
+        data = self.sample_data
+        commit = data["commits"][0]
+        pr = data["prs"]["hs-buddy"][0]
+        issue = data["issues"]["hs-buddy"][0]
+        data["commits"] = []
+        data["prs"]["hs-buddy"] = []
+        data["issues"]["hs-buddy"] = []
+        start = datetime.fromisoformat(data["range"]["start_iso"])
+        for day in range(15):
+            date = start + timedelta(days=day, hours=12)
+            data["commits"].append(dict(
+                commit, hash=str(day), author_date=date.isoformat(),
+                date_str=date.strftime("%Y-%m-%d"), day_index=date.weekday(),
+                day_of_week=date.strftime("%A"), hour=12))
+            timestamp = date.astimezone(ZoneInfo("UTC")).isoformat()
+            data["prs"]["hs-buddy"].append(dict(
+                pr, number=day, createdAt=timestamp, mergedAt=timestamp))
+            data["issues"]["hs-buddy"].append(dict(
+                issue, number=day, createdAt=timestamp, closedAt=timestamp))
+        result = analyze_data(data)
+        buckets = result["weekly_data"]
+        self.assertEqual([b["commits"] for b in buckets], [7, 7, 1])
+        covered_days = []
+        for bucket in buckets:
+            first = datetime.fromisoformat(bucket["start_date"])
+            last = datetime.fromisoformat(bucket["end_date"])
+            covered_days.extend(first + timedelta(days=d)
+                                for d in range((last - first).days + 1))
+            self.assertLessEqual(first, last)
+        self.assertEqual(len(covered_days), len(set(covered_days)))
+        self.assertEqual(len(covered_days), 15)
+        self.assertEqual(buckets[-1]["end_date"], data["range"]["end_date"])
+        for metric in ["commits", "prs_opened", "prs_merged", "issues_closed"]:
+            self.assertEqual(sum(b[metric] for b in buckets), 15, metric)
+
+    def test_custom_range_does_not_use_default_week_count(self):
+        self.sample_data["range"].update(
+            weeks=12, start_iso="2026-01-01T00:00:00-05:00",
+            end_iso="2026-01-02T23:59:59-05:00")
+        self.sample_data["commits"] = []
+        buckets = analyze_data(self.sample_data)["weekly_data"]
+        self.assertEqual(len(buckets), 1)
+        self.assertEqual(buckets[0]["start_date"], "2026-01-01")
+        self.assertEqual(buckets[0]["end_date"], "2026-01-02")
+
+    def test_utc_and_eastern_events_share_dst_boundary_buckets(self):
+        cases = [
+            ("2026-03-02T00:00:00-05:00", "2026-03-15T23:59:59-04:00",
+             "2026-03-09T03:30:00Z", "2026-03-08T23:30:00-04:00"),
+            ("2026-10-26T00:00:00-04:00", "2026-11-08T23:59:59-05:00",
+             "2026-11-02T04:30:00Z", "2026-11-01T23:30:00-05:00"),
+            ("2026-09-01T00:00:00-04:00", "2026-09-14T23:59:59-04:00",
+             "2026-09-08T02:00:00Z", "2026-09-07T22:00:00-04:00"),
+        ]
+        for start, end, utc, eastern in cases:
+            with self.subTest(start=start):
+                data = copy.deepcopy(self.sample_data)
+                data["range"].update(start_iso=start, end_iso=end)
+                data["commits"] = []
+                pr = data["prs"]["hs-buddy"][0]
+                issue = data["issues"]["hs-buddy"][0]
+                data["prs"]["hs-buddy"] = [
+                    dict(pr, createdAt=t, mergedAt=t) for t in [utc, eastern]]
+                data["issues"]["hs-buddy"] = [
+                    dict(issue, closedAt=t) for t in [utc, eastern]]
+                buckets = analyze_data(data)["weekly_data"]
+                for metric in ["prs_opened", "prs_merged", "issues_closed"]:
+                    self.assertEqual([b[metric] for b in buckets], [2, 0])
 
 if __name__ == "__main__":
     unittest.main()

@@ -51,6 +51,11 @@ python cli.py --weeks 12 --output "D:\hemsoft-productivity.html"
 python cli.py --start 2026-06-01 --end 2026-09-01 --output "D:\audit-q3.html"
 ```
 
+Date ranges include both endpoints in `America/New_York`. Relative windows
+look back the requested number of weeks through today, inclusively. Weekly
+charts include a final partial bucket when needed. Custom dates must be supplied
+together, with the start on or before the end; `--weeks` must be positive.
+
 ### Force refresh (bypass cache)
 
 ```powershell
