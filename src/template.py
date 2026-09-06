@@ -903,7 +903,7 @@ def build_html_report(analytics_data):
       <div class="chart-header">
         <div>
           <div class="chart-title">Weekly Cadence & Cumulative Lines Shipped</div>
-          <div class="chart-subtitle">Commits and Merged PRs alongside cumulative volume across 12 consecutive weeks</div>
+          <div class="chart-subtitle">Commits and merged PRs with cumulative lines added from {range_info['start_formatted']} through {range_info['end_formatted']}</div>
         </div>
       </div>
       <div class="chart-canvas-wrap" style="height: 340px;">
