@@ -10,7 +10,10 @@
     "lint:python": "python -m ruff check . && python -m ruff format --check .",
     "lint:markdown": "markdownlint-cli2",
     "fixture": "python scripts/generate_fixture.py",
-    "test:browser": "npm run fixture && playwright test"
+    "test:browser": "npm run fixture && playwright test",
+    "benchmark": "python scripts/generate_benchmark.py && node scripts/benchmark_browser.js",
+    "test:budget": "node --test tests/performance/budget.test.js",
+    "benchmark:probe": "python scripts/generate_benchmark.py && node scripts/verify_budget_probe.js"
   },
   "keywords": [
     "productivity",

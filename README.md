@@ -401,6 +401,14 @@ Tool references: [GitHub Action pinning](https://docs.github.com/en/actions/how-
 [Bandit](https://bandit.readthedocs.io/en/latest/man/bandit.html), and
 [pip-audit](https://github.com/pypa/pip-audit).
 
+## Browser performance and resources
+
+The required browser benchmark uses representative small/large reports, repeated
+warm samples, retained-resource checks and a controlled failing allocation probe.
+A weekly full viewport/DPR matrix supplies the more expensive backstop. Read the
+[method, budgets, commands and measurement limits](quality/browser-performance.md)
+before comparing results or changing a budget.
+
 ## Requirements
 
 - Python 3.10+ and the pinned `tzdata` package in `requirements.txt`.

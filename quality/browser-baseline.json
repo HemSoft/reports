@@ -1,0 +1,144 @@
+{
+  "sourceRun": "https://github.com/HemSoft/reports/actions/runs/34014110446",
+  "generatedAt": "2026-09-06T05:30:48.087Z",
+  "environment": {
+    "platform": "linux",
+    "release": "6.17.0-1022-azure",
+    "arch": "x64",
+    "cpus": 2,
+    "cpuModel": "AMD EPYC 7763 64-Core Processor",
+    "browser": "153.0.8010.12",
+    "node": "v22.23.2",
+    "gpu": [
+      {
+        "vendorId": 65535,
+        "deviceId": 65535,
+        "vendorString": "Google Inc. (Google)",
+        "deviceString": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0)",
+        "driverVendor": "SwANGLE",
+        "driverVersion": "5.0.0"
+      }
+    ],
+    "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver-5.0.0)",
+    "gpuVramBytes": null
+  },
+  "fixtures": {
+    "small": {
+      "weeks": 12,
+      "repositories": 20,
+      "commits": 1200,
+      "prs": 200,
+      "issues": 100,
+      "htmlBytes": 197842,
+      "displayedPrs": 50,
+      "displayedCommits": 100
+    },
+    "large": {
+      "weeks": 52,
+      "repositories": 200,
+      "commits": 20000,
+      "prs": 2000,
+      "issues": 1000,
+      "htmlBytes": 476003,
+      "displayedPrs": 50,
+      "displayedCommits": 100
+    }
+  },
+  "methodology": {
+    "repeats": 3,
+    "cycles": 3,
+    "warmupMs": 1500,
+    "idleMinimumMs": 1500,
+    "minimumFrames": 30,
+    "forcedGc": true,
+    "workload": "real viewport resize plus DOM mouse/input/click dispatch; no Playwright actionability waits",
+    "assets": "local pinned npm bytes; no network",
+    "renderBackend": "SwiftShader software WebGL",
+    "processMemory": "sum of per-process RSS includes shared pages; GPU-process RSS is not VRAM"
+  },
+  "notes": [
+    "Qualified before the later CPU-window accounting and RSS-summary corrections; timing/heap/RSS values below come from raw samples and include baseline RSS.",
+    "CPU rates are omitted here; current artifacts use aligned CPU sampling windows.",
+    "This is a comparison reference, not an automatically raised budget."
+  ],
+  "cases": [
+    {
+      "id": "small-320-dpr1",
+      "readyMs": {
+        "min": 561.5041029999993,
+        "median": 808.430266,
+        "max": 1045.6829069999985,
+        "cvPercent": 24.55003789716628
+      },
+      "frameP95Ms": {
+        "min": 116.80000000000018,
+        "median": 133.30000000000018,
+        "max": 133.30000000000018,
+        "cvPercent": 6.086208601762137
+      },
+      "heapMaxBytes": 7782612,
+      "heapGrowthMaxBytes": 316928,
+      "rssMaxBytes": 635121664,
+      "rssGrowthMaxBytes": 41238528
+    },
+    {
+      "id": "small-390-dpr2",
+      "readyMs": {
+        "min": 572.7820480000009,
+        "median": 583.955581999995,
+        "max": 608.6963560000004,
+        "cvPercent": 2.5500754523059923
+      },
+      "frameP95Ms": {
+        "min": 216.70000000000073,
+        "median": 266.6999999999998,
+        "max": 283.3000000000002,
+        "cvPercent": 11.075820228286727
+      },
+      "heapMaxBytes": 7895372,
+      "heapGrowthMaxBytes": 287124,
+      "rssMaxBytes": 769306624,
+      "rssGrowthMaxBytes": 20676608
+    },
+    {
+      "id": "large-1024-dpr1",
+      "readyMs": {
+        "min": 697.9642809999932,
+        "median": 2301.905303000007,
+        "max": 2369.6774539999897,
+        "cvPercent": 43.16423786765234
+      },
+      "frameP95Ms": {
+        "min": 316.7000000000007,
+        "median": 400,
+        "max": 433.3000000000011,
+        "cvPercent": 12.792761422050832
+      },
+      "heapMaxBytes": 8832696,
+      "heapGrowthMaxBytes": 406240,
+      "rssMaxBytes": 777019392,
+      "rssGrowthMaxBytes": 81809408
+    },
+    {
+      "id": "large-1440-dpr2",
+      "readyMs": {
+        "min": 787.8471730000165,
+        "median": 794.8362469999993,
+        "max": 828.888890000002,
+        "cvPercent": 2.2302976820298346
+      },
+      "frameP95Ms": {
+        "min": 600,
+        "median": 600.0999999999985,
+        "max": 716.6000000000004,
+        "cvPercent": 8.5995010276489
+      },
+      "heapMaxBytes": 8742472,
+      "heapGrowthMaxBytes": 280788,
+      "rssMaxBytes": 896880640,
+      "rssGrowthMaxBytes": 29061120
+    }
+  ],
+  "sourceRevisionUrl": "https://github.com/HemSoft/reports/commit/d3928aae134ad7aa9eb9997761a758a1ab18bb69",
+  "pullRequestHeadUrl": "https://github.com/HemSoft/reports/commit/5d0152136c5b812c93c704416b8c7cd0d0b046da"
+}
