@@ -18,6 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout reports repo
         uses: actions/checkout@v4
@@ -28,19 +29,21 @@ jobs:
           python-version: "3.12"
 
       - name: Clone HemSoft repos for commit scanning
+        shell: bash
         env:
           # Read access to Contents, Issues, and Pull requests on HemSoft repositories.
           GH_TOKEN: ${{ secrets.REPORTS_PAT }}
         run: |
           test -n "$GH_TOKEN" || { echo "REPORTS_PAT is required to include private repositories."; exit 1; }
-          gh auth setup-git
+          timeout 120 gh auth setup-git
           mkdir -p checkouts public
-          gh repo list HemSoft --limit 100 --json name --jq '.[].name' | while read -r repo; do
+          timeout 120 gh repo list HemSoft --limit 100 --json name --jq '.[].name' | while read -r repo; do
             echo "Cloning HemSoft/$repo ..."
-            gh repo clone "HemSoft/$repo" "checkouts/$repo" -- --quiet
+            timeout 300 gh repo clone "HemSoft/$repo" "checkouts/$repo" -- --quiet
           done
 
       - name: Generate report to public/index.html
+        shell: bash
         env:
           GH_TOKEN: ${{ secrets.REPORTS_PAT }}
         run: |

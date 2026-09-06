@@ -26,15 +26,8 @@ def generate_report(
     os.makedirs(cache_dir, exist_ok=True)
     cache_file = os.path.join(cache_dir, f"cache_{weeks}w.json" if not (start_str and end_str) else f"cache_{start_str}_{end_str}.json")
     
-    if refresh and os.path.exists(cache_file):
-        try:
-            os.remove(cache_file)
-            print("Refreshed cache. Performing fresh extraction.")
-        except Exception:
-            pass
-            
     # 1. Collect Data
-    raw_data = collect_all(base_dir, weeks=weeks, start_str=start_str, end_str=end_str, cache_file=cache_file)
+    raw_data = collect_all(base_dir, weeks=weeks, start_str=start_str, end_str=end_str, cache_file=cache_file, refresh=refresh)
     
     # 2. Analyze Data
     print("Computing metrics, time distributions, 3D matrices, and repository profiles...")
