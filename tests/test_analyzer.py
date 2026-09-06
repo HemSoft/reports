@@ -209,5 +209,16 @@ class TestAnalyzer(unittest.TestCase):
             commit.update(files=[], additions=0, deletions=0, net_lines=0)
         self.assertEqual(analyze_data(data)["repo_profiles"][0]["primary_language"], "Python")
 
+    def test_median_cycle_time_for_even_odd_empty_and_single_samples(self):
+        cases = [([0.5, 3.5], 2.0), ([3.5, 0.5, 2.0], 2.0), ([], 0.0),
+                 ([0.5], 0.5), ([0.501, 3.519], 2.01), ([None, 0.5], 0.5)]
+        for values, expected in cases:
+            with self.subTest(values=values):
+                data = copy.deepcopy(self.sample_data)
+                example = data["prs"]["hs-buddy"][0]
+                data["prs"]["hs-buddy"] = [dict(example, number=i+1, cycle_hours=value)
+                                             for i, value in enumerate(values)]
+                self.assertEqual(analyze_data(data)["kpis"]["median_pr_cycle_hours"], expected)
+
 if __name__ == "__main__":
     unittest.main()
