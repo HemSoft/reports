@@ -41,6 +41,11 @@ Playwright actionability waits as workload cost; the separate browser tests cove
 human-style interaction. After forced collection, an idle animation window of at
 least 1.5s and 30 intervals records raw RAF
 intervals, their p95, main-thread task time, and per-process CPU time. Browser
+task duration uses wall time and can include blocking; it is not CPU usage.
+Process CPU comes from cumulative CPU seconds across all process threads, divided
+by the elapsed interval between the two CDP samples. A value of 2 means roughly
+two CPU cores, including when the process is the software GPU process.
+Browser
 processes are reused between fresh contexts; first-navigation/JIT variation stays
 visible in the samples. Forced collection and the harness add overhead, so these
 numbers are diagnostic measurements rather than user-perceived timings.
@@ -76,8 +81,9 @@ Uploaded geometry may increase only within the measured scene allocation count.
 The initial caps are 10s initialization, 1000ms frame p95, 25MB V8 heap, 4MB retained
 heap growth, 1.5GB summed process RSS and 256MB RSS growth. These are coarse
 regression limits for software rendering on hosted runners, not UX targets.
-Main-thread and process CPU remain reported diagnostic values: a renderer already
-using a full core cannot meaningfully pass a CPU non-regression percentage cap.
+Task wall time and process CPU remain reported diagnostic values: the software GPU
+process can already saturate the hosted runner's CPU allocation, so a CPU
+non-regression percentage cap has little useful headroom.
 Frame time and memory still expose further deterioration. Review measured
 per-case ranges and variance alongside gate status; do not use a passing aggregate
 to claim a smooth high-DPR experience.

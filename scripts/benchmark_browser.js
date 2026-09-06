@@ -84,7 +84,7 @@ async function sample(browser, browserSession, scenario, index) {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   const session = await context.newCDPSession(page);
-  await session.send('Performance.enable');
+  await session.send('Performance.enable', { timeDomain: 'timeTicks' });
   const began = performance.now();
   try {
     await openReport(page, { reportPath: path.join(output, `${scenario.size}.html`) });
@@ -150,6 +150,7 @@ async function main() {
       renderer: gpu.auxAttributes?.glRenderer, gpuVramBytes: null },
     methodology: { repeats, cycles, warmupMs: 1500, idleMinimumMs: 1500, minimumFrames: 30, forcedGc: true,
       workload: 'real viewport resize plus DOM mouse/input/click dispatch; no Playwright actionability waits',
+      taskDuration: 'main-thread task wall time; includes blocking and is not CPU usage',
       assets: 'local pinned npm bytes; no network', renderBackend: 'SwiftShader software WebGL',
       processMemory: 'sum of per-process RSS includes shared pages; GPU-process RSS is not VRAM' },
     fixtures: JSON.parse(await fs.readFile(path.join(output, 'fixtures.json'), 'utf8')), cases: [] };

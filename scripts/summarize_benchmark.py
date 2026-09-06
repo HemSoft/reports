@@ -12,6 +12,16 @@ def spread(values):
     return f"{min(values):.1f}/{statistics.median(values):.1f}/{max(values):.1f} ({cv:.1f}%)"
 
 
+def gpu_cpu(samples):
+    values = []
+    for sample in samples:
+        rows = [p for p in sample.get("processCpu", []) if p["type"] == "GPU"]
+        if not rows or any(p["cpuSecondsPerSecond"] is None for p in rows):
+            return "unavailable"
+        values.append(sum(p["cpuSecondsPerSecond"] for p in rows))
+    return f"{statistics.median(values):.2f}"
+
+
 def main():
     path = Path(sys.argv[1])
     report = json.loads(path.read_text(encoding="utf-8"))
@@ -24,8 +34,8 @@ def main():
         "Timing columns show min/median/max and coefficient of variation across repeated samples.",
         "Growth is the maximum post-warm-up delta, not a leak diagnosis. MB uses decimal bytes.",
         "",
-        "| Case | Ready ms (CV) | Frame p95 ms (CV) | Main-thread ms/s median | Heap growth MB | RSS growth MB | RSS max MB |",
-        "| --- | --- | --- | ---: | ---: | ---: | ---: |",
+        "| Case | Ready ms (CV) | Frame p95 ms (CV) | Task wall ms/s median | GPU-process CPU cores median | Heap growth MB | RSS growth MB | RSS max MB |",
+        "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: |",
     ]
     for case in report["cases"]:
         samples = case["samples"]
@@ -42,6 +52,7 @@ def main():
             f"| {case['id']} | {spread([s['readyMs'] for s in samples])} | "
             f"{spread([s['frameP95Ms'] for s in samples])} | "
             f"{statistics.median(s['taskMsPerSecond'] for s in samples):.1f} | "
+            f"{gpu_cpu(samples)} | "
             f"{max(heap_growth):.2f} | {max(rss_growth):.1f} | {max(rss):.1f} |"
         )
     path.with_suffix(".md").write_text("\n".join(lines) + "\n", encoding="utf-8")
