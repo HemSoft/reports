@@ -12,6 +12,7 @@ import tempfile
 
 import toml
 from cosmic_ray.work_db import use_db
+from cosmic_ray.work_item import TestOutcome, WorkerOutcome
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -104,11 +105,14 @@ def summarize(database, excluded):
     with use_db(database) as db:
         counts["pending"] = len(db.pending_work_items)
         for work, result in db.completed_work_items:
-            if result.worker_outcome != "normal" or result.test_outcome == "incompetent":
+            if (
+                result.worker_outcome != WorkerOutcome.NORMAL
+                or result.test_outcome == TestOutcome.INCOMPETENT
+            ):
                 outcome = "error"
             elif result.output == "timeout":
                 outcome = "timeout"
-            elif result.test_outcome in ("killed", "survived"):
+            elif result.test_outcome in (TestOutcome.KILLED, TestOutcome.SURVIVED):
                 outcome = result.test_outcome.value
             else:
                 outcome = "error"
