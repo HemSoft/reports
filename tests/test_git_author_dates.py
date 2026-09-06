@@ -32,8 +32,8 @@ class TestGitAuthorDates(unittest.TestCase):
             for host_zone in ("UTC", "America/New_York"):
                 with self.subTest(host_zone=host_zone), patch.dict(os.environ, {"TZ": host_zone}):
                     commits = collect_commits(directory, start, end)
+                    results.append([(c["hash"], c["author_date"], c["timestamp"]) for c in commits])
                     self.assertEqual({c["subject"] for c in commits},
                                      {"included-rebased", "included-start", "included-end"})
                     self.assertEqual(len(commits), 3)
-                    results.append([(c["hash"], c["author_date"], c["timestamp"]) for c in commits])
             self.assertEqual(results[0], results[1])
