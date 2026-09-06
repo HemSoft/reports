@@ -12,14 +12,14 @@ function checkReport(report, budget) {
     : report.mode === 'probe' ? ['small-320-dpr1'] : ['small-320-dpr1', 'small-390-dpr2', 'large-1024-dpr1', 'large-1440-dpr2'];
   if (JSON.stringify([...keys].sort()) !== JSON.stringify(expectedKeys.sort())) failures.push('Unexpected or duplicate benchmark cases');
   function limit(value, cap, label) {
-    if (!Number.isFinite(value) || value > cap) failures.push(`${label}: ${value} exceeds ${cap}`);
+    if (!Number.isFinite(cap) || cap < 0 || !Number.isFinite(value) || value > cap) failures.push(`${label}: ${value} exceeds ${cap}`);
   }
   for (const scenario of report.cases || []) {
     const count = report.mode === 'full' ? 5 : report.mode === 'probe' ? 1 : 3;
     if (scenario.samples.length !== count) failures.push(`${scenario.id}: missing repeated samples`);
     for (const [index, sample] of scenario.samples.entries()) {
       const name = `${scenario.id}/${index}`;
-      if (sample.frameIntervalsMs.length < 5 || sample.frameIntervalsMs.some(n => !Number.isFinite(n))) failures.push(`${name}: insufficient frame samples`);
+      if (sample.frameIntervalsMs.length < 30 || sample.frameIntervalsMs.some(n => !Number.isFinite(n))) failures.push(`${name}: insufficient frame samples`);
       limit(sample.readyMs, budget.readyMs, `${name} readyMs`);
       const orderedFrames = [...sample.frameIntervalsMs].sort((a, b) => a - b);
       limit(orderedFrames[Math.ceil(orderedFrames.length * 0.95) - 1], budget.frameP95Ms, `${name} frameP95Ms`);

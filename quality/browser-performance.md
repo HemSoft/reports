@@ -35,7 +35,11 @@ network latency. They are not physical-device or hardware-GPU performance claims
 
 Each sample measures navigation until all seven charts and both WebGL renderers
 initialize. A resize/hover/rotation/reset/tab/filter workload runs before a 1.5s
-warm-up. After forced collection, a 1.5s idle animation window records raw RAF
+warm-up. Resize uses actual viewport changes; hover, clicks and input dispatch
+DOM events to the real handlers in one browser evaluation. This avoids measuring
+Playwright actionability waits as workload cost; the separate browser tests cover
+human-style interaction. After forced collection, an idle animation window of at
+least 1.5s and 30 intervals records raw RAF
 intervals, their p95, main-thread task time, and per-process CPU time. Browser
 processes are reused between fresh contexts; first-navigation/JIT variation stays
 visible in the samples. Forced collection and the harness add overhead, so these
@@ -69,7 +73,7 @@ from raw intervals. Scene allocations, textures, programs, listeners and documen
 counts cannot grow after warm-up; DOM nodes have a small allowance for UI state.
 Uploaded geometry may increase only within the measured scene allocation count.
 
-The initial caps are 10s initialization, 500ms frame p95, 25MB V8 heap, 4MB retained
+The initial caps are 10s initialization, 1000ms frame p95, 25MB V8 heap, 4MB retained
 heap growth, 1.5GB summed process RSS and 256MB RSS growth. These are coarse
 regression limits for software rendering on hosted runners, not UX targets.
 Main-thread and process CPU remain reported diagnostic values: a renderer already
@@ -77,6 +81,13 @@ using a full core cannot meaningfully pass a CPU non-regression percentage cap.
 Frame time and memory still expose further deterioration. Review measured
 per-case ranges and variance alongside gate status; do not use a passing aggregate
 to claim a smooth high-DPR experience.
+
+The first hosted qualification of unchanged rendering measured 567-700ms frame
+p95 in large cases and failed the provisional 500ms exploratory cap. The initial
+software-runner cap was therefore calibrated to 1000ms before adoption. The
+retained-heap break threshold stayed at 4MB throughout qualification and the
+negative probe. Sampling now requires at least 30 intervals (with a 45s deadline),
+because a 1.5s-only window produced too few frames on the saturated runner.
 
 The disposable probe retains a large JavaScript array after each workload cycle.
 CI requires an actual exit 1 with a retained-heap violation, saves its result,

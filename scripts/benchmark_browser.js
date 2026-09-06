@@ -49,17 +49,25 @@ async function snapshot(page, session, browserSession) {
 
 async function workload(page, scenario) {
   await page.setViewportSize({ width: scenario.width - 1, height: scenario.height });
+  await page.evaluate(() => new Promise(requestAnimationFrame));
   await page.setViewportSize({ width: scenario.width, height: scenario.height });
-  await page.locator('#viewport-velocity').scrollIntoViewIfNeeded();
-  const box = await page.locator('#viewport-velocity').boundingBox();
-  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
-  await page.getByRole('button', { name: 'Auto-rotate weekly velocity' }).click();
-  await page.getByRole('button', { name: 'Auto-rotate weekly velocity' }).click();
-  await page.getByRole('button', { name: 'Reset weekly velocity camera' }).click();
-  await page.getByRole('tab', { name: /Recent Pull Requests/ }).click();
-  await page.locator('#table-search').fill('no-benchmark-match');
-  await page.locator('#table-search').fill('');
-  await page.getByRole('tab', { name: /Repositories/ }).click();
+  await page.evaluate(() => new Promise(requestAnimationFrame));
+  await page.evaluate(() => {
+    const viewport = document.querySelector('#viewport-velocity');
+    viewport.scrollIntoView();
+    const box = viewport.getBoundingClientRect();
+    viewport.dispatchEvent(new MouseEvent('mousemove', { clientX: box.x + box.width / 2, clientY: box.y + box.height / 2 }));
+    const rotation = document.querySelector('[aria-label="Auto-rotate weekly velocity"]');
+    rotation.click(); rotation.click();
+    document.querySelector('[aria-label="Reset weekly velocity camera"]').click();
+    document.querySelector('#tab-prs').click();
+    const search = document.querySelector('#table-search');
+    for (const value of ['no-benchmark-match', '']) {
+      search.value = value;
+      search.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    document.querySelector('#tab-repos').click();
+  });
   if (probe) await page.evaluate(() => {
     window.retainedProbe ||= [];
     window.retainedProbe.push(new Array(2_000_000).fill(123));
@@ -87,14 +95,16 @@ async function sample(browser, browserSession, scenario, index) {
     const before = Object.fromEntries((await session.send('Performance.getMetrics')).metrics.map(m => [m.name, m.value]));
     const processBefore = await processes(browserSession);
     const idleStart = performance.now();
-    const frames = await page.evaluate(() => new Promise(resolve => {
+    const frames = await page.evaluate(() => new Promise((resolve, reject) => {
       const times = [];
       let first, previous;
+      const deadline = setTimeout(() => reject(new Error('Frame sampling did not complete within 45 seconds')), 45_000);
       function tick(now) {
         first ??= now;
         if (previous !== undefined) times.push(now - previous);
         previous = now;
-        if (now - first >= 1500) resolve(times); else requestAnimationFrame(tick);
+        if (now - first >= 1500 && times.length >= 30) { clearTimeout(deadline); resolve(times); }
+        else requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
     }));
@@ -137,7 +147,8 @@ async function main() {
     environment: { platform: process.platform, release: os.release(), arch: os.arch(), cpus: os.cpus().length,
       cpuModel: os.cpus()[0].model, browser: browser.version(), node: process.version, gpu: gpu.devices,
       renderer: gpu.auxAttributes?.glRenderer, gpuVramBytes: null },
-    methodology: { repeats, cycles, warmupMs: 1500, idleSampleMs: 1500, forcedGc: true,
+    methodology: { repeats, cycles, warmupMs: 1500, idleMinimumMs: 1500, minimumFrames: 30, forcedGc: true,
+      workload: 'real viewport resize plus DOM mouse/input/click dispatch; no Playwright actionability waits',
       assets: 'local pinned npm bytes; no network', renderBackend: 'SwiftShader software WebGL',
       processMemory: 'sum of per-process RSS includes shared pages; GPU-process RSS is not VRAM' },
     fixtures: JSON.parse(await fs.readFile(path.join(output, 'fixtures.json'), 'utf8')), cases: [] };
@@ -146,11 +157,12 @@ async function main() {
       const scenario = { ...entry, height: entry.width < 600 ? 844 : entry.width === 1024 ? 768 : 900,
         id: `${entry.size}-${entry.width}-dpr${entry.dpr}` };
       const samples = [];
+      report.cases.push({ ...scenario, samples });
       for (let index = 0; index < repeats; index++) {
         samples.push(await sample(browser, browserSession, scenario, index));
         console.log(`${scenario.id} sample ${index + 1}/${repeats}: ready ${samples.at(-1).readyMs.toFixed(0)}ms, frame p95 ${samples.at(-1).frameP95Ms.toFixed(1)}ms`);
+        await fs.writeFile(path.join(output, 'results.json'), JSON.stringify(report, null, 2));
       }
-      report.cases.push({ ...scenario, samples });
     }
   } catch (error) { report.error = error.message; }
   finally { await browser.close(); }

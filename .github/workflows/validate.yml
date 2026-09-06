@@ -159,6 +159,7 @@ jobs:
       - run: npm run test:budget
       - run: npm run benchmark:probe
       - run: npm run benchmark
+      - run: python scripts/summarize_benchmark.py test-results/performance/results.json
       - name: Preserve browser performance evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -166,6 +167,7 @@ jobs:
           name: browser-performance
           path: |
             test-results/performance/*results.json
+            test-results/performance/results.md
             test-results/performance/*.png
           if-no-files-found: error
           retention-days: 14
