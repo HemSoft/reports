@@ -191,6 +191,7 @@ Run the same checks used by CI:
 
 ```powershell
 python scripts/run_tests.py
+python scripts/check_risk.py
 npm run lint:python
 npm run lint:markdown
 actionlint
@@ -216,6 +217,43 @@ Pages calls the reusable workflow before building. Validation and report generat
 check out the same immutable `github.sha`; failed or cancelled validation prevents
 the build and artifact upload. The workflow does not inherit publication secrets
 into validation jobs.
+
+### Function risk and coverage
+
+`python scripts/check_risk.py` runs fresh guarded tests with coverage.py 7.16.0
+branch tracing, then measures cyclomatic complexity with Radon 6.0.1. It writes
+`test-results/coverage.json`, `risk.json`, and a sorted `risk.md`; CI retains these
+for seven days. All Python functions, methods, and closures under `src/` and in
+`cli.py` are included, even when never imported or executed. Tests, development
+scripts, module/class bodies, and embedded JavaScript are outside this function
+metric. No `pragma: no cover` or partial-branch exclusions are applied.
+
+CRAP is `complexity^2 * (1 - coverage)^3 + complexity`. Coverage is covered branch
+outcomes divided by all branch outcomes, from 0 to 1; it is not coverage.py's
+combined line/branch percentage. A function without branch outcomes uses statement
+coverage, explicitly identified in the report, so an unexecuted function does not
+receive vacuous 100% coverage. Subprocess execution is not credited; the guarded
+suite exercises production functions in-process.
+
+Scores above 30 are actionable; scores from 15 through 30 form the review queue.
+`quality/risk-baseline.json` records the initial three legacy exceptions and the
+worst score, with exact unrounded values. The gate rejects a new score above 30,
+an existing exception above its cap, or any worst score above its baseline. Legacy
+exceptions remain marked actionable in every artifact. Lower the affected caps
+when improving their measured risk; never raise them as a routine way to pass CI.
+Baseline changes require the same PR review as code. A renamed high-risk function
+has no legacy exception. Low averages cannot hide a failing function.
+
+The gate tests exercise formula boundaries, new high risk, legacy and worst-score
+regressions, untested branchless code, and missing measurement data. To check a
+real negative control, temporarily add an untested function with six independent
+`if` statements under `src/`, run the measurement command, and confirm exit 1 and
+an actionable entry. Remove the probe and rerun before committing.
+
+See [coverage.py branch measurement](https://coverage.readthedocs.io/en/latest/branch.html)
+and [Radon complexity](https://radon.readthedocs.io/en/latest/intro.html#cyclomatic-complexity)
+for the maintained tools' definitions. CRAP is a prioritization signal, not proof
+of correctness; mutation and browser-specific gates are tracked separately.
 
 ## Requirements
 

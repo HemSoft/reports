@@ -5,3 +5,16 @@ extend-exclude = [".venv-linux"]
 
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F"]
+
+[tool.coverage.run]
+branch = true
+source = ["src", "cli"]
+data_file = "test-results/.coverage"
+
+[tool.coverage.report]
+exclude_lines = []
+partial_branches = []
+
+[tool.coverage.json]
+output = "test-results/coverage.json"
+pretty_print = true
