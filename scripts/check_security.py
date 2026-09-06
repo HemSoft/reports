@@ -1,5 +1,7 @@
 """Local source/secret checks plus executable-dependency policy validation."""
 
+import base64
+import hashlib
 import json
 import re
 import subprocess
@@ -9,13 +11,39 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_FILES = {
+    "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
+    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js": "node_modules/three/build/three.min.js",
+    "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js": "node_modules/three/examples/js/controls/OrbitControls.js",
+}
+
+
+def verified_digest_pattern():
+    """Only verified public SRI values are exempt from secret entropy detection."""
+    tags = re.findall(
+        r'<script src="([^"]+)" integrity="sha384-([^"]+)" crossorigin="anonymous"></script>',
+        (ROOT / "src/template.py").read_text(encoding="utf-8"),
+    )
+    if len(tags) != len(SCRIPT_FILES) or {url for url, _ in tags} != set(SCRIPT_FILES):
+        raise ValueError("Browser script/SRI inventory differs from pinned dependencies")
+    digests = []
+    for url, digest in tags:
+        expected = base64.b64encode(
+            hashlib.sha384((ROOT / SCRIPT_FILES[url]).read_bytes()).digest()
+        ).decode()
+        if digest != expected:
+            raise ValueError(f"Browser integrity digest does not match npm bytes: {url}")
+        digests.append(re.escape(digest))
+    return "^(?:sha384-)?(?:" + "|".join(digests) + ")$"
 
 
 def check_policy():
     """Reject mutable external actions and excess Pages job permissions."""
-    for path in (ROOT / ".github/workflows").glob("*.yml"):
-        workflow = yaml.safe_load(path.read_text())
-        references = re.findall(r"^\s*-?\s*uses:\s*(\S+)", path.read_text(), re.M)
+    for path in (ROOT / ".github/workflows").iterdir():
+        if path.suffix not in {".yml", ".yaml"}:
+            continue
+        workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
+        references = re.findall(r"^\s*-?\s*uses:\s*(\S+)", path.read_text(encoding="utf-8"), re.M)
         for reference in references:
             if not reference.startswith("./") and not re.fullmatch(
                 r"[\w.-]+/[\w./-]+@[0-9a-f]{40}", reference
@@ -25,20 +53,24 @@ def check_policy():
             permissions = job.get("permissions", workflow.get("permissions", {}))
             expected = (
                 {"pages": "write", "id-token": "write"}
-                if path.name == "pages.yml" and name == "deploy"
+                if path.stem == "pages" and name == "deploy"
                 else {"contents": "read"}
             )
             if permissions != expected:
                 raise ValueError(f"Unexpected permissions in {path.name}/{name}")
 
 
-def scan_secrets():
+def scan_secrets(digest_pattern=None):
     """Scan tracked files without network verification; never print secret values."""
+    command = [sys.executable, "-X", "utf8", "-m", "detect_secrets", "scan", "--no-verify"]
+    if digest_pattern:
+        command.extend(["--exclude-secrets", digest_pattern])
     result = subprocess.run(
-        [sys.executable, "-m", "detect_secrets", "scan", "--no-verify"],
+        command,
         cwd=ROOT,
         capture_output=True,
         text=True,
+        encoding="utf-8",
         check=True,
         timeout=120,
     )
@@ -53,7 +85,7 @@ def scan_secrets():
 
 def main():
     check_policy()
-    scan_secrets()
+    scan_secrets(verified_digest_pattern())
     subprocess.run(
         [sys.executable, "-m", "bandit", "-r", "src", "scripts", "cli.py", "-ll"],
         cwd=ROOT,
