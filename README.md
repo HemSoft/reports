@@ -333,6 +333,19 @@ initial 57.94% artifact was rechecked this way and returned exit 1. CI always us
 the fresh full-run command. See the maintained
 [Cosmic Ray documentation](https://cosmic-ray.readthedocs.io/en/latest/).
 
+## Responsive report layout
+
+The header, visualization controls, table tabs, and search wrap within the page.
+At phone widths, the header stacks and controls retain at least 44px height.
+Wide data tables scroll inside their own containers; the page does not hide
+horizontal overflow to conceal clipped content. Names keep their normal font size.
+
+Browser validation checks 320x844, 390x844, 1024x768, and 1440x900 CSS viewports,
+including keyboard focus, expanded data tables, element bounds, and document width.
+CI retains header, scene, and table screenshots with geometry JSON for seven days.
+The mobile video demonstrates visible header actions, keyboard rotation control,
+local cadence-table scrolling, tab selection, and filtering at 320px.
+
 ## Requirements
 
 - Python 3.10+ and the pinned `tzdata` package in `requirements.txt`.
