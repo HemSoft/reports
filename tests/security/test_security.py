@@ -66,6 +66,15 @@ class SecurityChecks(unittest.TestCase):
             ):
                 pattern = check_security.verified_digest_pattern()
                 self.assertRegex(digest, pattern)
+                template = root / "src/template.py"
+                original = template.read_text(encoding="utf-8")
+                template.write_text(
+                    original + "<script src='https://fixture.test/extra.js'></script>",
+                    encoding="utf-8",
+                )
+                with self.assertRaisesRegex(ValueError, "lacks SHA-384"):
+                    check_security.verified_digest_pattern()
+                template.write_text(original, encoding="utf-8")
                 (root / "dependency.js").write_bytes(data + b"changed")
                 with self.assertRaisesRegex(ValueError, "does not match"):
                     check_security.verified_digest_pattern()

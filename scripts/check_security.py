@@ -7,6 +7,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from html.parser import HTMLParser
 
 import yaml
 
@@ -20,10 +21,25 @@ SCRIPT_FILES = {
 
 def verified_digest_pattern():
     """Only verified public SRI values are exempt from secret entropy detection."""
-    tags = re.findall(
-        r'<script src="([^"]+)" integrity="sha384-([^"]+)" crossorigin="anonymous"></script>',
-        (ROOT / "src/template.py").read_text(encoding="utf-8"),
-    )
+
+    class Scripts(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.external = []
+
+        def handle_starttag(self, tag, attrs):
+            attributes = dict(attrs)
+            if tag == "script" and "src" in attributes:
+                self.external.append(attributes)
+
+    parser = Scripts()
+    parser.feed((ROOT / "src/template.py").read_text(encoding="utf-8"))
+    tags = []
+    for attributes in parser.external:
+        integrity = attributes.get("integrity", "")
+        if attributes.get("crossorigin") != "anonymous" or not integrity.startswith("sha384-"):
+            raise ValueError("External browser script lacks SHA-384 SRI or anonymous CORS")
+        tags.append((attributes["src"], integrity.removeprefix("sha384-")))
     if len(tags) != len(SCRIPT_FILES) or {url for url, _ in tags} != set(SCRIPT_FILES):
         raise ValueError("Browser script/SRI inventory differs from pinned dependencies")
     digests = []
