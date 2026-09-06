@@ -1,5 +1,7 @@
 import json
 import html
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 VISUALIZATIONS = {
     "velocity": "Weekly velocity in three dimensions",
@@ -134,6 +136,17 @@ def _script_json(value):
     return json.dumps(value).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
 
 
+def _generated_label(timestamp):
+    """Keep collection freshness, including cached data, in Eastern Time."""
+    if not timestamp:
+        return "Unknown"
+    generated = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    if generated.utcoffset() is None:
+        raise ValueError("generated_at must include a timezone")
+    eastern = generated.astimezone(ZoneInfo("America/New_York"))
+    return eastern.strftime("%b %d, %Y %H:%M:%S %Z (UTC%z)")
+
+
 def build_html_report(analytics_data):
     kpis = analytics_data["kpis"]
     range_info = analytics_data["range"]
@@ -146,6 +159,10 @@ def build_html_report(analytics_data):
     recent_prs = analytics_data.get("recent_prs", [])
     recent_commits = analytics_data.get("recent_commits", [])
     chart_tables = _visualization_tables(analytics_data)
+    generated_label = _generated_label(analytics_data.get("generated_at"))
+    cycle_distribution = kpis["pr_cycle_distribution"]
+    measured_prs = sum(cycle_distribution.values())
+    under_hour_pct = 100 * cycle_distribution["under_1h"] / measured_prs if measured_prs else 0
 
     # JSON payloads for charts
     json_weekly = _script_json(weekly)
@@ -955,7 +972,9 @@ def build_html_report(analytics_data):
     
     <div class="header-actions">
       <div class="time-badge">
-        Audited: <strong>September 5, 2026</strong> | Timezone: <strong>America/New_York (EDT)</strong>
+        Data generated: <strong>{
+        generated_label
+    }</strong> | Timezone: <strong>America/New_York (ET)</strong>
       </div>
       <div class="btn-group">
         <button class="btn" onclick="window.print()">Print / Export PDF</button>
@@ -987,7 +1006,7 @@ def build_html_report(analytics_data):
       <span class="icon">🦉</span>
       <div><strong>Night Owl Rhythm:</strong> {
         kpis["night_owl_ratio"]
-    }% of commits during late night/early morning EDT</div>
+    }% of commits during late night/early morning ET</div>
     </div>
     <div class="persona-pill">
       <span class="icon">🔥</span>
@@ -1116,7 +1135,7 @@ def build_html_report(analytics_data):
     <div class="three-card" data-visualization="cadence" role="region" aria-label="Day and hour cadence in three dimensions">
       <div class="three-header">
         <div class="three-title">
-          <span>🏙️</span> 3D Cadence Landscape (Day × Hour Matrix EDT)
+          <span>🏙️</span> 3D Cadence Landscape (Day × Hour Matrix ET)
         </div>
         <div class="three-controls">
           <button class="three-btn active" id="btn-3d-cad-autorotate" aria-label="Auto-rotate day and hour cadence" aria-pressed="true" onclick="toggleAutoRotate('cad')">Auto-Rotate</button>
@@ -1161,7 +1180,7 @@ def build_html_report(analytics_data):
       <div class="chart-header">
         <div>
           <div class="chart-title">Day of Week Activity Matrix</div>
-          <div class="chart-subtitle">Commit distribution across days (EDT)</div>
+          <div class="chart-subtitle">Commit distribution across days (ET)</div>
         </div>
       </div>
       <div class="chart-canvas-wrap">
@@ -1203,7 +1222,8 @@ def build_html_report(analytics_data):
       <div class="chart-header">
         <div>
           <div class="chart-title">PR Turnaround Velocity Distribution</div>
-          <div class="chart-subtitle">Time from PR opening to merge (58.7% under 1 hour)</div>
+          <div class="chart-subtitle">Time from PR opening to merge ({
+        under_hour_pct:.1f}% under 1 hour; measured merged PRs)</div>
         </div>
       </div>
       <div class="chart-canvas-wrap">
@@ -1354,7 +1374,7 @@ def build_html_report(analytics_data):
             <tr>
               <th>Hash</th>
               <th>Repo</th>
-              <th>Date (EDT)</th>
+              <th>Date (ET)</th>
               <th>Subject</th>
               <th>Category</th>
               <th>Author</th>
@@ -1641,7 +1661,7 @@ def build_html_report(analytics_data):
 
         const mesh = new THREE.Mesh(geo, mat);
         mesh.position.set(startX + d * spacingX, barH / 2, startZ + h * spacingZ);
-        mesh.userData = {{ day: dayLabels[d], hour: `${{h}}:00 EDT`, count: count }};
+        mesh.userData = {{ day: dayLabels[d], hour: `${{h}}:00 ET`, count: count }};
         cadScene.add(mesh);
         cadBars.push(mesh);
       }}
@@ -1902,7 +1922,7 @@ def build_html_report(analytics_data):
       data: {{
         labels: hourLabels,
         datasets: [{{
-          label: 'Commits by Hour (EDT)',
+          label: 'Commits by Hour (ET)',
           data: hourValues,
           borderColor: '#a855f7',
           backgroundColor: 'rgba(168, 85, 247, 0.15)',
