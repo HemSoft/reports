@@ -74,8 +74,8 @@ def violations(rows, baseline):
     for row in rows:
         name, score = row["function"], row["crap"]
         cap = caps.get(name, 30)
-        if score > max(30, cap) + 1e-9:
-            errors.append(f"{name}: CRAP {score:.3f} exceeds cap {max(30, cap):.3f}")
+        if score > cap + 1e-9:
+            errors.append(f"{name}: CRAP {score:.3f} exceeds cap {cap:.3f}")
     worst = max((row["crap"] for row in rows), default=0)
     if worst > baseline["worst"] + 1e-9:
         errors.append(f"Worst CRAP {worst:.3f} exceeds baseline {baseline['worst']:.3f}")

@@ -27,6 +27,12 @@ class TestRiskGate(unittest.TestCase):
             violations([{"function": "new", "crap": 29}], {"worst": 28, "functions": {}})
         )
 
+    def test_lowered_legacy_cap_is_honored_below_actionable_threshold(self):
+        baseline = {"worst": 50, "functions": {"improved": 20, "other": 50}}
+        self.assertEqual(violations([{"function": "improved", "crap": 20}], baseline), [])
+        self.assertTrue(violations([{"function": "improved", "crap": 21}], baseline))
+        self.assertEqual(violations([{"function": "new", "crap": 30}], baseline), [])
+
     def test_branch_ratio_is_not_combined_line_percentage_and_untested_is_visible(self):
         source = "def choice(value):\n    if value:\n        return 1\n    return 0\n\ndef untested():\n    return 1\n"
         functions = {
