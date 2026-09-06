@@ -4,10 +4,7 @@ import html
 
 def _script_json(value):
     """Serialize data without exposing HTML parser delimiters inside a script."""
-    return (json.dumps(value)
-            .replace("<", "\\u003c")
-            .replace(">", "\\u003e")
-            .replace("&", "\\u0026"))
+    return json.dumps(value).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
 
 
 def build_html_report(analytics_data):
@@ -21,7 +18,7 @@ def build_html_report(analytics_data):
     categories = analytics_data["category_distribution"]
     recent_prs = analytics_data.get("recent_prs", [])
     recent_commits = analytics_data.get("recent_commits", [])
-    
+
     # JSON payloads for charts
     json_weekly = _script_json(weekly)
     json_repos = _script_json(repos)
@@ -31,7 +28,7 @@ def build_html_report(analytics_data):
     json_categories = _script_json(categories)
     json_authors = _script_json(authors)
     json_kpis = _script_json(kpis)
-    
+
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -730,7 +727,9 @@ def build_html_report(analytics_data):
         <div class="meta-bar">
           <span class="badge badge-cyan">github.com/HemSoft</span>
           <span class="badge badge-purple">Executive Engineering Audit</span>
-          <span>Period: <strong>{range_info['start_formatted']} – {range_info['end_formatted']}</strong></span>
+          <span>Period: <strong>{range_info["start_formatted"]} – {
+        range_info["end_formatted"]
+    }</strong></span>
         </div>
       </div>
     </div>
@@ -750,23 +749,32 @@ def build_html_report(analytics_data):
   <div class="persona-bar">
     <div class="persona-pill">
       <span class="icon">⚡</span>
-      <div><strong>Ultra-Rapid PR Delivery:</strong> {kpis['pr_cycle_distribution']['under_1h']} PRs merged under 1 hour (Median: {kpis['median_pr_cycle_hours']}h)</div>
+      <div><strong>Ultra-Rapid PR Delivery:</strong> {
+        kpis["pr_cycle_distribution"]["under_1h"]
+    } PRs merged under 1 hour (Median: {kpis["median_pr_cycle_hours"]}h)</div>
     </div>
     <div class="persona-pill">
       <span class="icon">🤖</span>
-      <div><strong>Agentic Pipeline:</strong> {kpis['merged_prs']:,} merged PRs across {kpis['active_repos_count']} repositories</div>
+      <div><strong>Agentic Pipeline:</strong> {kpis["merged_prs"]:,} merged PRs across {
+        kpis["active_repos_count"]
+    } repositories</div>
     </div>
     <div class="persona-pill">
       <span class="icon">🧹</span>
-      <div><strong>Radical Pruning:</strong> {kpis['total_deletions']:,} lines deleted (codebase lean & fast)</div>
+      <div><strong>Radical Pruning:</strong> {
+        kpis["total_deletions"]:,} lines deleted (codebase lean & fast)</div>
     </div>
     <div class="persona-pill">
       <span class="icon">🦉</span>
-      <div><strong>Night Owl Rhythm:</strong> {kpis['night_owl_ratio']}% of commits during late night/early morning EDT</div>
+      <div><strong>Night Owl Rhythm:</strong> {
+        kpis["night_owl_ratio"]
+    }% of commits during late night/early morning EDT</div>
     </div>
     <div class="persona-pill">
       <span class="icon">🔥</span>
-      <div><strong>Consistency:</strong> {kpis['active_days_count']} active days ({kpis['active_days_pct']}%) with {kpis['longest_streak']}-day streak</div>
+      <div><strong>Consistency:</strong> {kpis["active_days_count"]} active days ({
+        kpis["active_days_pct"]
+    }%) with {kpis["longest_streak"]}-day streak</div>
     </div>
   </div>
 
@@ -777,8 +785,8 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Total Commits</span>
         <span class="kpi-icon">📦</span>
       </div>
-      <div class="kpi-value text-cyan">{kpis['total_commits']:,}</div>
-      <div class="kpi-subtext">Across {kpis['active_repos_count']} active repositories</div>
+      <div class="kpi-value text-cyan">{kpis["total_commits"]:,}</div>
+      <div class="kpi-subtext">Across {kpis["active_repos_count"]} active repositories</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-purple);">
@@ -786,8 +794,10 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Pull Requests Merged</span>
         <span class="kpi-icon">🔀</span>
       </div>
-      <div class="kpi-value text-purple">{kpis['merged_prs']:,}</div>
-      <div class="kpi-subtext"><span class="text-emerald"><strong>{kpis['pr_merge_rate']}%</strong></span> merge rate ({kpis['total_prs']:,} total)</div>
+      <div class="kpi-value text-purple">{kpis["merged_prs"]:,}</div>
+      <div class="kpi-subtext"><span class="text-emerald"><strong>{
+        kpis["pr_merge_rate"]
+    }%</strong></span> merge rate ({kpis["total_prs"]:,} total)</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-emerald);">
@@ -795,8 +805,10 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Issues Resolved</span>
         <span class="kpi-icon">🎯</span>
       </div>
-      <div class="kpi-value text-emerald">{kpis['closed_issues']:,}</div>
-      <div class="kpi-subtext"><span class="text-emerald"><strong>{kpis['issue_close_rate']}%</strong></span> close rate ({kpis['total_issues']:,} total)</div>
+      <div class="kpi-value text-emerald">{kpis["closed_issues"]:,}</div>
+      <div class="kpi-subtext"><span class="text-emerald"><strong>{
+        kpis["issue_close_rate"]
+    }%</strong></span> close rate ({kpis["total_issues"]:,} total)</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-amber);">
@@ -804,8 +816,8 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Median Turnaround</span>
         <span class="kpi-icon">⏱️</span>
       </div>
-      <div class="kpi-value text-amber">{kpis['median_pr_cycle_hours']}h</div>
-      <div class="kpi-subtext">Average: {kpis['avg_pr_cycle_hours']}h to merge</div>
+      <div class="kpi-value text-amber">{kpis["median_pr_cycle_hours"]}h</div>
+      <div class="kpi-subtext">Average: {kpis["avg_pr_cycle_hours"]}h to merge</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-cyan);">
@@ -813,8 +825,8 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Lines Shipped (+)</span>
         <span class="kpi-icon">📈</span>
       </div>
-      <div class="kpi-value text-emerald">+{kpis['total_additions']:,}</div>
-      <div class="kpi-subtext">Across {kpis['total_unique_files']:,} unique files</div>
+      <div class="kpi-value text-emerald">+{kpis["total_additions"]:,}</div>
+      <div class="kpi-subtext">Across {kpis["total_unique_files"]:,} unique files</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-rose);">
@@ -822,8 +834,8 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Lines Pruned (-)</span>
         <span class="kpi-icon">✂️</span>
       </div>
-      <div class="kpi-value text-rose">-{kpis['total_deletions']:,}</div>
-      <div class="kpi-subtext">Net delta: {kpis['net_lines']:,} lines</div>
+      <div class="kpi-value text-rose">-{kpis["total_deletions"]:,}</div>
+      <div class="kpi-subtext">Net delta: {kpis["net_lines"]:,} lines</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-blue);">
@@ -831,8 +843,14 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Active Coding Cadence</span>
         <span class="kpi-icon">📅</span>
       </div>
-      <div class="kpi-value">{kpis['active_days_count']} <span style="font-size: 1.1rem; color: var(--text-muted);">/ {kpis['total_calendar_days']}d</span></div>
-      <div class="kpi-subtext">{kpis['active_days_pct']}% active | {kpis['avg_commits_per_active_day']} commits/active day</div>
+      <div class="kpi-value">{
+        kpis["active_days_count"]
+    } <span style="font-size: 1.1rem; color: var(--text-muted);">/ {
+        kpis["total_calendar_days"]
+    }d</span></div>
+      <div class="kpi-subtext">{kpis["active_days_pct"]}% active | {
+        kpis["avg_commits_per_active_day"]
+    } commits/active day</div>
     </div>
 
     <div class="kpi-card" style="--card-accent: var(--accent-purple);">
@@ -840,8 +858,11 @@ def build_html_report(analytics_data):
         <span class="kpi-label">Peak Productivity Day</span>
         <span class="kpi-icon">🚀</span>
       </div>
-      <div class="kpi-value text-cyan" style="font-size: 1.7rem; padding-top: 0.3rem;">{kpis['peak_day']['date']}</div>
-      <div class="kpi-subtext"><strong>{kpis['peak_day']['commits']} commits</strong> (+{kpis['peak_day']['additions']:,} lines)</div>
+      <div class="kpi-value text-cyan" style="font-size: 1.7rem; padding-top: 0.3rem;">{
+        kpis["peak_day"]["date"]
+    }</div>
+      <div class="kpi-subtext"><strong>{kpis["peak_day"]["commits"]} commits</strong> (+{
+        kpis["peak_day"]["additions"]:,} lines)</div>
     </div>
   </div>
 
@@ -903,7 +924,9 @@ def build_html_report(analytics_data):
       <div class="chart-header">
         <div>
           <div class="chart-title">Weekly Cadence & Cumulative Lines Shipped</div>
-          <div class="chart-subtitle">Commits and merged PRs with cumulative lines added from {range_info['start_formatted']} through {range_info['end_formatted']}</div>
+          <div class="chart-subtitle">Commits and merged PRs with cumulative lines added from {
+        range_info["start_formatted"]
+    } through {range_info["end_formatted"]}</div>
         </div>
       </div>
       <div class="chart-canvas-wrap" style="height: 340px;">
@@ -1001,9 +1024,15 @@ def build_html_report(analytics_data):
   <div class="table-card">
     <div class="table-toolbar">
       <div class="tabs-nav" style="margin-bottom: 0; border-bottom: none;">
-        <button class="tab-btn active" onclick="switchTab('repos')">Repositories ({len(repos)})</button>
-        <button class="tab-btn" onclick="switchTab('prs')">Recent Pull Requests ({len(recent_prs)})</button>
-        <button class="tab-btn" onclick="switchTab('commits')">Recent Commits ({len(recent_commits)})</button>
+        <button class="tab-btn active" onclick="switchTab('repos')">Repositories ({
+        len(repos)
+    })</button>
+        <button class="tab-btn" onclick="switchTab('prs')">Recent Pull Requests ({
+        len(recent_prs)
+    })</button>
+        <button class="tab-btn" onclick="switchTab('commits')">Recent Commits ({
+        len(recent_commits)
+    })</button>
       </div>
       <input type="text" class="search-input" id="table-search" placeholder="Filter repositories, PRs, or commits..." oninput="filterCurrentTable()">
     </div>
@@ -1028,22 +1057,27 @@ def build_html_report(analytics_data):
             </tr>
           </thead>
           <tbody>
-            {"".join(f'''<tr>
+            {
+        "".join(
+            f'''<tr>
               <td><a class="repo-name" href="https://github.com/HemSoft/{r['name']}" target="_blank">{r['name']}</a><br><small style="color: var(--text-muted);">{html.escape(r['description'][:60])}</small></td>
               <td><span class="badge {'badge-purple' if r['is_private'] else 'badge-cyan'}">{'Private' if r['is_private'] else 'Public'}</span></td>
               <td><strong>{r['primary_language']}</strong></td>
               <td><strong>{r['commits']:,}</strong></td>
               <td>
                 <span style="font-size: 0.8rem;">{r['commits_share']}%</span>
-                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: {min(100, r['commits_share']*3)}%;"></div></div>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: {min(100, r['commits_share'] * 3)}%;"></div></div>
               </td>
               <td class="text-emerald">+{r['additions']:,}</td>
               <td class="text-rose">-{r['deletions']:,}</td>
-              <td><strong class="{'text-emerald' if r['net_lines']>=0 else 'text-amber'}">{r['net_lines']:,}</strong></td>
+              <td><strong class="{'text-emerald' if r['net_lines'] >= 0 else 'text-amber'}">{r['net_lines']:,}</strong></td>
               <td><strong>{r['prs_merged']}</strong> / {r['prs_total']}</td>
               <td><strong>{r['issues_closed']}</strong></td>
               <td>{r['active_days']}d</td>
-            </tr>''' for r in repos)}
+            </tr>'''
+            for r in repos
+        )
+    }
           </tbody>
         </table>
       </div>
@@ -1065,15 +1099,20 @@ def build_html_report(analytics_data):
             </tr>
           </thead>
           <tbody>
-            {"".join(f'''<tr>
+            {
+        "".join(
+            f'''<tr>
               <td><span class="commit-hash">#{p.get('number')}</span></td>
               <td><span class="repo-name">{p.get('repo')}</span></td>
               <td>{html.escape(p.get('title', ''))}</td>
-              <td><span class="badge {'badge-emerald' if p.get('state')=='MERGED' else 'badge-cyan' if p.get('state')=='OPEN' else 'badge-purple'}">{p.get('state')}</span></td>
+              <td><span class="badge {'badge-emerald' if p.get('state') == 'MERGED' else 'badge-cyan' if p.get('state') == 'OPEN' else 'badge-purple'}">{p.get('state')}</span></td>
               <td><strong>{str(p.get('cycle_hours')) + 'h' if p.get('cycle_hours') is not None else '–'}</strong></td>
               <td style="font-family: var(--font-mono); font-size: 0.75rem;">{p.get('createdAt', '')[:10]}</td>
               <td><a href="{p.get('url')}" target="_blank" class="commit-hash">View PR ↗</a></td>
-            </tr>''' for p in recent_prs)}
+            </tr>'''
+            for p in recent_prs
+        )
+    }
           </tbody>
         </table>
       </div>
@@ -1095,7 +1134,9 @@ def build_html_report(analytics_data):
             </tr>
           </thead>
           <tbody>
-            {"".join(f'''<tr>
+            {
+        "".join(
+            f'''<tr>
               <td><a href="https://github.com/HemSoft/{c['repo']}/commit/{c['hash']}" target="_blank" class="commit-hash">{c['hash'][:8]}</a></td>
               <td><span class="repo-name">{c['repo']}</span></td>
               <td style="font-family: var(--font-mono); font-size: 0.75rem;">{c['author_date'][:16].replace('T', ' ')}</td>
@@ -1103,7 +1144,10 @@ def build_html_report(analytics_data):
               <td><span class="badge badge-cyan">{c['category']}</span></td>
               <td><small>{html.escape(c['author_name'])}</small></td>
               <td><span class="text-emerald">+{c['additions']}</span> / <span class="text-rose">-{c['deletions']}</span></td>
-            </tr>''' for c in recent_commits)}
+            </tr>'''
+            for c in recent_commits
+        )
+    }
           </tbody>
         </table>
       </div>
@@ -1116,7 +1160,7 @@ def build_html_report(analytics_data):
       Generated by <strong>Antigravity Productivity Engine</strong> | Tool Repo: <a href="file:///D:/github/hemsoft/reports">D:\\github\\hemsoft\\reports</a>
     </div>
     <div>
-      Audited Period: {range_info['start_formatted']} – {range_info['end_formatted']}
+      Audited Period: {range_info["start_formatted"]} – {range_info["end_formatted"]}
     </div>
   </footer>
 

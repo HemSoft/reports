@@ -1,8 +1,6 @@
 import os
 import subprocess
-import json
 from collections import defaultdict
-from datetime import datetime
 
 base_dir = r"D:\github\HemSoft"
 repos = []
@@ -29,9 +27,13 @@ for name, path in repos:
 
     try:
         cmd = [
-            "git", "-C", path, "log", "--all",
+            "git",
+            "-C",
+            path,
+            "log",
+            "--all",
             "--since=2026-06-13T00:00:00",
-            "--format=%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s"
+            "--format=%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
         ]
         res = subprocess.run(cmd, capture_output=True, text=True, errors="replace", check=True)
         for line in res.stdout.strip().split("\n"):
@@ -39,7 +41,16 @@ for name, path in repos:
                 continue
             parts = line.split("\t")
             if len(parts) >= 8:
-                h, an, ae, ai, cn, ce, ci, s = parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], "\t".join(parts[7:])
+                h, an, ae, ai, cn, ce, ci, s = (
+                    parts[0],
+                    parts[1],
+                    parts[2],
+                    parts[3],
+                    parts[4],
+                    parts[5],
+                    parts[6],
+                    "\t".join(parts[7:]),
+                )
                 authors[(an, ae)] += 1
                 if h not in all_commits:
                     all_commits[h] = {
@@ -52,9 +63,9 @@ for name, path in repos:
                         "committer_name": cn,
                         "committer_email": ce,
                         "committer_date": ci,
-                        "subject": s
+                        "subject": s,
                     }
-    except Exception as e:
+    except Exception:
         pass
 
 print(f"Unique commits collected (deduped across worktrees): {len(all_commits)}")

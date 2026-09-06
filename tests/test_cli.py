@@ -17,9 +17,12 @@ class TestCli(unittest.TestCase):
             ["--weeks", "-1"],
         ]
         for args in cases:
-            with self.subTest(args=args), patch("sys.argv", ["cli.py", *args]), \
-                    patch("cli.generate_report") as generate, \
-                    contextlib.redirect_stderr(io.StringIO()) as stderr:
+            with (
+                self.subTest(args=args),
+                patch("sys.argv", ["cli.py", *args]),
+                patch("cli.generate_report") as generate,
+                contextlib.redirect_stderr(io.StringIO()) as stderr,
+            ):
                 with self.assertRaises(SystemExit) as error:
                     cli.main()
                 self.assertEqual(error.exception.code, 2)

@@ -31,7 +31,7 @@ known durations, the reported median is `0.0`.
 
 ## Architecture
 
-```
+```text
 reports/
 ├── cli.py               # Main CLI entry point
 ├── src/
@@ -179,9 +179,43 @@ are public. Private repository visibility does not restrict access to the site.
 
 ## Running tests
 
+Install development tools in the active Python environment and Node.js 22+:
+
 ```powershell
-python -m unittest discover tests
+python -m pip install -r requirements-dev.txt
+npm ci
+npx playwright install chromium
 ```
+
+Run the same checks used by CI:
+
+```powershell
+python scripts/run_tests.py
+npm run lint:python
+npm run lint:markdown
+actionlint
+npm run test:browser
+```
+
+Use actionlint 1.7.12. CI installs that exact version through Go. The ordinary
+`python -m unittest discover tests` command remains available, while the CI runner
+also clears GitHub credentials and rejects accidental external commands or Python
+network calls. Tests use temporary Git repositories and synthetic JSON fixtures.
+The browser smoke test supplies pinned local copies of the existing chart libraries,
+initializes both WebGL scenes and seven charts, and exercises table tabs and search.
+Browser failures retain screenshots and traces under `test-results/browser/`.
+
+`.github/workflows/validate.yml` runs on pull requests, main pushes, and as a reusable
+workflow. Its stable `Validation` status succeeds only if both platform test jobs
+and the lint/browser job succeed. Main requires this status from GitHub Actions and
+an up-to-date branch. Administrators are subject to the same gate; there is no routine
+bypass. Any emergency protection change requires Franz's explicit authorization and
+a recorded reason, followed by restoring the gate.
+
+Pages calls the reusable workflow before building. Validation and report generation
+check out the same immutable `github.sha`; failed or cancelled validation prevents
+the build and artifact upload. The workflow does not inherit publication secrets
+into validation jobs.
 
 ## Requirements
 

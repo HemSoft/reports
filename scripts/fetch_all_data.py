@@ -1,10 +1,8 @@
 import os
-import sys
-import json
 import subprocess
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 from zoneinfo import ZoneInfo
-from collections import defaultdict, Counter
+from collections import defaultdict
 
 EDT = ZoneInfo("America/New_York")
 START_DATE = datetime(2026, 6, 13, 0, 0, 0, tzinfo=EDT)
@@ -13,10 +11,16 @@ END_DATE = datetime(2026, 9, 5, 23, 59, 59, tzinfo=EDT)
 START_ISO = START_DATE.isoformat()
 END_ISO = END_DATE.isoformat()
 
-print(f"Auditing period: {START_DATE.strftime('%Y-%m-%d %H:%M:%S %Z')} to {END_DATE.strftime('%Y-%m-%d %H:%M:%S %Z')}")
+print(
+    f"Auditing period: {START_DATE.strftime('%Y-%m-%d %H:%M:%S %Z')} to {END_DATE.strftime('%Y-%m-%d %H:%M:%S %Z')}"
+)
 
 base_dir = r"D:\github\HemSoft"
-candidate_dirs = [os.path.join(base_dir, d) for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
+candidate_dirs = [
+    os.path.join(base_dir, d)
+    for d in os.listdir(base_dir)
+    if os.path.isdir(os.path.join(base_dir, d))
+]
 
 # Map canonical repo paths
 repo_commits = defaultdict(list)
@@ -26,22 +30,26 @@ for d in candidate_dirs:
     git_dir = os.path.join(d, ".git")
     if not (os.path.exists(git_dir) or os.path.isfile(git_dir)):
         continue
-    
+
     repo_name = os.path.basename(d)
     # If it's a worktree folder like .worktrees or has worktree in name, resolve to base repo name if possible
     base_name = repo_name.replace(".worktrees", "").split("-identify-")[0]
-    
+
     # Run git log numstat
     try:
         cmd = [
-            "git", "-C", d, "log", "--all",
+            "git",
+            "-C",
+            d,
+            "log",
+            "--all",
             f"--since={START_DATE.strftime('%Y-%m-%dT00:00:00')}",
             f"--until={END_DATE.strftime('%Y-%m-%dT23:59:59')}",
             "--format=COMMIT_META%x09%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
-            "--numstat"
+            "--numstat",
         ]
         res = subprocess.run(cmd, capture_output=True, text=True, errors="replace", check=True)
-        
+
         current_commit = None
         for line in res.stdout.split("\n"):
             line = line.strip()
@@ -54,11 +62,11 @@ for d in candidate_dirs:
                     current_commit = None
                     continue
                 seen_hashes.add(chash)
-                
+
                 # Parse date to EDT
                 dt = datetime.fromisoformat(parts[4])
                 dt_edt = dt.astimezone(EDT)
-                
+
                 current_commit = {
                     "hash": chash,
                     "repo": base_name,
@@ -71,7 +79,7 @@ for d in candidate_dirs:
                     "subject": parts[8] if len(parts) > 8 else "",
                     "additions": 0,
                     "deletions": 0,
-                    "files": []
+                    "files": [],
                 }
                 repo_commits[base_name].append(current_commit)
             elif current_commit and "\t" in line:
@@ -82,12 +90,8 @@ for d in candidate_dirs:
                     dels = int(del_str) if del_str.isdigit() else 0
                     current_commit["additions"] += adds
                     current_commit["deletions"] += dels
-                    current_commit["files"].append({
-                        "path": fpath,
-                        "adds": adds,
-                        "dels": dels
-                    })
-    except Exception as e:
+                    current_commit["files"].append({"path": fpath, "adds": adds, "dels": dels})
+    except Exception:
         # print(f"Error reading {d}: {e}")
         pass
 

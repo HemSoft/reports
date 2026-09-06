@@ -1,6 +1,4 @@
 import os
-import sys
-import json
 import subprocess
 
 base_dir = r"D:\github\HemSoft"
@@ -22,16 +20,20 @@ total_commits = 0
 for name, path in local_repos:
     try:
         cmd = [
-            "git", "-C", path, "log", "--all",
+            "git",
+            "-C",
+            path,
+            "log",
+            "--all",
             "--since=2026-06-13T00:00:00",
-            "--format=%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s"
+            "--format=%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
         ]
         res = subprocess.run(cmd, capture_output=True, text=True, errors="replace", check=True)
-        lines = [l for l in res.stdout.strip().split("\n") if l.strip()]
+        lines = [line for line in res.stdout.strip().split("\n") if line.strip()]
         if lines:
             commits_by_repo[name] = len(lines)
             total_commits += len(lines)
-    except Exception as e:
+    except Exception:
         pass
 
 print(f"Total commits in past 12 weeks across local repos: {total_commits}")

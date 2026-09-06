@@ -2,7 +2,16 @@ import subprocess
 import json
 
 # Get all repos of HemSoft
-cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json", "name,isPrivate,description,pushedAt,createdAt,updatedAt,defaultBranchRef,stargazerCount,forkCount"]
+cmd = [
+    "gh",
+    "repo",
+    "list",
+    "HemSoft",
+    "--limit",
+    "100",
+    "--json",
+    "name,isPrivate,description,pushedAt,createdAt,updatedAt,defaultBranchRef,stargazerCount,forkCount",
+]
 res = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
 remote_repos = json.loads(res.stdout)
 

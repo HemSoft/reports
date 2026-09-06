@@ -1,0 +1,74 @@
+name: Validate report
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Unit tests (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python scripts/run_tests.py
+
+  quality:
+    name: Lint and browser smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: python -m pip install -r requirements-dev.txt
+      - run: npm ci
+      - run: npm run lint:python
+      - run: npm run lint:markdown
+      - name: Validate workflow configuration
+        run: go run github.com/rhysd/actionlint/cmd/actionlint@v1.7.12
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:browser
+      - name: Preserve browser failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-failure
+          path: test-results/browser/
+          if-no-files-found: ignore
+          retention-days: 7
+
+  validation:
+    name: Validation
+    if: always()
+    needs: [unit, quality]
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every validation job to succeed
+        env:
+          UNIT_RESULT: ${{ needs.unit.result }}
+          QUALITY_RESULT: ${{ needs.quality.result }}
+        run: test "$UNIT_RESULT" = success && test "$QUALITY_RESULT" = success
