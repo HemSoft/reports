@@ -19,6 +19,11 @@ The tool generates standalone interactive HTML dashboards with Three.js 3D bar m
 - **Auditing filters**: Searchable and filterable tables for repositories, recent pull requests, and commit logs with links directly to GitHub.
 - **Arbitrary timeframes**: Audit any historical period using `--weeks <N>` or explicit `--start YYYY-MM-DD` and `--end YYYY-MM-DD` dates.
 
+Repository profile language follows the largest file-churn total in the selected
+interval. Without file-derived language, it uses GitHub's primary language.
+Missing, null, or empty language metadata displays `Unknown`, including repositories
+whose commits change no files.
+
 ## Architecture
 
 ```
