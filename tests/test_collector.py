@@ -16,6 +16,13 @@ class TestCollector(unittest.TestCase):
         self.assertEqual(start_dt.strftime("%Y-%m-%d"), "2026-01-01")
         self.assertEqual(end_dt.strftime("%Y-%m-%d"), "2026-01-31")
 
+    def test_invalid_ranges_are_rejected(self):
+        for args in [dict(weeks=0), dict(weeks=-1),
+                     dict(start_str="2026-01-01"), dict(end_str="2026-01-01"),
+                     dict(start_str="2026-01-02", end_str="2026-01-01")]:
+            with self.subTest(args=args), self.assertRaises(ValueError):
+                get_date_range(**args)
+
     def test_language_detection(self):
         self.assertEqual(detect_language("main.swift"), "Swift")
         self.assertEqual(detect_language("app.tsx"), "TypeScript (React)")

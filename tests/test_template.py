@@ -29,6 +29,17 @@ class ScriptParser(HTMLParser):
 
 
 class TestTemplate(unittest.TestCase):
+    def test_period_labels_describe_the_selected_interval(self):
+        fixture = test_analyzer.TestAnalyzer()
+        fixture.setUp()
+        data = analyze_data(fixture.sample_data)
+        report = build_html_report(data)
+        self.assertIn("cumulative lines added from Aug 22, 2026 through Sep 05, 2026", report)
+        self.assertNotIn("across 12 consecutive weeks", report)
+        self.assertNotIn("12-Week Period", report)
+        self.assertNotIn("12-week audit window", report)
+        self.assertNotIn("(12 Weeks)", report)
+
     def test_metadata_cannot_terminate_script_and_round_trips(self):
         payloads = [
             "</script><script>document.documentElement.dataset.auditProbe=1</script>",

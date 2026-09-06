@@ -10,6 +10,7 @@ import os
 import sys
 import argparse
 from src.generator import generate_report
+from src.collector import get_date_range
 
 def main():
     parser = argparse.ArgumentParser(
@@ -60,6 +61,11 @@ def main():
     )
 
     args = parser.parse_args()
+
+    try:
+        get_date_range(args.weeks, args.start, args.end)
+    except ValueError as exc:
+        parser.error(str(exc))
 
     out_file, analysis = generate_report(
         base_dir=args.base_dir,
