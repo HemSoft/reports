@@ -49,6 +49,47 @@ reports/
 
 ## Quick start
 
+Create and activate a virtual environment, then install the pinned runtime dependency.
+
+Windows PowerShell:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install -r requirements.txt
+python cli.py --help
+```
+
+Linux:
+
+On Debian/Ubuntu, install the `python3-venv` OS package first if venv reports
+that `ensurepip` is unavailable.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python cli.py --help
+```
+
+The remaining Python commands assume this environment is active. `tzdata` supplies
+IANA timezone data on Windows and serves as a fallback on Linux. Python explains
+this dependency in its [zoneinfo data-source documentation](https://docs.python.org/3/library/zoneinfo.html#data-sources).
+Update the pin in `requirements.txt` when adopting a new timezone database and
+rerun the tests, which check packaged Eastern winter and summer offsets.
+
+If the Linux OS package cannot be installed, bootstrap pip inside the environment
+using pip's [supported get-pip method](https://pip.pypa.io/en/stable/installation/#get-pip-py):
+
+```bash
+python3 -m venv --without-pip .venv
+curl --fail --location --output .venv/get-pip.py https://bootstrap.pypa.io/get-pip.py
+.venv/bin/python .venv/get-pip.py
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+python cli.py --help
+```
+
 ### Generate default 12-week report
 
 ```powershell
@@ -144,6 +185,6 @@ python -m unittest discover tests
 
 ## Requirements
 
-- Python 3.10+ (Standard Library only, zero external pip packages needed).
+- Python 3.10+ and the pinned `tzdata` package in `requirements.txt`.
 - GitHub CLI (`gh`) authenticated with repository access.
 - Local repository clones in `D:\github\HemSoft` (automatically cross-referenced with GitHub remote metadata).
