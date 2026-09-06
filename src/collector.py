@@ -3,11 +3,108 @@ import sys
 import json
 import re
 import subprocess
+import tempfile
 from datetime import datetime, timezone, timedelta
 from zoneinfo import ZoneInfo
 from collections import defaultdict
 
 EDT = ZoneInfo("America/New_York")
+
+COMMAND_TIMEOUT_SECONDS = 120
+
+
+class CollectionError(RuntimeError):
+    """A required source could not be collected completely."""
+
+
+def _run_command(cmd, source):
+    try:
+        result = subprocess.run(
+            cmd, capture_output=True, encoding="utf-8", errors="replace",
+            check=True, timeout=COMMAND_TIMEOUT_SECONDS,
+        )
+        # Check explicitly as well so alternate runners cannot return failed data.
+        if result.returncode:
+            raise subprocess.CalledProcessError(
+                result.returncode, cmd, output=result.stdout, stderr=result.stderr)
+        return result.stdout
+    except subprocess.TimeoutExpired as exc:
+        raise CollectionError(f"{source}: timed out after {COMMAND_TIMEOUT_SECONDS}s") from exc
+    except subprocess.CalledProcessError as exc:
+        detail = (exc.stderr or "command failed").strip()
+        raise CollectionError(f"{source}: exit {exc.returncode}: {detail}") from exc
+    except OSError as exc:
+        raise CollectionError(f"{source}: {exc}") from exc
+
+
+REPO_FIELDS = {
+    "name": (str,), "isPrivate": (bool,), "description": (str, type(None)),
+    "stargazerCount": (int,), "forkCount": (int,),
+    "primaryLanguage": (dict, type(None)),
+}
+PR_FIELDS = {
+    "number": (int,), "title": (str,), "state": (str,), "createdAt": (str,),
+    "closedAt": (str, type(None)), "mergedAt": (str, type(None)), "url": (str,),
+}
+ISSUE_FIELDS = {key: value for key, value in PR_FIELDS.items() if key != "mergedAt"}
+
+
+def _validate_item(item, fields):
+    if not isinstance(item, dict):
+        raise ValueError("expected an object")
+    for key, allowed in fields.items():
+        if key not in item or type(item[key]) not in allowed:
+            raise ValueError(f"missing or invalid {key}")
+    for key in ("name", "title", "url"):
+        if key in fields and not item[key]:
+            raise ValueError(f"empty {key}")
+    for key in ("number", "stargazerCount", "forkCount"):
+        if key in fields and item[key] < (1 if key == "number" else 0):
+            raise ValueError(f"invalid {key}")
+    language = item.get("primaryLanguage")
+    if language is not None and (not isinstance(language.get("name"), str) or not language["name"]):
+        raise ValueError("invalid primaryLanguage.name")
+    for key in ("createdAt", "mergedAt", "closedAt"):
+        if key in fields and item[key] is not None:
+            parsed = datetime.fromisoformat(item[key].replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                raise ValueError(f"{key} lacks a timezone")
+    if "state" in fields:
+        states = ("OPEN", "CLOSED", "MERGED") if "mergedAt" in fields else ("OPEN", "CLOSED")
+        if item["state"] not in states:
+            raise ValueError("invalid state")
+        if item["state"] in ("CLOSED", "MERGED") and not item["closedAt"]:
+            raise ValueError("closed record lacks closedAt")
+        if item["state"] == "MERGED" and not item["mergedAt"]:
+            raise ValueError("merged pull request lacks mergedAt")
+
+
+def _read_items(cmd, source, fields):
+    try:
+        items = json.loads(_run_command(cmd, source))
+        if not isinstance(items, list):
+            raise ValueError("expected an array")
+        for item in items:
+            _validate_item(item, fields)
+        return items
+    except (ValueError, TypeError, AttributeError) as exc:
+        raise CollectionError(f"{source}: invalid JSON response: {exc}") from exc
+
+
+def _write_cache(cache_file, data):
+    directory = os.path.dirname(os.path.abspath(cache_file))
+    os.makedirs(directory, exist_ok=True)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=directory,
+                                         delete=False) as stream:
+            temporary = stream.name
+            json.dump(data, stream, indent=2)
+        os.replace(temporary, cache_file)
+    finally:
+        if temporary and os.path.exists(temporary):
+            os.remove(temporary)
+
 
 def get_date_range(weeks=12, start_str=None, end_str=None):
     if weeks <= 0:
@@ -113,7 +210,11 @@ def collect_commits(base_dir, start_dt, end_dt):
     start_str = start_dt.strftime("%Y-%m-%dT00:00:00")
     end_str = end_dt.strftime("%Y-%m-%dT23:59:59")
     
-    candidate_dirs = [os.path.join(base_dir, d) for d in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, d))]
+    try:
+        candidate_dirs = [os.path.join(base_dir, d) for d in os.listdir(base_dir)
+                          if os.path.isdir(os.path.join(base_dir, d))]
+    except OSError as exc:
+        raise CollectionError(f"Repository enumeration in {base_dir}: {exc}") from exc
     commits = []
     seen_hashes = set()
     
@@ -137,15 +238,17 @@ def collect_commits(base_dir, start_dt, end_dt):
                 "--format=COMMIT_META%x09%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
                 "--numstat"
             ]
-            res = subprocess.run(cmd, capture_output=True, encoding="utf-8", errors="replace", check=True)
+            output = _run_command(cmd, f"Git history in {d}")
             
             cur = None
-            for line in res.stdout.split("\n"):
+            for line in output.split("\n"):
                 line = line.strip()
                 if not line:
                     continue
                 if line.startswith("COMMIT_META\t"):
-                    parts = line.split("\t")
+                    parts = line.split("\t", 8)
+                    if len(parts) != 9:
+                        raise ValueError("invalid commit metadata")
                     chash = parts[1]
                     if chash in seen_hashes:
                         cur = None
@@ -154,10 +257,11 @@ def collect_commits(base_dir, start_dt, end_dt):
                     
                     try:
                         dt_orig = datetime.fromisoformat(parts[4])
+                        if dt_orig.tzinfo is None:
+                            raise ValueError("author date lacks a timezone")
                         dt_edt = dt_orig.astimezone(EDT)
-                    except Exception:
-                        cur = None
-                        continue
+                    except (ValueError, TypeError) as exc:
+                        raise CollectionError(f"Git history in {d}: invalid author date") from exc
                     
                     if dt_edt < start_dt or dt_edt > end_dt:
                         cur = None
@@ -197,9 +301,9 @@ def collect_commits(base_dir, start_dt, end_dt):
                             "dels": dels,
                             "language": lang
                         })
-        except Exception:
-            pass
-            
+        except (ValueError, IndexError) as exc:
+            raise CollectionError(f"Git history in {d}: malformed output: {exc}") from exc
+
     for c in commits:
         c["category"] = classify_commit(c["subject"], c["files"])
         c["net_lines"] = c["additions"] - c["deletions"]
@@ -210,99 +314,54 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
     start_iso = start_dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
     end_iso = end_dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
     
-    # 1. Repo general info
-    repo_meta = {}
-    try:
-        cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json", "name,isPrivate,description,pushedAt,createdAt,stargazerCount,forkCount,primaryLanguage"]
-        res = subprocess.run(cmd, capture_output=True, encoding="utf-8", errors="replace")
-        if res.returncode == 0:
-            for r in json.loads(res.stdout):
-                repo_meta[r["name"]] = r
-    except Exception as e:
-        print(f"Error fetching repo list: {e}")
-        
+    repo_cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json",
+                ",".join(REPO_FIELDS)]
+    repo_meta = {item["name"]: item for item in _read_items(
+        repo_cmd, "GitHub repository enumeration for HemSoft", REPO_FIELDS)}
     prs_by_repo = defaultdict(list)
     issues_by_repo = defaultdict(list)
-    
+
     for r in active_repo_names:
-        # Fetch PRs
-        try:
-            p_cmd = [
-                "gh", "pr", "list", "--repo", f"HemSoft/{r}",
-                "--state", "all", "--limit", "500",
-                "--json", "number,title,state,createdAt,closedAt,mergedAt,url,headRefName,author,comments"
-            ]
-            p_res = subprocess.run(p_cmd, capture_output=True, encoding="utf-8", errors="replace")
-            if p_res.returncode == 0 and p_res.stdout:
-                items = json.loads(p_res.stdout)
-                for item in items:
-                    c_at = item.get("createdAt")
-                    m_at = item.get("mergedAt")
-                    cl_at = item.get("closedAt")
-                    
-                    # Check if within range
-                    in_range = False
-                    if c_at and start_iso <= c_at <= end_iso:
-                        in_range = True
-                    elif m_at and start_iso <= m_at <= end_iso:
-                        in_range = True
-                    elif cl_at and start_iso <= cl_at <= end_iso:
-                        in_range = True
-                        
-                    if in_range:
-                        # calculate cycle time in hours
-                        cycle_hours = None
-                        if m_at and c_at:
-                            try:
-                                dt_c = datetime.fromisoformat(c_at.replace("Z", "+00:00"))
-                                dt_m = datetime.fromisoformat(m_at.replace("Z", "+00:00"))
-                                cycle_hours = round((dt_m - dt_c).total_seconds() / 3600.0, 2)
-                            except Exception:
-                                pass
-                        item["cycle_hours"] = cycle_hours
-                        item["repo"] = r
-                        prs_by_repo[r].append(item)
-        except Exception:
-            pass
-            
-        # Fetch Issues
-        try:
-            i_cmd = [
-                "gh", "issue", "list", "--repo", f"HemSoft/{r}",
-                "--state", "all", "--limit", "500",
-                "--json", "number,title,state,createdAt,closedAt,url,author,labels,comments"
-            ]
-            i_res = subprocess.run(i_cmd, capture_output=True, encoding="utf-8", errors="replace")
-            if i_res.returncode == 0 and i_res.stdout:
-                items = json.loads(i_res.stdout)
-                for item in items:
-                    c_at = item.get("createdAt")
-                    cl_at = item.get("closedAt")
-                    
-                    in_range = False
-                    if c_at and start_iso <= c_at <= end_iso:
-                        in_range = True
-                    elif cl_at and start_iso <= cl_at <= end_iso:
-                        in_range = True
-                        
-                    if in_range:
-                        item["repo"] = r
-                        issues_by_repo[r].append(item)
-        except Exception:
-            pass
-            
+        p_cmd = ["gh", "pr", "list", "--repo", f"HemSoft/{r}",
+                 "--state", "all", "--limit", "500", "--json",
+                 ",".join(PR_FIELDS)]
+        for item in _read_items(p_cmd, f"GitHub pull requests for HemSoft/{r}",
+                                PR_FIELDS):
+            if not any(item.get(key) and start_iso <= item[key] <= end_iso
+                       for key in ("createdAt", "mergedAt", "closedAt")):
+                continue
+            item["cycle_hours"] = None
+            if item.get("mergedAt") and item.get("createdAt"):
+                created = datetime.fromisoformat(item["createdAt"].replace("Z", "+00:00"))
+                merged = datetime.fromisoformat(item["mergedAt"].replace("Z", "+00:00"))
+                item["cycle_hours"] = round((merged - created).total_seconds() / 3600.0, 2)
+            item["repo"] = r
+            prs_by_repo[r].append(item)
+
+        i_cmd = ["gh", "issue", "list", "--repo", f"HemSoft/{r}",
+                 "--state", "all", "--limit", "500", "--json",
+                 ",".join(ISSUE_FIELDS)]
+        for item in _read_items(i_cmd, f"GitHub issues for HemSoft/{r}",
+                                ISSUE_FIELDS):
+            if any(item.get(key) and start_iso <= item[key] <= end_iso
+                   for key in ("createdAt", "closedAt")):
+                item["repo"] = r
+                issues_by_repo[r].append(item)
+
     return repo_meta, dict(prs_by_repo), dict(issues_by_repo)
 
-def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=None):
+def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=None, refresh=False):
     start_dt, end_dt = get_date_range(weeks, start_str, end_str)
     
-    if cache_file and os.path.exists(cache_file):
+    if cache_file and not refresh and os.path.exists(cache_file):
         try:
             with open(cache_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 cached_start = data.get("range", {}).get("start_iso")
                 cached_end = data.get("range", {}).get("end_iso")
-                if cached_start == start_dt.isoformat() and cached_end == end_dt.isoformat():
+                if (data.get("collection_complete") is True
+                        and cached_start == start_dt.isoformat()
+                        and cached_end == end_dt.isoformat()):
                     print(f"Loaded cached audit data from {cache_file}")
                     return data
         except Exception as e:
@@ -320,6 +379,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     repo_meta, prs, issues = collect_github_metadata(active_repos, start_dt, end_dt)
     
     data = {
+        "collection_complete": True,
         "generated_at": datetime.now(EDT).isoformat(),
         "range": {
             "weeks": weeks,
@@ -337,9 +397,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     }
     
     if cache_file:
-        os.makedirs(os.path.dirname(cache_file), exist_ok=True)
-        with open(cache_file, "w", encoding="utf-8") as f:
-            json.dump(data, f, indent=2)
+        _write_cache(cache_file, data)
         print(f"Saved audit data cache to {cache_file}")
         
     return data

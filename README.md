@@ -62,6 +62,15 @@ together, with the start on or before the end; `--weeks` must be positive.
 python cli.py --weeks 12 --refresh
 ```
 
+Collection must succeed for every requested source. Git or GitHub failures,
+malformed responses, and timeouts stop the CLI with exit 1 and identify the
+source; no partial-report mode is enabled. Each Python command has a 120-second
+timeout with no automatic retries. Pages uses Bash fail-fast and pipeline error
+handling, bounds cloning commands, and stops before artifact upload on failure.
+A refresh keeps the previous cache until complete data can replace it atomically;
+collection failures leave existing report and metrics files untouched. Older
+caches without a completeness marker are recollected once.
+
 ### Export raw metrics JSON
 
 ```powershell

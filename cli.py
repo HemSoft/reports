@@ -10,7 +10,7 @@ import os
 import sys
 import argparse
 from src.generator import generate_report
-from src.collector import get_date_range
+from src.collector import CollectionError, get_date_range
 
 def main():
     parser = argparse.ArgumentParser(
@@ -67,15 +67,19 @@ def main():
     except ValueError as exc:
         parser.error(str(exc))
 
-    out_file, analysis = generate_report(
-        base_dir=args.base_dir,
-        weeks=args.weeks,
-        start_str=args.start,
-        end_str=args.end,
-        output_html=args.output,
-        refresh=args.refresh,
-        json_out=args.json_out
-    )
+    try:
+        out_file, analysis = generate_report(
+            base_dir=args.base_dir,
+            weeks=args.weeks,
+            start_str=args.start,
+            end_str=args.end,
+            output_html=args.output,
+            refresh=args.refresh,
+            json_out=args.json_out
+        )
+    except CollectionError as exc:
+        print(f"Collection failed: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc
 
     print("\nAudit complete! Open the report in your browser:")
     print(f"  {out_file}")
