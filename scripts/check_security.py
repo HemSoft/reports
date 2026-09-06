@@ -53,6 +53,29 @@ def verified_digest_pattern():
     return "^(?:sha384-)?(?:" + "|".join(digests) + ")$"
 
 
+def check_reference(reference, visited):
+    if not reference.startswith("./"):
+        if not re.fullmatch(r"[\w.-]+/[\w./-]+@[0-9a-f]{40}", reference):
+            raise ValueError(f"Mutable action reference: {reference}")
+        return
+    target = (ROOT / reference).resolve()
+    if not target.is_relative_to(ROOT.resolve()):
+        raise ValueError("Local action escapes the repository")
+    if target.is_file() and target.parent == (ROOT / ".github/workflows").resolve():
+        return  # Reusable workflows are checked by the full workflow loop.
+    manifests = [target / name for name in ("action.yml", "action.yaml")]
+    manifest = next((path for path in manifests if path.is_file()), None)
+    if manifest is None:
+        raise ValueError(f"Missing local action manifest: {reference}")
+    if manifest in visited:
+        return
+    visited.add(manifest)
+    action = yaml.safe_load(manifest.read_text(encoding="utf-8"))
+    for step in action["runs"].get("steps", []):
+        if "uses" in step:
+            check_reference(step["uses"], visited)
+
+
 def check_policy():
     """Reject mutable external actions and excess Pages job permissions."""
     for path in (ROOT / ".github/workflows").iterdir():
@@ -65,10 +88,7 @@ def check_policy():
                 references.append(job["uses"])
             references.extend(step["uses"] for step in job.get("steps", []) if "uses" in step)
         for reference in references:
-            if not reference.startswith("./") and not re.fullmatch(
-                r"[\w.-]+/[\w./-]+@[0-9a-f]{40}", reference
-            ):
-                raise ValueError(f"Mutable action reference in {path.name}: {reference}")
+            check_reference(reference, set())
         for name, job in workflow["jobs"].items():
             permissions = job.get("permissions", workflow.get("permissions", {}))
             expected = (

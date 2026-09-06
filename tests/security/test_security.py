@@ -12,6 +12,35 @@ from scripts import check_security
 
 
 class SecurityChecks(unittest.TestCase):
+    def test_local_composite_action_references_are_checked_recursively(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workflows = root / ".github/workflows"
+            workflows.mkdir(parents=True)
+            (workflows / "probe.yml").write_text(
+                "permissions: {contents: read}\njobs: {test: {steps: [{uses: './local/outer'}]}}",
+                encoding="utf-8",
+            )
+            for name in ("outer", "inner"):
+                (root / "local" / name).mkdir(parents=True)
+            (root / "local/outer/action.yml").write_text(
+                "runs: {using: composite, steps: [{uses: './local/inner'}]}", encoding="utf-8"
+            )
+            inner = root / "local/inner/action.yaml"
+            inner.write_text(
+                "runs: {using: composite, steps: [{uses: actions/checkout@v4}]}", encoding="utf-8"
+            )
+            with patch.object(check_security, "ROOT", root):
+                with self.assertRaisesRegex(ValueError, "Mutable action"):
+                    check_security.check_policy()
+                inner.write_text(
+                    "runs: {using: composite, steps: [{uses: 'actions/checkout@"
+                    + "a" * 40
+                    + "'}]}",
+                    encoding="utf-8",
+                )
+                check_security.check_policy()
+
     def test_mutable_reference_and_excess_permissions_fail(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
