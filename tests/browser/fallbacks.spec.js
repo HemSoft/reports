@@ -4,7 +4,7 @@ const { pathToFileURL } = require('node:url');
 const { openReport, root } = require('./fixture');
 
 async function assertTablesWork(page) {
-  await page.getByRole('button', { name: /Recent Pull Requests/ }).click();
+  await page.getByRole('tab', { name: /Recent Pull Requests/ }).click();
   await expect(page.locator('#pane-prs')).toBeVisible();
   await expect(page.locator('#pane-prs tbody tr:visible')).toHaveCount(1);
   await page.locator('#table-search').fill('no-fixture-match');

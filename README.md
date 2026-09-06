@@ -21,6 +21,18 @@ views running; unavailable 3D controls are disabled. With networking disabled,
 embedded metrics, repository/PR/commit tables, tab navigation, and filtering still
 work. Outbound GitHub links require connectivity.
 
+Each of the nine visualizations has a named region and a **View ... data** disclosure.
+Press Enter or Space on its summary to inspect a captioned table, even if graphics
+are unavailable. Weekly tables include every plotted value and hover detail, plus
+cumulative additions; the cadence table exposes all 168 day/hour values in
+`America/New_York`. Repository and language alternatives match the charts' top-eight
+and top-seven subsets. Focus a wide table's scroll region and use arrow keys to pan.
+
+Auto-rotate buttons expose their pressed state and identify the scene they control.
+The report table tabs support Left/Right, Home, and End keys, with automatic activation
+and a single tab stop. Tab then reaches the named search field; its filter applies to
+the selected table. Keyboard focus has a visible outline.
+
 ## Features
 
 - **3D weekly velocity bars**: WebGL volumetric rendering of commits, merged PRs, and code churn over time. Includes orbit controls, specular lighting, and hover raycasting tooltips.
@@ -221,6 +233,12 @@ Browser regression cases block each graphics dependency, disable WebGL, inject o
 scene/chart failure, and open the local HTML with networking disabled. The dedicated
 walkthrough test records a short video showing 3D fallback notices, working 2D charts,
 and table filtering under `test-results/browser/`.
+Accessibility tests compare every alternative-table value with the fixture, inspect
+the browser accessibility tree for cadence row/column headers and all 168 cells,
+exercise keyboard controls, and run pinned axe-core checks on visualization regions
+and the table toolbar. CI retains the accessibility tree, scan result, screenshot,
+and keyboard walkthrough for seven days. These checks cover the report's chart data
+and controls; they do not replace testing with a user's preferred screen reader.
 
 `.github/workflows/validate.yml` runs on pull requests, main pushes, and as a reusable
 workflow. Its stable `Validation` status succeeds only if both platform test jobs

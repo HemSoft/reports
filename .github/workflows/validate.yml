@@ -72,6 +72,17 @@ jobs:
           path: test-results/browser/**/video.webm
           if-no-files-found: ignore
           retention-days: 7
+      - name: Preserve accessibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: accessibility-evidence
+          path: |
+            test-results/accessibility.json
+            test-results/cadence-accessibility.yml
+            test-results/accessible-data.png
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Preserve browser failure evidence
         if: failure()
         uses: actions/upload-artifact@v4
