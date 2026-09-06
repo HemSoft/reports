@@ -37,10 +37,11 @@ jobs:
           test -n "$GH_TOKEN" || { echo "REPORTS_PAT is required to include private repositories."; exit 1; }
           timeout 120 gh auth setup-git
           mkdir -p checkouts public
-          timeout 120 gh repo list HemSoft --limit 100 --json name --jq '.[].name' | while read -r repo; do
-            echo "Cloning HemSoft/$repo ..."
-            timeout 300 gh repo clone "HemSoft/$repo" "checkouts/$repo" -- --quiet
-          done
+          python -m src.collector --list-repositories > repositories.txt
+          while read -r repo; do
+            echo "Cloning $repo ..."
+            timeout 300 gh repo clone "$repo" "checkouts/${repo#*/}" -- --quiet
+          done < repositories.txt
 
       - name: Generate report to public/index.html
         shell: bash
