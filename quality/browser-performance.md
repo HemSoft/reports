@@ -71,6 +71,10 @@ a change. RSS fluctuations or a few retained samples alone do not establish a le
 ## Gates and interpretation
 
 `browser-budget.json` holds reviewed upper bounds. Every sample must meet the
+policy. `browser-baseline.json` preserves the first qualified hosted run's
+environment, fixture sizes, per-case variance, and memory maxima beyond artifact
+retention. It names its exact source run/revision and accounting limits. Compare
+like environments; update the reference only through review. Every sample must meet the
 initialization, frame-p95, absolute heap/RSS, and retained-growth bounds. Missing
 measurements, missing/duplicate cases, incomplete repetitions, browser errors,
 or unavailable required process memory fail qualification. Frames are checked
