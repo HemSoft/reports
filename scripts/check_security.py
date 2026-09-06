@@ -43,7 +43,11 @@ def check_policy():
         if path.suffix not in {".yml", ".yaml"}:
             continue
         workflow = yaml.safe_load(path.read_text(encoding="utf-8"))
-        references = re.findall(r"^\s*-?\s*uses:\s*(\S+)", path.read_text(encoding="utf-8"), re.M)
+        references = []
+        for job in workflow["jobs"].values():
+            if "uses" in job:
+                references.append(job["uses"])
+            references.extend(step["uses"] for step in job.get("steps", []) if "uses" in step)
         for reference in references:
             if not reference.startswith("./") and not re.fullmatch(
                 r"[\w.-]+/[\w./-]+@[0-9a-f]{40}", reference

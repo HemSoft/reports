@@ -19,6 +19,8 @@ class SecurityChecks(unittest.TestCase):
             workflows.mkdir(parents=True)
             for text in (
                 "permissions: {contents: read}\njobs:\n  test:\n    steps:\n      - uses: actions/checkout@v4\n",
+                "permissions: {contents: read}\njobs: {test: {steps: [{uses: actions/checkout@v4}]}}\n",
+                "permissions: {contents: read}\njobs: {test: {uses: owner/repo/.github/workflows/reuse.yml@main}}\n",
                 "permissions: {contents: write}\njobs:\n  test:\n    steps: []\n",
             ):
                 for extension in ("yml", "yaml"):
