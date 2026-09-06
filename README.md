@@ -346,6 +346,61 @@ CI retains header, scene, and table screenshots with geometry JSON for seven day
 The mobile video demonstrates visible header actions, keyboard rotation control,
 local cadence-table scrolling, tab selection, and filtering at 320px.
 
+## Dependency integrity and security checks
+
+External Actions use full commit SHAs with major-version comments. Weekly
+Dependabot PRs cover Actions, npm, and pip dependencies. Review upstream release
+notes and the exact commit diff before accepting an Action update; verify that
+the revision belongs to the official `actions/*` repository. The local policy
+check rejects mutable references and unexpected job permissions. Pages build has
+only `contents: read`; only deployment can write Pages and request an OIDC token.
+Checkout does not persist credentials in the build or security job. Keep
+`REPORTS_PAT` limited to the collection steps and read access described above.
+Pages packaging follows the official upload-pages-artifact tar format, then
+uploads `artifact.tar` as `github-pages` with the pinned upload-artifact action.
+This avoids the mutable nested `upload-artifact@v4` reference in the v3 wrapper.
+
+All three executable CDN scripts require SHA-384 Subresource Integrity (SRI) and
+anonymous CORS. Their bytes match the exact npm versions in `package-lock.json`.
+The Chart.js URL deliberately uses the package's UMD file, avoiding a CDN-only
+minification transform. For a browser-library update, update the npm pin/lock,
+script URL, fixture mapping, security-check inventory, and SRI together. Compare
+downloaded bytes with the
+installed package, calculate `sha384-` plus the Base64 SHA-384 digest, then run
+every browser test. Do not remove SRI to make an update pass. Three regression
+cases alter one response each and require browser rejection, no injected-code
+execution, and usable fallback content. Fonts and avatars remain external
+non-script resources and are outside these integrity checks.
+
+Install `requirements-security.txt` alongside the development requirements, then
+run these same commands used by the required security job:
+
+```sh
+python scripts/check_security.py
+python -m unittest discover tests/security
+python -m pip_audit -r requirements-dev.txt -r requirements-security.txt
+npm audit --audit-level=low
+```
+
+The first command checks policy, runs detect-secrets in UTF-8 mode on Git-tracked
+files with network verification disabled, and runs Bandit on Python production and tool
+scripts. Potential secrets fail without printing values. Bandit fails on medium
+or high severity; low-severity findings remain visible in its counts and need
+manual review. It does not analyze embedded JavaScript. No source or secret
+values are suppressed except the three public SRI digests, and only after
+recomputing them from installed npm files. An altered digest fails before scanning.
+No source or secret
+values are uploaded to an analyzer. pip-audit and npm audit send public package
+names/versions to their advisory services; dependency installation also uses
+package registries. All reported dependency vulnerabilities fail the gate, and
+network/tool failures also fail. Checks cover current tracked content and known
+advisories, not Git history or proof that dependencies are harmless.
+
+Tool references: [GitHub Action pinning](https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/find-and-customize-actions),
+[detect-secrets](https://github.com/Yelp/detect-secrets),
+[Bandit](https://bandit.readthedocs.io/en/latest/man/bandit.html), and
+[pip-audit](https://github.com/pypa/pip-audit).
+
 ## Requirements
 
 - Python 3.10+ and the pinned `tzdata` package in `requirements.txt`.
