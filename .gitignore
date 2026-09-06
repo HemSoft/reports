@@ -12,3 +12,4 @@ checkouts/
 test-results/
 playwright-report/
 .ruff_cache/
+.coverage*

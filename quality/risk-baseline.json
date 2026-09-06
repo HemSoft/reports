@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "origin": "Measured after issue 10 at 9760a87b0fd0cb7688618ff6052b837646265af0 with coverage.py 7.16.0 and Radon 6.0.1; caps may only decrease during routine changes.",
+  "worst": 96.144,
+  "functions": {
+    "src/analyzer.py:analyze_data": 96.144,
+    "src/collector.py:collect_commits": 53.47120991253644,
+    "src/collector.py:classify_commit": 45.26249060856499
+  }
+}
