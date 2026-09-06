@@ -220,7 +220,8 @@ def analyze_data(data):
         for c in r_commits:
             for f in c.get("files", []):
                 r_langs[f["language"]] += (f["adds"] + f["dels"])
-        primary_lang = r_langs.most_common(1)[0][0] if r_langs else (meta.get("primaryLanguage") or {}).get("name", "Unknown")
+        metadata_language = (meta.get("primaryLanguage") or {}).get("name") or "Unknown"
+        primary_lang = r_langs.most_common(1)[0][0] if r_langs else metadata_language
         
         r_active_days = len(set(c["date_str"] for c in r_commits))
         first_commit = min((c["author_date"] for c in r_commits), default=None)

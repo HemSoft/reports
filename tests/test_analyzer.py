@@ -187,5 +187,27 @@ class TestAnalyzer(unittest.TestCase):
                 for metric in ["prs_opened", "prs_merged", "issues_closed"]:
                     self.assertEqual([b[metric] for b in buckets], [2, 0])
 
+    def test_empty_commit_profiles_handle_missing_null_and_empty_language(self):
+        from src.template import build_html_report
+        for metadata in ({}, {"primaryLanguage": None}, {"primaryLanguage": {}},
+                         {"primaryLanguage": ""}, {"primaryLanguage": {"name": None}},
+                         {"primaryLanguage": {"name": ""}}):
+            with self.subTest(metadata=metadata):
+                data = copy.deepcopy(self.sample_data)
+                data["commits"] = [dict(data["commits"][0], files=[], additions=0, deletions=0, net_lines=0)]
+                data["repo_meta"]["hs-buddy"] = metadata
+                analysis = analyze_data(data)
+                self.assertEqual(analysis["repo_profiles"][0]["primary_language"], "Unknown")
+                self.assertEqual(analysis["repo_profiles"][0]["commits"], 1)
+                self.assertIn("Unknown", build_html_report(analysis))
+
+    def test_profile_language_uses_churn_then_metadata(self):
+        data = copy.deepcopy(self.sample_data)
+        data["repo_meta"]["hs-buddy"]["primaryLanguage"] = {"name": "Python"}
+        self.assertEqual(analyze_data(data)["repo_profiles"][0]["primary_language"], "TypeScript")
+        for commit in data["commits"]:
+            commit.update(files=[], additions=0, deletions=0, net_lines=0)
+        self.assertEqual(analyze_data(data)["repo_profiles"][0]["primary_language"], "Python")
+
 if __name__ == "__main__":
     unittest.main()
