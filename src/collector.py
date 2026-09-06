@@ -4,6 +4,7 @@ import json
 import re
 import subprocess
 import tempfile
+import hashlib
 from datetime import datetime, timezone, timedelta
 from zoneinfo import ZoneInfo
 from collections import defaultdict
@@ -11,6 +12,8 @@ from collections import defaultdict
 EDT = ZoneInfo("America/New_York")
 
 COMMAND_TIMEOUT_SECONDS = 120
+CACHE_SCHEMA_VERSION = 1
+COLLECTION_SCOPE = "all-owned-author-date-v2"
 
 
 class CollectionError(RuntimeError):
@@ -405,24 +408,56 @@ def _has_event(item, keys, start, end):
                end.astimezone(timezone.utc) for key in keys)
 
 
+def normalize_source(base_dir):
+    return os.path.normcase(os.path.realpath(os.path.abspath(os.path.expanduser(base_dir))))
+
+
+def cache_source_key(base_dir):
+    return hashlib.sha256(normalize_source(base_dir).encode("utf-8")).hexdigest()[:16]
+
+
+def _cache_inputs(base_dir, weeks, start_dt, end_dt):
+    return {
+        "source_directory": normalize_source(base_dir),
+        "weeks": weeks,
+        "start_iso": start_dt.isoformat(),
+        "end_iso": end_dt.isoformat(),
+        "timezone": "America/New_York",
+        "github_owner": "HemSoft",
+        "collection_scope": COLLECTION_SCOPE,
+    }
+
+
+def _cache_matches(data, inputs):
+    if not isinstance(data, dict):
+        return False
+    if (data.get("cache_schema_version") != CACHE_SCHEMA_VERSION
+            or data.get("cache_inputs") != inputs
+            or data.get("collection_complete") is not True):
+        return False
+    if not all(isinstance(data.get(key), kind) for key, kind in (
+        ("commits", list), ("prs", dict), ("issues", dict), ("repo_meta", dict), ("range", dict))):
+        return False
+    return (data["range"].get("start_iso") == inputs["start_iso"]
+            and data["range"].get("end_iso") == inputs["end_iso"]
+            and data["range"].get("weeks") == inputs["weeks"])
+
+
 def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=None, refresh=False):
     start_dt, end_dt = get_date_range(weeks, start_str, end_str)
-    
+    base_dir = normalize_source(base_dir)
+    inputs = _cache_inputs(base_dir, weeks, start_dt, end_dt)
+
     if cache_file and not refresh and os.path.exists(cache_file):
         try:
             with open(cache_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
-                cached_start = data.get("range", {}).get("start_iso")
-                cached_end = data.get("range", {}).get("end_iso")
-                if (data.get("collection_complete") is True
-                        and data.get("collection_scope") == "all-owned-author-date-v2"
-                        and cached_start == start_dt.isoformat()
-                        and cached_end == end_dt.isoformat()):
-                    print(f"Loaded cached audit data from {cache_file}")
-                    return data
-        except Exception as e:
-            print(f"Cache read error: {e}")
-            
+            if _cache_matches(data, inputs):
+                print(f"Loaded cached audit data from {cache_file}")
+                return data
+        except (OSError, ValueError, TypeError) as exc:
+            print(f"Cache read error: {exc}")
+
     print(f"Scanning local commits in {base_dir} from {start_dt.strftime('%Y-%m-%d')} to {end_dt.strftime('%Y-%m-%d')} EDT...")
     commits = collect_commits(base_dir, start_dt, end_dt)
     print(f"Collected {len(commits)} unique commits.")
@@ -436,7 +471,9 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     
     data = {
         "collection_complete": True,
-        "collection_scope": "all-owned-author-date-v2",
+        "collection_scope": COLLECTION_SCOPE,
+        "cache_schema_version": CACHE_SCHEMA_VERSION,
+        "cache_inputs": inputs,
         "generated_at": datetime.now(EDT).isoformat(),
         "range": {
             "weeks": weeks,

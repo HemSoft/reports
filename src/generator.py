@@ -3,7 +3,7 @@ import sys
 import json
 from datetime import datetime
 from zoneinfo import ZoneInfo
-from .collector import collect_all
+from .collector import cache_source_key, collect_all
 from .analyzer import analyze_data
 from .template import build_html_report
 
@@ -24,7 +24,8 @@ def generate_report(
     
     cache_dir = os.path.join(os.path.dirname(__file__), "..", "data")
     os.makedirs(cache_dir, exist_ok=True)
-    cache_file = os.path.join(cache_dir, f"cache_{weeks}w.json" if not (start_str and end_str) else f"cache_{start_str}_{end_str}.json")
+    period = f"{weeks}w" if not (start_str and end_str) else f"{start_str}_{end_str}_{weeks}w"
+    cache_file = os.path.join(cache_dir, f"cache_{cache_source_key(base_dir)}_{period}.json")
     
     # 1. Collect Data
     raw_data = collect_all(base_dir, weeks=weeks, start_str=start_str, end_str=end_str, cache_file=cache_file, refresh=refresh)
