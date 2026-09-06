@@ -1,6 +1,15 @@
 import json
 import html
 
+
+def _script_json(value):
+    """Serialize data without exposing HTML parser delimiters inside a script."""
+    return (json.dumps(value)
+            .replace("<", "\\u003c")
+            .replace(">", "\\u003e")
+            .replace("&", "\\u0026"))
+
+
 def build_html_report(analytics_data):
     kpis = analytics_data["kpis"]
     range_info = analytics_data["range"]
@@ -14,14 +23,14 @@ def build_html_report(analytics_data):
     recent_commits = analytics_data.get("recent_commits", [])
     
     # JSON payloads for charts
-    json_weekly = json.dumps(weekly)
-    json_repos = json.dumps(repos)
-    json_languages = json.dumps(languages)
-    json_temporal = json.dumps(temporal)
-    json_matrix = json.dumps(temporal["matrix_7x24"])
-    json_categories = json.dumps(categories)
-    json_authors = json.dumps(authors)
-    json_kpis = json.dumps(kpis)
+    json_weekly = _script_json(weekly)
+    json_repos = _script_json(repos)
+    json_languages = _script_json(languages)
+    json_temporal = _script_json(temporal)
+    json_matrix = _script_json(temporal["matrix_7x24"])
+    json_categories = _script_json(categories)
+    json_authors = _script_json(authors)
+    json_kpis = _script_json(kpis)
     
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
