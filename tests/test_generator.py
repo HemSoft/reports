@@ -22,6 +22,8 @@ class TestGenerator(unittest.TestCase):
             self.assertIn("Franz Hemmer", content)
             self.assertIn("Three.js", content)
             self.assertIn("chart-weekly-combo", content)
+            self.assertIn("Sep 05, 2026 12:00:00 EDT (UTC-0400)", content)
+            self.assertEqual(analysis["generated_at"], "2026-09-05T12:00:00-04:00")
 
 
 if __name__ == "__main__":

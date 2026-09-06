@@ -137,6 +137,14 @@ Filtering compares timezone-aware instants and is independent of the host zone.
 Large local histories require a full history read, subject to the command timeout.
 Caches collected with the old date prefilter are recollected automatically.
 
+The header displays the data's `generated_at` timestamp in `America/New_York`,
+including EST/EDT and its UTC offset. Reusing a cache preserves that timestamp;
+rendering HTML does not make old data fresh. Missing timestamps display `Unknown`,
+and timestamps without an offset are rejected. Cadence labels use ET because a
+selected period can span both standard and daylight saving time. The under-one-hour
+percentage uses merged PRs with measured cycle times, matching the chart buckets;
+no measured cycles displays 0.0%.
+
 ### Force refresh (bypass cache)
 
 ```powershell

@@ -546,7 +546,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
             print(f"Cache read error: {exc}")
 
     print(
-        f"Scanning local commits in {base_dir} from {start_dt.strftime('%Y-%m-%d')} to {end_dt.strftime('%Y-%m-%d')} EDT..."
+        f"Scanning local commits in {base_dir} from {start_dt.strftime('%Y-%m-%d')} to {end_dt.strftime('%Y-%m-%d')} America/New_York (ET)..."
     )
     commits = collect_commits(base_dir, start_dt, end_dt)
     print(f"Collected {len(commits)} unique commits.")

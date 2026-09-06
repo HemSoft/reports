@@ -1,6 +1,7 @@
 import json
 import re
 import unittest
+from datetime import datetime
 from html.parser import HTMLParser
 
 from report_fixture import load_report_fixture
@@ -29,6 +30,74 @@ class ScriptParser(HTMLParser):
 
 
 class TestTemplate(unittest.TestCase):
+    def test_generation_timestamp_uses_eastern_season_and_source_freshness(self):
+        for timestamp, expected in [
+            ("2026-09-05T12:00:00-04:00", "Sep 05, 2026 12:00:00 EDT (UTC-0400)"),
+            ("2026-01-08T02:30:00Z", "Jan 07, 2026 21:30:00 EST (UTC-0500)"),
+            ("2026-03-08T06:59:59Z", "Mar 08, 2026 01:59:59 EST (UTC-0500)"),
+            ("2026-03-08T07:00:00Z", "Mar 08, 2026 03:00:00 EDT (UTC-0400)"),
+            (None, "Unknown"),
+        ]:
+            with self.subTest(timestamp=timestamp):
+                raw = load_report_fixture()
+                raw["generated_at"] = timestamp
+                data = analyze_data(raw)
+                report = build_html_report(data)
+                self.assertIn(f"Data generated: <strong>{expected}</strong>", report)
+                self.assertIn("America/New_York (ET)", report)
+                self.assertIn("Day × Hour Matrix ET", report)
+                self.assertIn("Date (ET)", report)
+                self.assertIn("Commits by Hour (ET)", report)
+                self.assertEqual(data["generated_at"], timestamp)
+
+    def test_generation_timestamp_without_offset_is_rejected(self):
+        data = analyze_data(load_report_fixture())
+        data["generated_at"] = "2026-01-08T02:30:00"
+        with self.assertRaisesRegex(ValueError, "generated_at must include a timezone"):
+            build_html_report(data)
+
+    def test_cycle_subtitle_uses_measured_merged_prs(self):
+        for cycles, expected in [([], "0.0"), ([0.5], "100.0"), ([0.5, 1, 4], "33.3")]:
+            with self.subTest(cycles=cycles):
+                raw = load_report_fixture()
+                prototype = raw["prs"]["hs-buddy"][0]
+                raw["prs"]["hs-buddy"] = [
+                    dict(prototype, cycle_hours=hours) for hours in cycles
+                ] + [
+                    dict(prototype, cycle_hours=None),
+                    dict(prototype, state="OPEN", cycle_hours=0.5),
+                ]
+                report = build_html_report(analyze_data(raw))
+                self.assertIn(f"({expected}% under 1 hour; measured merged PRs)", report)
+                self.assertNotIn("58.7%", report)
+        raw["prs"] = {}
+        self.assertIn(
+            "(0.0% under 1 hour; measured merged PRs)", build_html_report(analyze_data(raw))
+        )
+
+    def test_header_subtitle_and_footer_match_short_and_explicit_periods(self):
+        for start, end, weeks in [
+            ("2026-09-01T00:00:00-04:00", "2026-09-07T23:59:59-04:00", 1),
+            ("2026-08-22T00:00:00-04:00", "2026-09-05T23:59:59-04:00", 2),
+            ("2026-01-03T00:00:00-05:00", "2026-01-05T23:59:59-05:00", 12),
+        ]:
+            with self.subTest(start=start, end=end):
+                raw = load_report_fixture()
+                start_dt, end_dt = datetime.fromisoformat(start), datetime.fromisoformat(end)
+                first, last = start_dt.strftime("%b %d, %Y"), end_dt.strftime("%b %d, %Y")
+                raw["range"].update(
+                    start_iso=start,
+                    end_iso=end,
+                    weeks=weeks,
+                    start_formatted=first,
+                    end_formatted=last,
+                )
+                report = build_html_report(analyze_data(raw))
+                self.assertIn(f"Period: <strong>{first} – {last}</strong>", report)
+                self.assertIn(f"cumulative lines added from {first} through {last}", report)
+                self.assertIn(f"Audited Period: {first} – {last}", report)
+                self.assertNotRegex(report, r"12[- ](?:Week|week)")
+
     def test_period_labels_describe_the_selected_interval(self):
         data = analyze_data(load_report_fixture())
         report = build_html_report(data)
