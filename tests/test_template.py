@@ -3,7 +3,7 @@ import re
 import unittest
 from html.parser import HTMLParser
 
-import test_analyzer
+from report_fixture import load_report_fixture
 from src.analyzer import analyze_data
 from src.template import build_html_report
 
@@ -30,9 +30,7 @@ class ScriptParser(HTMLParser):
 
 class TestTemplate(unittest.TestCase):
     def test_period_labels_describe_the_selected_interval(self):
-        fixture = test_analyzer.TestAnalyzer()
-        fixture.setUp()
-        data = analyze_data(fixture.sample_data)
+        data = analyze_data(load_report_fixture())
         report = build_html_report(data)
         self.assertIn("cumulative lines added from Aug 22, 2026 through Sep 05, 2026", report)
         self.assertNotIn("across 12 consecutive weeks", report)
@@ -45,14 +43,13 @@ class TestTemplate(unittest.TestCase):
             "</script><script>document.documentElement.dataset.auditProbe=1</script>",
             "</ScRiPt><script>document.documentElement.dataset.auditProbe=1</script>",
             "<!-- <script> nested </script> -->",
-            'Quotes " and \' & <angles> café 日本語 \u2028 \u2029',
+            "Quotes \" and ' & <angles> café 日本語 \u2028 \u2029",
         ]
         for payload in payloads:
             with self.subTest(payload=payload):
-                fixture = test_analyzer.TestAnalyzer()
-                fixture.setUp()
-                fixture.sample_data["repo_meta"]["hs-buddy"]["description"] = payload
-                data = analyze_data(fixture.sample_data)
+                fixture_data = load_report_fixture()
+                fixture_data["repo_meta"]["hs-buddy"]["description"] = payload
+                data = analyze_data(fixture_data)
                 data["author_distribution"] = {payload: 2}
                 data["category_distribution"] = {payload: 2}
                 data["weekly_data"][0]["top_repo"] = payload

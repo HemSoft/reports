@@ -1,34 +1,58 @@
 import json
-from pathlib import Path
 import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from src.collector import (CollectionError, collect_all, collect_github_metadata,
-                           get_date_range, list_github_repositories)
+from src.collector import (
+    CollectionError,
+    collect_all,
+    collect_github_metadata,
+    get_date_range,
+    list_github_repositories,
+)
 from src.analyzer import analyze_data
 from src.template import build_html_report
 
 
 def repository(name):
-    return dict(name=name, nameWithOwner=f"HemSoft/{name}", isPrivate=True,
-                description=None, stargazerCount=0, forkCount=0, primaryLanguage=None)
+    return dict(
+        name=name,
+        nameWithOwner=f"HemSoft/{name}",
+        isPrivate=True,
+        description=None,
+        stargazerCount=0,
+        forkCount=0,
+        primaryLanguage=None,
+    )
 
 
 def activity(number, pr=False):
-    item = dict(number=number, title=f"Activity {number}", state="CLOSED",
-                createdAt="2020-01-01T00:00:00Z", closedAt="2026-09-02T12:00:00Z",
-                url=f"https://github.com/HemSoft/r100/issues/{number}")
+    item = dict(
+        number=number,
+        title=f"Activity {number}",
+        state="CLOSED",
+        createdAt="2020-01-01T00:00:00Z",
+        closedAt="2026-09-02T12:00:00Z",
+        url=f"https://github.com/HemSoft/r100/issues/{number}",
+    )
     if pr:
         item.update(state="MERGED", mergedAt=item["closedAt"])
     return item
 
 
 def page(nodes, total=None, cursor=None, has_next=False):
-    body = {"data": {"scope": {"items": {"nodes": nodes,
-            "totalCount": len(nodes) if total is None else total,
-            "pageInfo": {"hasNextPage": has_next, "endCursor": cursor}}}}}
+    body = {
+        "data": {
+            "scope": {
+                "items": {
+                    "nodes": nodes,
+                    "totalCount": len(nodes) if total is None else total,
+                    "pageInfo": {"hasNextPage": has_next, "endCursor": cursor},
+                }
+            }
+        }
+    }
     return subprocess.CompletedProcess(["gh"], 0, json.dumps(body), "")
 
 
@@ -49,10 +73,15 @@ class TestGithubPagination(unittest.TestCase):
                 items = repos
             else:
                 requested.append(values["name"])
-                items = ([activity(i + 1, pr="pullRequests" in query) for i in range(501)]
-                         if values["name"] == "r100" else [])
+                items = (
+                    [activity(i + 1, pr="pullRequests" in query) for i in range(501)]
+                    if values["name"] == "r100"
+                    else []
+                )
             next_offset = offset + 100
-            return page(items[offset:next_offset], len(items), str(next_offset), next_offset < len(items))
+            return page(
+                items[offset:next_offset], len(items), str(next_offset), next_offset < len(items)
+            )
 
         with patch("src.collector.subprocess.run", side_effect=run):
             meta, prs, issues = collect_github_metadata([], self.start, self.end)
@@ -64,8 +93,17 @@ class TestGithubPagination(unittest.TestCase):
         self.assertEqual(issues["r100"][-1]["number"], 501)
 
     def test_activity_without_commits_reaches_metrics_profiles_and_html(self):
-        with tempfile.TemporaryDirectory() as directory, patch("src.collector.subprocess.run", side_effect=[
-                page([repository("r100")]), page([activity(1, pr=True)]), page([activity(2)])]):
+        with (
+            tempfile.TemporaryDirectory() as directory,
+            patch(
+                "src.collector.subprocess.run",
+                side_effect=[
+                    page([repository("r100")]),
+                    page([activity(1, pr=True)]),
+                    page([activity(2)]),
+                ],
+            ),
+        ):
             raw = collect_all(directory, start_str="2026-09-01", end_str="2026-09-07")
         analysis = analyze_data(raw)
         self.assertEqual(analysis["kpis"]["total_commits"], 0)
@@ -84,16 +122,25 @@ class TestGithubPagination(unittest.TestCase):
         cases = [
             [page([one], total=2)],
             [page([one], total=2, has_next=True)],
-            [page([one], total=3, cursor="same", has_next=True),
-             page([two], total=3, cursor="same", has_next=True)],
+            [
+                page([one], total=3, cursor="same", has_next=True),
+                page([two], total=3, cursor="same", has_next=True),
+            ],
             [page([one], total=2, cursor="next", has_next=True), page([one], total=2)],
             [page([one], total=2, cursor="next", has_next=True), page([two], total=3)],
             [page([], total=2, cursor="next", has_next=True)],
-            [subprocess.CompletedProcess(["gh"], 0, '{"data":null,"errors":[{"message":"rate limit"}]}', "")],
+            [
+                subprocess.CompletedProcess(
+                    ["gh"], 0, '{"data":null,"errors":[{"message":"rate limit"}]}', ""
+                )
+            ],
             [subprocess.CompletedProcess(["gh"], 0, '{"data":{"scope":null}}', "")],
             [page([dict(one, nameWithOwner="Other/one")])],
         ]
         for responses in cases:
-            with self.subTest(responses=responses), patch("src.collector.subprocess.run", side_effect=responses):
+            with (
+                self.subTest(responses=responses),
+                patch("src.collector.subprocess.run", side_effect=responses),
+            ):
                 with self.assertRaises(CollectionError):
                     list_github_repositories()

@@ -24,16 +24,37 @@ class TestGitAuthorDates(unittest.TestCase):
             subprocess.run(["git", "init", "--quiet", str(repo)], check=True, timeout=30)
             for subject, authored, committed in cases:
                 env = dict(os.environ, GIT_AUTHOR_DATE=authored, GIT_COMMITTER_DATE=committed)
-                subprocess.run(["git", "-C", str(repo), "-c", "user.name=Fixture",
-                                "-c", "user.email=fixture@example.invalid", "-c", "commit.gpgsign=false",
-                                "-c", "core.hooksPath=/dev/null", "commit", "--quiet", "--allow-empty", "-m", subject],
-                               env=env, check=True, timeout=30)
+                subprocess.run(
+                    [
+                        "git",
+                        "-C",
+                        str(repo),
+                        "-c",
+                        "user.name=Fixture",
+                        "-c",
+                        "user.email=fixture@example.invalid",
+                        "-c",
+                        "commit.gpgsign=false",
+                        "-c",
+                        "core.hooksPath=/dev/null",
+                        "commit",
+                        "--quiet",
+                        "--allow-empty",
+                        "-m",
+                        subject,
+                    ],
+                    env=env,
+                    check=True,
+                    timeout=30,
+                )
             results = []
             for host_zone in ("UTC", "America/New_York"):
                 with self.subTest(host_zone=host_zone), patch.dict(os.environ, {"TZ": host_zone}):
                     commits = collect_commits(directory, start, end)
                     results.append([(c["hash"], c["author_date"], c["timestamp"]) for c in commits])
-                    self.assertEqual({c["subject"] for c in commits},
-                                     {"included-rebased", "included-start", "included-end"})
+                    self.assertEqual(
+                        {c["subject"] for c in commits},
+                        {"included-rebased", "included-start", "included-end"},
+                    )
                     self.assertEqual(len(commits), 3)
             self.assertEqual(results[0], results[1])

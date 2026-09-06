@@ -1,6 +1,5 @@
 import subprocess
 import json
-from datetime import datetime
 from zoneinfo import ZoneInfo
 
 EDT = ZoneInfo("America/New_York")
@@ -17,15 +16,28 @@ for r in all_repos:
     name = r["name"]
     # Check PRs
     p_cmd = [
-        "gh", "pr", "list", "--repo", f"HemSoft/{name}",
-        "--state", "all", "--limit", "100",
-        "--json", "number,title,state,createdAt,closedAt,mergedAt,url,headRefName,baseRefName,author,labels,comments"
+        "gh",
+        "pr",
+        "list",
+        "--repo",
+        f"HemSoft/{name}",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,title,state,createdAt,closedAt,mergedAt,url,headRefName,baseRefName,author,labels,comments",
     ]
     p_res = subprocess.run(p_cmd, capture_output=True, encoding="utf-8", errors="replace")
     if p_res.returncode == 0 and p_res.stdout:
         try:
             repo_prs = json.loads(p_res.stdout)
-            recent_prs = [p for p in repo_prs if p.get("createdAt", "") >= START_ISO or (p.get("mergedAt") and p.get("mergedAt") >= START_ISO)]
+            recent_prs = [
+                p
+                for p in repo_prs
+                if p.get("createdAt", "") >= START_ISO
+                or (p.get("mergedAt") and p.get("mergedAt") >= START_ISO)
+            ]
             if recent_prs:
                 prs_by_repo[name] = recent_prs
         except Exception:
@@ -33,15 +45,28 @@ for r in all_repos:
 
     # Check Issues
     i_cmd = [
-        "gh", "issue", "list", "--repo", f"HemSoft/{name}",
-        "--state", "all", "--limit", "100",
-        "--json", "number,title,state,createdAt,closedAt,url,author,labels,comments"
+        "gh",
+        "issue",
+        "list",
+        "--repo",
+        f"HemSoft/{name}",
+        "--state",
+        "all",
+        "--limit",
+        "100",
+        "--json",
+        "number,title,state,createdAt,closedAt,url,author,labels,comments",
     ]
     i_res = subprocess.run(i_cmd, capture_output=True, encoding="utf-8", errors="replace")
     if i_res.returncode == 0 and i_res.stdout:
         try:
             repo_issues = json.loads(i_res.stdout)
-            recent_issues = [i for i in repo_issues if i.get("createdAt", "") >= START_ISO or (i.get("closedAt") and i.get("closedAt") >= START_ISO)]
+            recent_issues = [
+                i
+                for i in repo_issues
+                if i.get("createdAt", "") >= START_ISO
+                or (i.get("closedAt") and i.get("closedAt") >= START_ISO)
+            ]
             if recent_issues:
                 issues_by_repo[name] = recent_issues
         except Exception:

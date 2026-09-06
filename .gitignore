@@ -9,3 +9,6 @@ public/
 checkouts/
 .venv/
 .venv-linux/
+test-results/
+playwright-report/
+.ruff_cache/

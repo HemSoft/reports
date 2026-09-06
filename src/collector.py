@@ -23,13 +23,18 @@ class CollectionError(RuntimeError):
 def _run_command(cmd, source):
     try:
         result = subprocess.run(
-            cmd, capture_output=True, encoding="utf-8", errors="replace",
-            check=True, timeout=COMMAND_TIMEOUT_SECONDS,
+            cmd,
+            capture_output=True,
+            encoding="utf-8",
+            errors="replace",
+            check=True,
+            timeout=COMMAND_TIMEOUT_SECONDS,
         )
         # Check explicitly as well so alternate runners cannot return failed data.
         if result.returncode:
             raise subprocess.CalledProcessError(
-                result.returncode, cmd, output=result.stdout, stderr=result.stderr)
+                result.returncode, cmd, output=result.stdout, stderr=result.stderr
+            )
         return result.stdout
     except subprocess.TimeoutExpired as exc:
         raise CollectionError(f"{source}: timed out after {COMMAND_TIMEOUT_SECONDS}s") from exc
@@ -41,13 +46,22 @@ def _run_command(cmd, source):
 
 
 REPO_FIELDS = {
-    "name": (str,), "nameWithOwner": (str,), "isPrivate": (bool,), "description": (str, type(None)),
-    "stargazerCount": (int,), "forkCount": (int,),
+    "name": (str,),
+    "nameWithOwner": (str,),
+    "isPrivate": (bool,),
+    "description": (str, type(None)),
+    "stargazerCount": (int,),
+    "forkCount": (int,),
     "primaryLanguage": (dict, type(None)),
 }
 PR_FIELDS = {
-    "number": (int,), "title": (str,), "state": (str,), "createdAt": (str,),
-    "closedAt": (str, type(None)), "mergedAt": (str, type(None)), "url": (str,),
+    "number": (int,),
+    "title": (str,),
+    "state": (str,),
+    "createdAt": (str,),
+    "closedAt": (str, type(None)),
+    "mergedAt": (str, type(None)),
+    "url": (str,),
 }
 ISSUE_FIELDS = {key: value for key, value in PR_FIELDS.items() if key != "mergedAt"}
 
@@ -121,8 +135,13 @@ def _read_connection(query, variables, source, fields, identity):
                     raise ValueError("incomplete enumeration: record count differs from totalCount")
                 return items
             cursor = page["endCursor"]
-            if (not isinstance(cursor, str) or not cursor or cursor in seen_cursors
-                    or not nodes or len(items) >= expected_count):
+            if (
+                not isinstance(cursor, str)
+                or not cursor
+                or cursor in seen_cursors
+                or not nodes
+                or len(items) >= expected_count
+            ):
                 raise ValueError("incomplete enumeration: pagination made no progress")
             seen_cursors.add(cursor)
         except (ValueError, TypeError, KeyError, AttributeError) as exc:
@@ -142,21 +161,32 @@ query($owner: String!, $cursor: String) {
 
 
 def list_github_repositories():
-    records = _read_connection(REPOSITORIES_QUERY, {"owner": "HemSoft"},
-                               "GitHub repository enumeration for HemSoft", REPO_FIELDS, "nameWithOwner")
+    records = _read_connection(
+        REPOSITORIES_QUERY,
+        {"owner": "HemSoft"},
+        "GitHub repository enumeration for HemSoft",
+        REPO_FIELDS,
+        "nameWithOwner",
+    )
     for item in records:
         canonical = item["nameWithOwner"]
         if canonical.lower() != f"HemSoft/{item['name']}".lower():
-            raise CollectionError(f"GitHub repository enumeration: invalid canonical identity {canonical}")
+            raise CollectionError(
+                f"GitHub repository enumeration: invalid canonical identity {canonical}"
+            )
     return {item["name"]: item for item in records}
 
 
 def _repository_activity(canonical, connection, fields, source):
     owner, name = canonical.split("/", 1)
-    query = ("query($owner:String!, $name:String!, $cursor:String) { "
-             "scope:repository(owner:$owner, name:$name) { items:" + connection +
-             "(first:100, after:$cursor) { totalCount pageInfo { hasNextPage endCursor } nodes { " +
-             " ".join(fields) + " } } } }")
+    query = (
+        "query($owner:String!, $name:String!, $cursor:String) { "
+        "scope:repository(owner:$owner, name:$name) { items:"
+        + connection
+        + "(first:100, after:$cursor) { totalCount pageInfo { hasNextPage endCursor } nodes { "
+        + " ".join(fields)
+        + " } } } }"
+    )
     return _read_connection(query, {"owner": owner, "name": name}, source, fields, "number")
 
 
@@ -165,8 +195,9 @@ def _write_cache(cache_file, data):
     os.makedirs(directory, exist_ok=True)
     temporary = None
     try:
-        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", dir=directory,
-                                         delete=False) as stream:
+        with tempfile.NamedTemporaryFile(
+            mode="w", encoding="utf-8", dir=directory, delete=False
+        ) as stream:
             temporary = stream.name
             json.dump(data, stream, indent=2)
         os.replace(temporary, cache_file)
@@ -181,19 +212,26 @@ def get_date_range(weeks=12, start_str=None, end_str=None):
     if (start_str is None) != (end_str is None):
         raise ValueError("--start and --end must be supplied together")
     if start_str is not None:
-        start_dt = datetime.strptime(start_str, "%Y-%m-%d").replace(hour=0, minute=0, second=0, tzinfo=EDT)
-        end_dt = datetime.strptime(end_str, "%Y-%m-%d").replace(hour=23, minute=59, second=59, tzinfo=EDT)
+        start_dt = datetime.strptime(start_str, "%Y-%m-%d").replace(
+            hour=0, minute=0, second=0, tzinfo=EDT
+        )
+        end_dt = datetime.strptime(end_str, "%Y-%m-%d").replace(
+            hour=23, minute=59, second=59, tzinfo=EDT
+        )
     else:
         end_dt = datetime.now(EDT).replace(hour=23, minute=59, second=59, microsecond=0)
-        start_dt = (end_dt - timedelta(weeks=weeks)).replace(hour=0, minute=0, second=0, microsecond=0)
+        start_dt = (end_dt - timedelta(weeks=weeks)).replace(
+            hour=0, minute=0, second=0, microsecond=0
+        )
     if start_dt > end_dt:
         raise ValueError("start date must not be after end date")
     return start_dt, end_dt
 
+
 def detect_language(file_path):
     ext = os.path.splitext(file_path)[1].lower()
     base = os.path.basename(file_path).lower()
-    
+
     mapping = {
         ".swift": "Swift",
         ".ts": "TypeScript",
@@ -229,12 +267,19 @@ def detect_language(file_path):
         return "Makefile"
     return mapping.get(ext, "Other" if ext else "Config/Docs")
 
+
 def classify_commit(subject, files):
     s = subject.lower().strip()
-    
+
     if re.match(r"^feat(\(.*\))?:", s) or s.startswith("feature:"):
         return "Feature"
-    if re.match(r"^fix(\(.*\))?:", s) or s.startswith("bug:") or "fix " in s or "fixes " in s or "bugfix" in s:
+    if (
+        re.match(r"^fix(\(.*\))?:", s)
+        or s.startswith("bug:")
+        or "fix " in s
+        or "fixes " in s
+        or "bugfix" in s
+    ):
         return "Bug Fix"
     if re.match(r"^refactor(\(.*\))?:", s) or "refactor" in s:
         return "Refactoring"
@@ -244,21 +289,36 @@ def classify_commit(subject, files):
         return "Testing"
     if re.match(r"^perf(\(.*\))?:", s) or "performance" in s or "speed" in s:
         return "Performance"
-    if re.match(r"^ci(\(.*\))?:", s) or re.match(r"^build(\(.*\))?:", s) or "workflow" in s or "action" in s or "pipeline" in s:
+    if (
+        re.match(r"^ci(\(.*\))?:", s)
+        or re.match(r"^build(\(.*\))?:", s)
+        or "workflow" in s
+        or "action" in s
+        or "pipeline" in s
+    ):
         return "CI / DevOps"
-    if re.match(r"^chore(\(.*\))?:", s) or "bump" in s or "upgrade" in s or "clean" in s or "pin" in s:
+    if (
+        re.match(r"^chore(\(.*\))?:", s)
+        or "bump" in s
+        or "upgrade" in s
+        or "clean" in s
+        or "pin" in s
+    ):
         return "Chore / Maintenance"
-    
-    if any(k in s for k in ["ralph", "loop", "agent", "minibot", "hermes", "conductor", "automation"]):
+
+    if any(
+        k in s for k in ["ralph", "loop", "agent", "minibot", "hermes", "conductor", "automation"]
+    ):
         return "Agent / Automation"
-    
+
     all_paths = [f["path"].lower() for f in files]
     if all(p.endswith(".md") or "doc" in p for p in all_paths) and all_paths:
         return "Documentation"
     if any("test" in p for p in all_paths) and len(all_paths) <= 2:
         return "Testing"
-    
+
     return "Feature"
+
 
 def categorize_author(name, email):
     n = name.lower()
@@ -275,36 +335,44 @@ def categorize_author(name, email):
         return "Bot"
     return "Human (Franz Hemmer)"
 
+
 def collect_commits(base_dir, start_dt, end_dt):
     # Git date limits use committer dates. Read all refs and filter author instants below.
     try:
-        candidate_dirs = [os.path.join(base_dir, d) for d in os.listdir(base_dir)
-                          if os.path.isdir(os.path.join(base_dir, d))]
+        candidate_dirs = [
+            os.path.join(base_dir, d)
+            for d in os.listdir(base_dir)
+            if os.path.isdir(os.path.join(base_dir, d))
+        ]
     except OSError as exc:
         raise CollectionError(f"Repository enumeration in {base_dir}: {exc}") from exc
     commits = []
     seen_hashes = set()
-    
+
     for d in candidate_dirs:
         git_dir = os.path.join(d, ".git")
         if not (os.path.exists(git_dir) or os.path.isfile(git_dir)):
             continue
-        
+
         folder_name = os.path.basename(d)
         repo_name = folder_name.replace(".worktrees", "").split("-identify-")[0]
         if repo_name.startswith("."):
             repo_name = repo_name.lstrip(".")
             if not repo_name:
                 repo_name = "dot-github"
-        
+
         try:
             cmd = [
-                "git", "-C", d, "log", "--all",
+                "git",
+                "-C",
+                d,
+                "log",
+                "--all",
                 "--format=COMMIT_META%x09%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
-                "--numstat"
+                "--numstat",
             ]
             output = _run_command(cmd, f"Git history in {d}")
-            
+
             cur = None
             for line in output.split("\n"):
                 line = line.strip()
@@ -319,7 +387,7 @@ def collect_commits(base_dir, start_dt, end_dt):
                         cur = None
                         continue
                     seen_hashes.add(chash)
-                    
+
                     try:
                         dt_orig = datetime.fromisoformat(parts[4])
                         if dt_orig.tzinfo is None:
@@ -327,12 +395,15 @@ def collect_commits(base_dir, start_dt, end_dt):
                         dt_edt = dt_orig.astimezone(EDT)
                     except (ValueError, TypeError) as exc:
                         raise CollectionError(f"Git history in {d}: invalid author date") from exc
-                    
-                    if not (start_dt.astimezone(timezone.utc) <= dt_orig.astimezone(timezone.utc)
-                            <= end_dt.astimezone(timezone.utc)):
+
+                    if not (
+                        start_dt.astimezone(timezone.utc)
+                        <= dt_orig.astimezone(timezone.utc)
+                        <= end_dt.astimezone(timezone.utc)
+                    ):
                         cur = None
                         continue
-                        
+
                     subj = parts[8] if len(parts) > 8 else ""
                     cur = {
                         "hash": chash,
@@ -349,7 +420,7 @@ def collect_commits(base_dir, start_dt, end_dt):
                         "subject": subj,
                         "additions": 0,
                         "deletions": 0,
-                        "files": []
+                        "files": [],
                     }
                     commits.append(cur)
                 elif cur and "\t" in line:
@@ -361,20 +432,18 @@ def collect_commits(base_dir, start_dt, end_dt):
                         lang = detect_language(fpath)
                         cur["additions"] += adds
                         cur["deletions"] += dels
-                        cur["files"].append({
-                            "path": fpath,
-                            "adds": adds,
-                            "dels": dels,
-                            "language": lang
-                        })
+                        cur["files"].append(
+                            {"path": fpath, "adds": adds, "dels": dels, "language": lang}
+                        )
         except (ValueError, IndexError) as exc:
             raise CollectionError(f"Git history in {d}: malformed output: {exc}") from exc
 
     for c in commits:
         c["category"] = classify_commit(c["subject"], c["files"])
         c["net_lines"] = c["additions"] - c["deletions"]
-        
+
     return sorted(commits, key=lambda x: x["author_date"], reverse=True)
+
 
 def collect_github_metadata(active_repo_names, start_dt, end_dt):
     # The legacy positional argument is retained for callers; GitHub owns discovery.
@@ -383,8 +452,9 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
     issues_by_repo = defaultdict(list)
     for r, meta in repo_meta.items():
         canonical = meta["nameWithOwner"]
-        for item in _repository_activity(canonical, "pullRequests", PR_FIELDS,
-                                         f"GitHub pull requests for {canonical}"):
+        for item in _repository_activity(
+            canonical, "pullRequests", PR_FIELDS, f"GitHub pull requests for {canonical}"
+        ):
             if not _has_event(item, ("createdAt", "mergedAt", "closedAt"), start_dt, end_dt):
                 continue
             item["cycle_hours"] = None
@@ -394,8 +464,9 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
                 item["cycle_hours"] = round((merged - created).total_seconds() / 3600.0, 2)
             item["repo"] = r
             prs_by_repo[r].append(item)
-        for item in _repository_activity(canonical, "issues", ISSUE_FIELDS,
-                                         f"GitHub issues for {canonical}"):
+        for item in _repository_activity(
+            canonical, "issues", ISSUE_FIELDS, f"GitHub issues for {canonical}"
+        ):
             if _has_event(item, ("createdAt", "closedAt"), start_dt, end_dt):
                 item["repo"] = r
                 issues_by_repo[r].append(item)
@@ -403,9 +474,13 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
 
 
 def _has_event(item, keys, start, end):
-    return any(item.get(key) and start.astimezone(timezone.utc) <=
-               datetime.fromisoformat(item[key].replace("Z", "+00:00")).astimezone(timezone.utc) <=
-               end.astimezone(timezone.utc) for key in keys)
+    return any(
+        item.get(key)
+        and start.astimezone(timezone.utc)
+        <= datetime.fromisoformat(item[key].replace("Z", "+00:00")).astimezone(timezone.utc)
+        <= end.astimezone(timezone.utc)
+        for key in keys
+    )
 
 
 def normalize_source(base_dir):
@@ -431,16 +506,28 @@ def _cache_inputs(base_dir, weeks, start_dt, end_dt):
 def _cache_matches(data, inputs):
     if not isinstance(data, dict):
         return False
-    if (data.get("cache_schema_version") != CACHE_SCHEMA_VERSION
-            or data.get("cache_inputs") != inputs
-            or data.get("collection_complete") is not True):
+    if (
+        data.get("cache_schema_version") != CACHE_SCHEMA_VERSION
+        or data.get("cache_inputs") != inputs
+        or data.get("collection_complete") is not True
+    ):
         return False
-    if not all(isinstance(data.get(key), kind) for key, kind in (
-        ("commits", list), ("prs", dict), ("issues", dict), ("repo_meta", dict), ("range", dict))):
+    if not all(
+        isinstance(data.get(key), kind)
+        for key, kind in (
+            ("commits", list),
+            ("prs", dict),
+            ("issues", dict),
+            ("repo_meta", dict),
+            ("range", dict),
+        )
+    ):
         return False
-    return (data["range"].get("start_iso") == inputs["start_iso"]
-            and data["range"].get("end_iso") == inputs["end_iso"]
-            and data["range"].get("weeks") == inputs["weeks"])
+    return (
+        data["range"].get("start_iso") == inputs["start_iso"]
+        and data["range"].get("end_iso") == inputs["end_iso"]
+        and data["range"].get("weeks") == inputs["weeks"]
+    )
 
 
 def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=None, refresh=False):
@@ -458,17 +545,19 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
         except (OSError, ValueError, TypeError) as exc:
             print(f"Cache read error: {exc}")
 
-    print(f"Scanning local commits in {base_dir} from {start_dt.strftime('%Y-%m-%d')} to {end_dt.strftime('%Y-%m-%d')} EDT...")
+    print(
+        f"Scanning local commits in {base_dir} from {start_dt.strftime('%Y-%m-%d')} to {end_dt.strftime('%Y-%m-%d')} EDT..."
+    )
     commits = collect_commits(base_dir, start_dt, end_dt)
     print(f"Collected {len(commits)} unique commits.")
-    
+
     # Active repos
     active_repos = sorted(list(set(c["repo"] for c in commits)))
     print(f"Active repos ({len(active_repos)}): {', '.join(active_repos)}")
-    
+
     print("Collecting GitHub PRs, issues, and metadata...")
     repo_meta, prs, issues = collect_github_metadata(active_repos, start_dt, end_dt)
-    
+
     data = {
         "collection_complete": True,
         "collection_scope": COLLECTION_SCOPE,
@@ -487,17 +576,19 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
         "commits": commits,
         "prs": prs,
         "issues": issues,
-        "repo_meta": repo_meta
+        "repo_meta": repo_meta,
     }
-    
+
     if cache_file:
         _write_cache(cache_file, data)
         print(f"Saved audit data cache to {cache_file}")
-        
+
     return data
+
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser(description="List every accessible HemSoft-owned repository.")
     parser.add_argument("--list-repositories", action="store_true", required=True)
     parser.parse_args()

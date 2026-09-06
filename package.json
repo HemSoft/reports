@@ -6,7 +6,11 @@
   "scripts": {
     "report": "python cli.py --weeks 12 --output D:\\hemsoft-productivity.html",
     "report:refresh": "python cli.py --weeks 12 --refresh --output D:\\hemsoft-productivity.html",
-    "test": "python -m unittest discover tests"
+    "test": "python scripts/run_tests.py",
+    "lint:python": "python -m ruff check . && python -m ruff format --check .",
+    "lint:markdown": "markdownlint-cli2",
+    "fixture": "python scripts/generate_fixture.py",
+    "test:browser": "npm run fixture && playwright test"
   },
   "keywords": [
     "productivity",
@@ -17,5 +21,11 @@
     "visualization"
   ],
   "author": "Franz Hemmer <franz_hemmer@hotmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "chart.js": "4.4.1",
+    "markdownlint-cli2": "0.23.2",
+    "three": "0.128.0"
+  }
 }
