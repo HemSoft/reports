@@ -32,6 +32,7 @@ def main():
         heap_growth, rss_growth, rss = [], [], []
         for sample in samples:
             baseline_rss = sum(p["rssBytes"] for p in sample["baseline"]["processes"])
+            rss.append(baseline_rss / 1e6)
             for point in sample["retained"]:
                 current_rss = sum(p["rssBytes"] for p in point["processes"])
                 heap_growth.append((point["heapBytes"] - sample["baseline"]["heapBytes"]) / 1e6)
