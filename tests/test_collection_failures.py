@@ -102,3 +102,41 @@ class TestCollectionFailures(unittest.TestCase):
                     collect_all(directory, cache_file=cache, refresh=True)
             self.assertEqual(cache.read_text(), "previous valid cache")
             self.assertEqual(list(Path(directory).iterdir()), [cache])
+
+    def test_requested_record_fields_are_validated_before_collection_completes(self):
+        records = [
+            {"name": "example", "isPrivate": True, "description": None,
+             "stargazerCount": 0, "forkCount": 0, "primaryLanguage": None},
+            {"number": 1, "title": "Example PR", "state": "OPEN", "url": "https://github.com/HemSoft/example/pull/1",
+             "createdAt": "2026-09-01T12:00:00Z", "closedAt": None, "mergedAt": None},
+            {"number": 2, "title": "Example issue", "state": "OPEN", "url": "https://github.com/HemSoft/example/issues/2",
+             "createdAt": "2026-09-01T12:00:00Z", "closedAt": None},
+        ]
+        good = [response(json.dumps([record])) for record in records]
+        with patch("src.collector.subprocess.run", side_effect=good):
+            meta, prs, issues = collect_github_metadata(["example"], self.start, self.end)
+        self.assertEqual(len(meta), 1)
+        self.assertEqual(len(prs["example"]), 1)
+        self.assertEqual(len(issues["example"]), 1)
+        for index, record in enumerate(records):
+            for field, original in record.items():
+                invalid_values = [[], None] if original is not None else [[]]
+                for replacement in ["missing", *invalid_values]:
+                    invalid = record.copy()
+                    if replacement == "missing":
+                        del invalid[field]
+                    else:
+                        invalid[field] = replacement
+                    responses = good[:index] + [response(json.dumps([invalid]))]
+                    with self.subTest(source=index, field=field, value=replacement), \
+                            patch("src.collector.subprocess.run", side_effect=responses):
+                        with self.assertRaisesRegex(CollectionError, field):
+                            collect_github_metadata(["example"], self.start, self.end)
+        for field, value in (("state", "UNKNOWN"), ("createdAt", "bad-date"),
+                             ("createdAt", "2026-09-01T12:00:00"), ("number", True),
+                             ("number", -1), ("state", "MERGED")):
+            invalid = dict(records[1], **{field: value})
+            with self.subTest(field=field, value=value), \
+                    patch("src.collector.subprocess.run", side_effect=[good[0], response(json.dumps([invalid]))]):
+                with self.assertRaises(CollectionError):
+                    collect_github_metadata(["example"], self.start, self.end)

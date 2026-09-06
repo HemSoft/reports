@@ -37,20 +37,55 @@ def _run_command(cmd, source):
         raise CollectionError(f"{source}: {exc}") from exc
 
 
-def _read_items(cmd, source, required):
+REPO_FIELDS = {
+    "name": (str,), "isPrivate": (bool,), "description": (str, type(None)),
+    "stargazerCount": (int,), "forkCount": (int,),
+    "primaryLanguage": (dict, type(None)),
+}
+PR_FIELDS = {
+    "number": (int,), "title": (str,), "state": (str,), "createdAt": (str,),
+    "closedAt": (str, type(None)), "mergedAt": (str, type(None)), "url": (str,),
+}
+ISSUE_FIELDS = {key: value for key, value in PR_FIELDS.items() if key != "mergedAt"}
+
+
+def _validate_item(item, fields):
+    if not isinstance(item, dict):
+        raise ValueError("expected an object")
+    for key, allowed in fields.items():
+        if key not in item or type(item[key]) not in allowed:
+            raise ValueError(f"missing or invalid {key}")
+    for key in ("name", "title", "url"):
+        if key in fields and not item[key]:
+            raise ValueError(f"empty {key}")
+    for key in ("number", "stargazerCount", "forkCount"):
+        if key in fields and item[key] < (1 if key == "number" else 0):
+            raise ValueError(f"invalid {key}")
+    language = item.get("primaryLanguage")
+    if language is not None and (not isinstance(language.get("name"), str) or not language["name"]):
+        raise ValueError("invalid primaryLanguage.name")
+    for key in ("createdAt", "mergedAt", "closedAt"):
+        if key in fields and item[key] is not None:
+            parsed = datetime.fromisoformat(item[key].replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                raise ValueError(f"{key} lacks a timezone")
+    if "state" in fields:
+        states = ("OPEN", "CLOSED", "MERGED") if "mergedAt" in fields else ("OPEN", "CLOSED")
+        if item["state"] not in states:
+            raise ValueError("invalid state")
+        if item["state"] in ("CLOSED", "MERGED") and not item["closedAt"]:
+            raise ValueError("closed record lacks closedAt")
+        if item["state"] == "MERGED" and not item["mergedAt"]:
+            raise ValueError("merged pull request lacks mergedAt")
+
+
+def _read_items(cmd, source, fields):
     try:
         items = json.loads(_run_command(cmd, source))
-        if not isinstance(items, list) or any(
-            not isinstance(item, dict) or any(key not in item for key in required)
-            for item in items
-        ):
-            raise ValueError("unexpected response structure")
+        if not isinstance(items, list):
+            raise ValueError("expected an array")
         for item in items:
-            for key in ("createdAt", "mergedAt", "closedAt"):
-                if item.get(key):
-                    parsed = datetime.fromisoformat(item[key].replace("Z", "+00:00"))
-                    if parsed.tzinfo is None:
-                        raise ValueError(f"{key} lacks a timezone")
+            _validate_item(item, fields)
         return items
     except (ValueError, TypeError, AttributeError) as exc:
         raise CollectionError(f"{source}: invalid JSON response: {exc}") from exc
@@ -280,18 +315,18 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
     end_iso = end_dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
     
     repo_cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json",
-                "name,isPrivate,description,pushedAt,createdAt,stargazerCount,forkCount,primaryLanguage"]
+                ",".join(REPO_FIELDS)]
     repo_meta = {item["name"]: item for item in _read_items(
-        repo_cmd, "GitHub repository enumeration for HemSoft", ("name",))}
+        repo_cmd, "GitHub repository enumeration for HemSoft", REPO_FIELDS)}
     prs_by_repo = defaultdict(list)
     issues_by_repo = defaultdict(list)
 
     for r in active_repo_names:
         p_cmd = ["gh", "pr", "list", "--repo", f"HemSoft/{r}",
                  "--state", "all", "--limit", "500", "--json",
-                 "number,title,state,createdAt,closedAt,mergedAt,url,headRefName,author,comments"]
+                 ",".join(PR_FIELDS)]
         for item in _read_items(p_cmd, f"GitHub pull requests for HemSoft/{r}",
-                                ("number", "createdAt", "mergedAt", "closedAt")):
+                                PR_FIELDS):
             if not any(item.get(key) and start_iso <= item[key] <= end_iso
                        for key in ("createdAt", "mergedAt", "closedAt")):
                 continue
@@ -305,9 +340,9 @@ def collect_github_metadata(active_repo_names, start_dt, end_dt):
 
         i_cmd = ["gh", "issue", "list", "--repo", f"HemSoft/{r}",
                  "--state", "all", "--limit", "500", "--json",
-                 "number,title,state,createdAt,closedAt,url,author,labels,comments"]
+                 ",".join(ISSUE_FIELDS)]
         for item in _read_items(i_cmd, f"GitHub issues for HemSoft/{r}",
-                                ("number", "createdAt", "closedAt")):
+                                ISSUE_FIELDS):
             if any(item.get(key) and start_iso <= item[key] <= end_iso
                    for key in ("createdAt", "closedAt")):
                 item["repo"] = r
