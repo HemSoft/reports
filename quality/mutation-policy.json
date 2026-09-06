@@ -1,0 +1,17 @@
+{
+  "runner": "cosmic-ray==8.7.0",
+  "break_score": 80,
+  "target_score": 90,
+  "timeout_seconds": 5,
+  "targets": {
+    "src/analyzer.py": {
+      "functions": ["_in_interval"],
+      "assignments": ["pr_merge_rate", "avg_cycle_time", "median_cycle_time", "cycle_distribution", "issue_close_rate"]
+    },
+    "src/collector.py": {
+      "functions": ["get_date_range", "_has_event", "_cache_matches"],
+      "assignments": []
+    }
+  },
+  "exclusions": "Only the named calculation assignments and collection/date/cache decisions are qualified initially. Other analyzer/collector code, rendering, orchestration, I/O, tests, and development scripts are outside this score. Every Cosmic Ray core operator in the selected spans is retained; no survivor-specific exclusions."
+}

@@ -192,6 +192,7 @@ Run the same checks used by CI:
 ```powershell
 python scripts/run_tests.py
 python scripts/check_risk.py
+python scripts/check_mutations.py
 npm run lint:python
 npm run lint:markdown
 actionlint
@@ -208,7 +209,7 @@ Browser failures retain screenshots and traces under `test-results/browser/`.
 
 `.github/workflows/validate.yml` runs on pull requests, main pushes, and as a reusable
 workflow. Its stable `Validation` status succeeds only if both platform test jobs
-and the lint/browser job succeed. Main requires this status from GitHub Actions and
+and the lint/browser and mutation jobs succeed. Main requires this status from GitHub Actions and
 an up-to-date branch. Administrators are subject to the same gate; there is no routine
 bypass. Any emergency protection change requires Franz's explicit authorization and
 a recorded reason, followed by restoring the gate.
@@ -254,6 +255,50 @@ See [coverage.py branch measurement](https://coverage.readthedocs.io/en/latest/b
 and [Radon complexity](https://radon.readthedocs.io/en/latest/intro.html#cyclomatic-complexity)
 for the maintained tools' definitions. CRAP is a prioritization signal, not proof
 of correctness; mutation and browser-specific gates are tracked separately.
+
+### Mutation qualification
+
+`python scripts/check_mutations.py` uses Cosmic Ray 8.7.0 on Python 3.12 and runs
+the guarded suite in a disposable copy. It first requires the unmodified tests
+to pass, then replaces the median assignment with `-999.0` and requires a failure
+in the median behavior assertion. It restores that copy before the normal run.
+The worktree's production files are never mutated.
+
+`quality/mutation-policy.json` declares the initial scope: PR/issue rates,
+average and median cycle times, cycle-duration buckets, interval membership,
+date-range construction, and cache-envelope matching. Targets follow named AST
+functions and assignments; missing or ambiguous targets fail. All Cosmic Ray
+core operators in those spans are retained. Other code is explicitly outside
+this score; no individual survivor is suppressed as equivalent.
+
+The break threshold is **80%** and the target is **90%**. Score is completed kills
+divided by all selected mutants, including survivors, timeouts, errors, and pending
+work in the denominator. Timeouts do not count as kills; errors, pending work,
+and an empty run fail regardless of score. Each mutant has a five-second timeout.
+The local distributor runs serially; allow several minutes for a complete run.
+
+The initial measurement before the new behavior assertions was **57.94%**:
+186 killed, 135 survived, zero timeouts/errors/pending, and 1,013 mutants excluded
+because they were outside the selected spans. All 321 selected mutants ran, and
+the command correctly failed below 80%. The negative-median control was killed.
+The final score is published in each CI artifact; the new tests cover fractional
+rates, precise averages, all duration-bucket boundaries, empty activity, inclusive
+interval endpoints, full-day date ranges, and strict cache completeness.
+
+The required `Mutation qualification` job writes a seven-day
+`test-results/mutation/results.json` artifact with policy, counts, score, and each
+mutant's module, line, operator, and outcome. It excludes raw source diffs and test
+output. Surviving mutants remain visible and are the next assertion-review queue.
+This is a score for the declared targets, not a repository-wide mutation score.
+Keep the break and target thresholds under normal PR review; improve tests or
+explain an explicit scope change rather than lowering the gate to hide survivors.
+
+To re-evaluate a saved artifact against the current threshold without rerunning
+mutations, use `python scripts/check_mutations.py --check-report <results.json>`.
+This only checks that saved result; it does not qualify the current source. The
+initial 57.94% artifact was rechecked this way and returned exit 1. CI always uses
+the fresh full-run command. See the maintained
+[Cosmic Ray documentation](https://cosmic-ray.readthedocs.io/en/latest/).
 
 ## Requirements
 
