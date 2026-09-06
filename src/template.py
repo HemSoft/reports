@@ -1,6 +1,133 @@
 import json
 import html
 
+VISUALIZATIONS = {
+    "velocity": "Weekly velocity in three dimensions",
+    "cadence": "Day and hour cadence in three dimensions",
+    "weekly-combo": "Weekly cadence and cumulative lines added",
+    "day-distribution": "Commits by day of week",
+    "hour-distribution": "Commits by hour of day",
+    "repo-share": "Repository commit share",
+    "pr-cycle": "Pull request cycle duration",
+    "commit-categories": "Commit categories",
+    "languages": "Language additions and deletions",
+}
+
+
+def _data_table(key, columns, rows):
+    name = html.escape(VISUALIZATIONS[key])
+    headings = "".join(f'<th scope="col">{html.escape(str(column))}</th>' for column in columns)
+    body = ""
+    for row in rows:
+        cells = f'<th scope="row">{html.escape(str(row[0]))}</th>'
+        cells += "".join(f"<td>{html.escape(str(value))}</td>" for value in row[1:])
+        body += f"<tr>{cells}</tr>"
+    return (
+        f'<details class="chart-data" id="data-{key}">'
+        f'<summary id="data-summary-{key}">View {name} data</summary>'
+        f'<div class="table-wrap" tabindex="0" role="region" aria-label="{name} data table">'
+        f"<table><caption>{name} data</caption><thead><tr>{headings}</tr></thead>"
+        f"<tbody>{body}</tbody></table></div></details>"
+    )
+
+
+def _weekly_table_rows(weekly):
+    rows = []
+    cumulative = 0
+    for week in weekly:
+        cumulative += week["additions"]
+        rows.append(
+            [
+                week["label"],
+                week["start_date"],
+                week["end_date"],
+                week["commits"],
+                week["prs_opened"],
+                week["prs_merged"],
+                week["issues_closed"],
+                week["additions"],
+                week["deletions"],
+                week["net_lines"],
+                week["human_commits"],
+                week["ai_commits"],
+                week["active_days"],
+                week["top_repo"],
+                cumulative,
+            ]
+        )
+    return rows
+
+
+def _visualization_tables(data):
+    temporal = data["temporal"]
+    weekly_columns = [
+        "Week",
+        "Start",
+        "End",
+        "Commits",
+        "PRs opened",
+        "PRs merged",
+        "Issues closed",
+        "Lines added",
+        "Lines deleted",
+        "Net lines",
+        "Human commits",
+        "AI commits",
+        "Active days",
+        "Top repository",
+        "Cumulative lines added",
+    ]
+    weekly_rows = _weekly_table_rows(data["weekly_data"])
+    cycle_labels = [
+        "Less than 1 hour",
+        "1 to less than 4 hours",
+        "4 to less than 24 hours",
+        "24 to less than 72 hours",
+        "72 hours or more",
+    ]
+    cycle_keys = ["under_1h", "1h_to_4h", "4h_to_24h", "1d_to_3d", "over_3d"]
+    return {
+        "velocity": _data_table("velocity", weekly_columns, weekly_rows),
+        "weekly-combo": _data_table("weekly-combo", weekly_columns, weekly_rows),
+        "cadence": _data_table(
+            "cadence",
+            ["Day (America/New_York)"] + [f"{h:02d}:00" for h in range(24)],
+            [[day, *values] for day, values in zip(temporal["day_names"], temporal["matrix_7x24"])],
+        ),
+        "day-distribution": _data_table(
+            "day-distribution", ["Day", "Commits"], temporal["day_counts"].items()
+        ),
+        "hour-distribution": _data_table(
+            "hour-distribution",
+            ["Hour (America/New_York)", "Commits"],
+            [[f"{int(hour):02d}:00", count] for hour, count in temporal["hour_counts"].items()],
+        ),
+        "repo-share": _data_table(
+            "repo-share",
+            ["Repository", "Commits"],
+            [[repo["name"], repo["commits"]] for repo in data["repo_profiles"][:8]],
+        ),
+        "pr-cycle": _data_table(
+            "pr-cycle",
+            ["Duration", "Merged PRs"],
+            [
+                [label, data["kpis"]["pr_cycle_distribution"][key]]
+                for label, key in zip(cycle_labels, cycle_keys)
+            ],
+        ),
+        "commit-categories": _data_table(
+            "commit-categories", ["Category", "Commits"], data["category_distribution"].items()
+        ),
+        "languages": _data_table(
+            "languages",
+            ["Language", "Lines added", "Lines deleted"],
+            [
+                [language["language"], language["additions"], language["deletions"]]
+                for language in data["language_breakdown"][:7]
+            ],
+        ),
+    }
+
 
 def _script_json(value):
     """Serialize data without exposing HTML parser delimiters inside a script."""
@@ -18,6 +145,7 @@ def build_html_report(analytics_data):
     categories = analytics_data["category_distribution"]
     recent_prs = analytics_data.get("recent_prs", [])
     recent_commits = analytics_data.get("recent_commits", [])
+    chart_tables = _visualization_tables(analytics_data)
 
     # JSON payloads for charts
     json_weekly = _script_json(weekly)
@@ -479,6 +607,29 @@ def build_html_report(analytics_data):
       cursor: not-allowed;
     }}
 
+    .chart-data {{
+      margin-top: 1rem;
+      color: var(--text-secondary);
+      min-width: 0;
+    }}
+
+    .chart-data summary {{
+      cursor: pointer;
+      padding: 0.5rem 0;
+    }}
+
+    .chart-data table {{ font-size: 0.85rem; }}
+    .chart-data th {{ color: var(--text-secondary); font-size: 0.8rem; }}
+    .chart-data th[scope="row"], .chart-data thead th:first-child {{
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: #101622;
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }}
+    .chart-data caption {{ text-align: left; padding: 0.5rem; }}
+    :focus-visible {{ outline: 2px solid var(--accent-cyan); outline-offset: 3px; }}
+
     .three-hint {{
       position: absolute;
       bottom: 12px;
@@ -896,37 +1047,39 @@ def build_html_report(analytics_data):
 
   <div class="three-row">
     <!-- 3D Weekly Velocity Multi-Bar Chart -->
-    <div class="three-card">
+    <div class="three-card" data-visualization="velocity" role="region" aria-label="Weekly velocity in three dimensions">
       <div class="three-header">
         <div class="three-title">
           <span>📊</span> 3D Weekly Velocity & Throughput
         </div>
         <div class="three-controls">
-          <button class="three-btn active" id="btn-3d-vel-autorotate" onclick="toggleAutoRotate('vel')">Auto-Rotate</button>
-          <button class="three-btn" onclick="resetCamera('vel')">Reset View</button>
+          <button class="three-btn active" id="btn-3d-vel-autorotate" aria-label="Auto-rotate weekly velocity" aria-pressed="true" onclick="toggleAutoRotate('vel')">Auto-Rotate</button>
+          <button class="three-btn" aria-label="Reset weekly velocity camera" onclick="resetCamera('vel')">Reset View</button>
         </div>
       </div>
       <div class="three-viewport" id="viewport-velocity">
         <div class="three-hint">Left Drag: Orbit | Right Drag: Pan | Scroll: Zoom | Hover: Inspect Bar</div>
         <div class="three-tooltip" id="tooltip-velocity"></div>
       </div>
+      {chart_tables["velocity"]}
     </div>
 
     <!-- 3D Day x Hour Productivity Landscape -->
-    <div class="three-card">
+    <div class="three-card" data-visualization="cadence" role="region" aria-label="Day and hour cadence in three dimensions">
       <div class="three-header">
         <div class="three-title">
           <span>🏙️</span> 3D Cadence Landscape (Day × Hour Matrix EDT)
         </div>
         <div class="three-controls">
-          <button class="three-btn active" id="btn-3d-cad-autorotate" onclick="toggleAutoRotate('cad')">Auto-Rotate</button>
-          <button class="three-btn" onclick="resetCamera('cad')">Reset View</button>
+          <button class="three-btn active" id="btn-3d-cad-autorotate" aria-label="Auto-rotate day and hour cadence" aria-pressed="true" onclick="toggleAutoRotate('cad')">Auto-Rotate</button>
+          <button class="three-btn" aria-label="Reset day and hour cadence camera" onclick="resetCamera('cad')">Reset View</button>
         </div>
       </div>
       <div class="three-viewport" id="viewport-cadence">
         <div class="three-hint">Left Drag: Orbit | Right Drag: Pan | Scroll: Zoom | Hover: Inspect Hour</div>
         <div class="three-tooltip" id="tooltip-cadence"></div>
       </div>
+      {chart_tables["cadence"]}
     </div>
   </div>
 
@@ -940,7 +1093,7 @@ def build_html_report(analytics_data):
 
   <div class="chart-grid">
     <!-- Weekly Velocity Combo Chart -->
-    <div class="chart-card full-width">
+    <div class="chart-card full-width" data-visualization="weekly-combo" role="region" aria-label="Weekly cadence and cumulative lines added">
       <div class="chart-header">
         <div>
           <div class="chart-title">Weekly Cadence & Cumulative Lines Shipped</div>
@@ -950,12 +1103,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap" style="height: 340px;">
-        <canvas id="chart-weekly-combo"></canvas>
+        <canvas id="chart-weekly-combo" role="img" aria-label="Weekly cadence and cumulative lines added" aria-describedby="data-summary-weekly-combo">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["weekly-combo"]}
     </div>
 
     <!-- 2D Heatmap: Day of Week & Hour Distribution -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="day-distribution" role="region" aria-label="Commits by day of week">
       <div class="chart-header">
         <div>
           <div class="chart-title">Day of Week Activity Matrix</div>
@@ -963,12 +1117,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-day-distribution"></canvas>
+        <canvas id="chart-day-distribution" role="img" aria-label="Commits by day of week" aria-describedby="data-summary-day-distribution">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["day-distribution"]}
     </div>
 
     <!-- Hour of Day Distribution -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="hour-distribution" role="region" aria-label="Commits by hour of day">
       <div class="chart-header">
         <div>
           <div class="chart-title">24-Hour Diurnal Rhythm (America/New_York)</div>
@@ -976,12 +1131,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-hour-distribution"></canvas>
+        <canvas id="chart-hour-distribution" role="img" aria-label="Commits by hour of day" aria-describedby="data-summary-hour-distribution">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["hour-distribution"]}
     </div>
 
     <!-- Repository Effort Share -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="repo-share" role="region" aria-label="Repository commit share">
       <div class="chart-header">
         <div>
           <div class="chart-title">Repository Contribution Share</div>
@@ -989,12 +1145,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-repo-share"></canvas>
+        <canvas id="chart-repo-share" role="img" aria-label="Repository commit share" aria-describedby="data-summary-repo-share">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["repo-share"]}
     </div>
 
     <!-- PR Cycle Time & Resolution Speed -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="pr-cycle" role="region" aria-label="Pull request cycle duration">
       <div class="chart-header">
         <div>
           <div class="chart-title">PR Turnaround Velocity Distribution</div>
@@ -1002,12 +1159,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-pr-cycle"></canvas>
+        <canvas id="chart-pr-cycle" role="img" aria-label="Pull request cycle duration" aria-describedby="data-summary-pr-cycle">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["pr-cycle"]}
     </div>
 
     <!-- Commit Discipline / Categories -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="commit-categories" role="region" aria-label="Commit categories">
       <div class="chart-header">
         <div>
           <div class="chart-title">Engineering Discipline Breakdown</div>
@@ -1015,12 +1173,13 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-commit-categories"></canvas>
+        <canvas id="chart-commit-categories" role="img" aria-label="Commit categories" aria-describedby="data-summary-commit-categories">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["commit-categories"]}
     </div>
 
     <!-- Language & Stack Churn -->
-    <div class="chart-card">
+    <div class="chart-card" data-visualization="languages" role="region" aria-label="Language additions and deletions">
       <div class="chart-header">
         <div>
           <div class="chart-title">Language & Technology Churn</div>
@@ -1028,8 +1187,9 @@ def build_html_report(analytics_data):
         </div>
       </div>
       <div class="chart-canvas-wrap">
-        <canvas id="chart-languages"></canvas>
+        <canvas id="chart-languages" role="img" aria-label="Language additions and deletions" aria-describedby="data-summary-languages">Equivalent values are available in the data table below.</canvas>
       </div>
+      {chart_tables["languages"]}
     </div>
   </div>
 
@@ -1043,22 +1203,22 @@ def build_html_report(analytics_data):
 
   <div class="table-card">
     <div class="table-toolbar">
-      <div class="tabs-nav" style="margin-bottom: 0; border-bottom: none;">
-        <button class="tab-btn active" onclick="switchTab('repos')">Repositories ({
+      <div class="tabs-nav" role="tablist" aria-label="Report tables" style="margin-bottom: 0; border-bottom: none;">
+        <button class="tab-btn active" id="tab-repos" role="tab" aria-controls="pane-repos" aria-selected="true" tabindex="0" onclick="switchTab('repos')">Repositories ({
         len(repos)
     })</button>
-        <button class="tab-btn" onclick="switchTab('prs')">Recent Pull Requests ({
+        <button class="tab-btn" id="tab-prs" role="tab" aria-controls="pane-prs" aria-selected="false" tabindex="-1" onclick="switchTab('prs')">Recent Pull Requests ({
         len(recent_prs)
     })</button>
-        <button class="tab-btn" onclick="switchTab('commits')">Recent Commits ({
+        <button class="tab-btn" id="tab-commits" role="tab" aria-controls="pane-commits" aria-selected="false" tabindex="-1" onclick="switchTab('commits')">Recent Commits ({
         len(recent_commits)
     })</button>
       </div>
-      <input type="text" class="search-input" id="table-search" placeholder="Filter repositories, PRs, or commits..." oninput="filterCurrentTable()">
+      <input type="search" class="search-input" id="table-search" aria-label="Filter the selected report table" placeholder="Filter repositories, PRs, or commits..." oninput="filterCurrentTable()">
     </div>
 
     <!-- TAB 1: REPOSITORIES -->
-    <div class="tab-pane active" id="pane-repos">
+    <div class="tab-pane active" id="pane-repos" role="tabpanel" aria-labelledby="tab-repos" tabindex="0">
       <div class="table-wrap">
         <table id="table-repos">
           <thead>
@@ -1104,7 +1264,7 @@ def build_html_report(analytics_data):
     </div>
 
     <!-- TAB 2: PULL REQUESTS -->
-    <div class="tab-pane" id="pane-prs">
+    <div class="tab-pane" id="pane-prs" role="tabpanel" aria-labelledby="tab-prs" tabindex="0" hidden>
       <div class="table-wrap">
         <table id="table-prs">
           <thead>
@@ -1139,7 +1299,7 @@ def build_html_report(analytics_data):
     </div>
 
     <!-- TAB 3: COMMITS -->
-    <div class="tab-pane" id="pane-commits">
+    <div class="tab-pane" id="pane-commits" role="tabpanel" aria-labelledby="tab-commits" tabindex="0" hidden>
       <div class="table-wrap">
         <table id="table-commits">
           <thead>
@@ -1219,6 +1379,7 @@ def build_html_report(analytics_data):
     velRenderer.setSize(width, height);
     velRenderer.setPixelRatio(window.devicePixelRatio);
     velRenderer.shadowMap.enabled = true;
+    nameCanvas(velRenderer.domElement, 'velocity');
     container.appendChild(velRenderer.domElement);
 
     velControls = new THREE.OrbitControls(velCamera, velRenderer.domElement);
@@ -1380,6 +1541,7 @@ def build_html_report(analytics_data):
     cadRenderer.setSize(width, height);
     cadRenderer.setPixelRatio(window.devicePixelRatio);
     cadRenderer.shadowMap.enabled = true;
+    nameCanvas(cadRenderer.domElement, 'cadence');
     container.appendChild(cadRenderer.domElement);
 
     cadControls = new THREE.OrbitControls(cadCamera, cadRenderer.domElement);
@@ -1491,9 +1653,11 @@ def build_html_report(analytics_data):
     if (scene === 'vel') {{
       velAutoRotate = !velAutoRotate;
       document.getElementById('btn-3d-vel-autorotate').classList.toggle('active', velAutoRotate);
+      document.getElementById('btn-3d-vel-autorotate').setAttribute('aria-pressed', String(velAutoRotate));
     }} else {{
       cadAutoRotate = !cadAutoRotate;
       document.getElementById('btn-3d-cad-autorotate').classList.toggle('active', cadAutoRotate);
+      document.getElementById('btn-3d-cad-autorotate').setAttribute('aria-pressed', String(cadAutoRotate));
     }}
   }}
 
@@ -1512,6 +1676,14 @@ def build_html_report(analytics_data):
   // ==========================================
   // CHART.JS INITIALIZATION
   // ==========================================
+  function nameCanvas(canvas, key) {{
+    const region = document.querySelector(`[data-visualization="${{key}}"]`);
+    canvas.setAttribute('role', 'img');
+    canvas.setAttribute('aria-label', region.getAttribute('aria-label'));
+    canvas.setAttribute('aria-describedby', `data-summary-${{key}}`);
+    canvas.textContent = 'Equivalent values are available in the data table below.';
+  }}
+
   function showVisualizationFallback(container, message) {{
     const notice = document.createElement('p');
     notice.className = 'visualization-fallback';
@@ -1538,6 +1710,7 @@ def build_html_report(analytics_data):
       container.closest('.three-card').querySelectorAll('button').forEach(button => {{
         button.disabled = true;
         button.classList.remove('active');
+        if (button.hasAttribute('aria-pressed')) button.setAttribute('aria-pressed', 'false');
       }});
       showVisualizationFallback(container,
         '3D view unavailable. Its graphics library could not load or WebGL could not start. Report metrics and tables remain available.');
@@ -1813,20 +1986,31 @@ def build_html_report(analytics_data):
 
   // Table Tabs & Filtering
   function switchTab(tabId) {{
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-    
-    if (tabId === 'repos') {{
-      document.querySelectorAll('.tab-btn')[0].classList.add('active');
-      document.getElementById('pane-repos').classList.add('active');
-    }} else if (tabId === 'prs') {{
-      document.querySelectorAll('.tab-btn')[1].classList.add('active');
-      document.getElementById('pane-prs').classList.add('active');
-    }} else {{
-      document.querySelectorAll('.tab-btn')[2].classList.add('active');
-      document.getElementById('pane-commits').classList.add('active');
-    }}
+    ['repos', 'prs', 'commits'].forEach(id => {{
+      const selected = id === tabId;
+      const tab = document.getElementById(`tab-${{id}}`);
+      const pane = document.getElementById(`pane-${{id}}`);
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', String(selected));
+      tab.tabIndex = selected ? 0 : -1;
+      pane.classList.toggle('active', selected);
+      pane.hidden = !selected;
+    }});
+    filterCurrentTable();
   }}
+
+  document.querySelector('[role="tablist"]').addEventListener('keydown', event => {{
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const current = tabs.indexOf(event.target);
+    if (current < 0 || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    event.preventDefault();
+    let next = event.key === 'ArrowLeft' ? (current + tabs.length - 1) % tabs.length
+      : (current + 1) % tabs.length;
+    if (event.key === 'Home') next = 0;
+    if (event.key === 'End') next = tabs.length - 1;
+    tabs[next].focus();
+    switchTab(tabs[next].id.replace('tab-', ''));
+  }});
 
   function filterCurrentTable() {{
     const term = document.getElementById('table-search').value.toLowerCase();
