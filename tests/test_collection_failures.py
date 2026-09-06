@@ -13,7 +13,20 @@ from src.collector import (CollectionError, collect_all, collect_commits,
 
 
 def response(output="[]", code=0):
+    try:
+        items = json.loads(output)
+        if isinstance(items, list):
+            output = json.dumps({"data": {"scope": {"items": {
+                "nodes": items, "totalCount": len(items),
+                "pageInfo": {"hasNextPage": False, "endCursor": None}}}}})
+    except ValueError:
+        pass
     return subprocess.CompletedProcess(["gh"], code, output, "authentication failed" if code else "")
+
+
+def repo_record():
+    return {"name": "example", "nameWithOwner": "HemSoft/example", "isPrivate": True,
+            "description": None, "stargazerCount": 0, "forkCount": 0, "primaryLanguage": None}
 
 
 class TestCollectionFailures(unittest.TestCase):
@@ -25,7 +38,7 @@ class TestCollectionFailures(unittest.TestCase):
             for failure in (response(code=1), subprocess.TimeoutExpired(["gh"], 120),
                             response("{broken"), response("{}"), response('[{"wrong":1}]')):
                 with self.subTest(source=source, failure=str(failure)), \
-                        patch("src.collector.subprocess.run", side_effect=[response()] * index + [failure]) as run:
+                        patch("src.collector.subprocess.run", side_effect=[response(json.dumps([repo_record()])), response()][:index] + [failure]) as run:
                     with self.assertRaisesRegex(CollectionError, source):
                         collect_github_metadata(["example"], self.start, self.end)
                     self.assertEqual(run.call_count, index + 1)
@@ -105,8 +118,7 @@ class TestCollectionFailures(unittest.TestCase):
 
     def test_requested_record_fields_are_validated_before_collection_completes(self):
         records = [
-            {"name": "example", "isPrivate": True, "description": None,
-             "stargazerCount": 0, "forkCount": 0, "primaryLanguage": None},
+            repo_record(),
             {"number": 1, "title": "Example PR", "state": "OPEN", "url": "https://github.com/HemSoft/example/pull/1",
              "createdAt": "2026-09-01T12:00:00Z", "closedAt": None, "mergedAt": None},
             {"number": 2, "title": "Example issue", "state": "OPEN", "url": "https://github.com/HemSoft/example/issues/2",

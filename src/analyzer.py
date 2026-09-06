@@ -201,7 +201,9 @@ def analyze_data(data):
         repo_groups[c["repo"]].append(c)
         
     repo_profiles = []
-    for r_name, r_commits in repo_groups.items():
+    active_repos = set(repo_groups) | set(prs_by_repo) | set(issues_by_repo)
+    for r_name in sorted(active_repos):
+        r_commits = repo_groups[r_name]
         meta = repo_meta.get(r_name, {})
         r_prs = prs_by_repo.get(r_name, [])
         r_issues = issues_by_repo.get(r_name, [])
@@ -218,11 +220,11 @@ def analyze_data(data):
         for c in r_commits:
             for f in c.get("files", []):
                 r_langs[f["language"]] += (f["adds"] + f["dels"])
-        primary_lang = r_langs.most_common(1)[0][0] if r_langs else meta.get("primaryLanguage", {}).get("name", "Unknown")
+        primary_lang = r_langs.most_common(1)[0][0] if r_langs else (meta.get("primaryLanguage") or {}).get("name", "Unknown")
         
         r_active_days = len(set(c["date_str"] for c in r_commits))
-        first_commit = min(c["author_date"] for c in r_commits)
-        last_commit = max(c["author_date"] for c in r_commits)
+        first_commit = min((c["author_date"] for c in r_commits), default=None)
+        last_commit = max((c["author_date"] for c in r_commits), default=None)
         
         repo_profiles.append({
             "name": r_name,
@@ -232,7 +234,7 @@ def analyze_data(data):
             "forks": meta.get("forkCount", 0),
             "primary_language": primary_lang,
             "commits": len(r_commits),
-            "commits_share": round(len(r_commits) / total_commits * 100.0, 1),
+            "commits_share": round(len(r_commits) / total_commits * 100.0, 1) if total_commits else 0.0,
             "additions": r_adds,
             "deletions": r_dels,
             "net_lines": r_net,

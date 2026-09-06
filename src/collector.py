@@ -38,7 +38,7 @@ def _run_command(cmd, source):
 
 
 REPO_FIELDS = {
-    "name": (str,), "isPrivate": (bool,), "description": (str, type(None)),
+    "name": (str,), "nameWithOwner": (str,), "isPrivate": (bool,), "description": (str, type(None)),
     "stargazerCount": (int,), "forkCount": (int,),
     "primaryLanguage": (dict, type(None)),
 }
@@ -79,16 +79,82 @@ def _validate_item(item, fields):
             raise ValueError("merged pull request lacks mergedAt")
 
 
-def _read_items(cmd, source, fields):
-    try:
-        items = json.loads(_run_command(cmd, source))
-        if not isinstance(items, list):
-            raise ValueError("expected an array")
-        for item in items:
-            _validate_item(item, fields)
-        return items
-    except (ValueError, TypeError, AttributeError) as exc:
-        raise CollectionError(f"{source}: invalid JSON response: {exc}") from exc
+def _read_connection(query, variables, source, fields, identity):
+    """Read every page, rejecting partial GraphQL data and changing listings."""
+    items = []
+    seen_ids, seen_cursors = set(), set()
+    cursor = None
+    expected_count = None
+    while True:
+        cmd = ["gh", "api", "graphql", "-f", f"query={query}"]
+        for key, value in variables.items():
+            cmd.extend(["-f", f"{key}={value}"])
+        if cursor is not None:
+            cmd.extend(["-f", f"cursor={cursor}"])
+        try:
+            payload = json.loads(_run_command(cmd, source))
+            if payload.get("errors"):
+                raise ValueError("GraphQL returned errors; partial data rejected")
+            connection = payload["data"]["scope"]["items"]
+            nodes, page = connection["nodes"], connection["pageInfo"]
+            count = connection["totalCount"]
+            if type(count) is not int or count < 0 or not isinstance(nodes, list):
+                raise ValueError("invalid connection count or nodes")
+            if expected_count is None:
+                expected_count = count
+            if count != expected_count:
+                raise ValueError("listing changed during collection; refresh required")
+            for item in nodes:
+                _validate_item(item, fields)
+                key = item[identity]
+                if key in seen_ids:
+                    raise ValueError("duplicate record across pages; refresh required")
+                seen_ids.add(key)
+                items.append(item)
+            if type(page["hasNextPage"]) is not bool:
+                raise ValueError("invalid hasNextPage")
+            if not page["hasNextPage"]:
+                if len(items) != expected_count:
+                    raise ValueError("incomplete enumeration: record count differs from totalCount")
+                return items
+            cursor = page["endCursor"]
+            if (not isinstance(cursor, str) or not cursor or cursor in seen_cursors
+                    or not nodes or len(items) >= expected_count):
+                raise ValueError("incomplete enumeration: pagination made no progress")
+            seen_cursors.add(cursor)
+        except (ValueError, TypeError, KeyError, AttributeError) as exc:
+            raise CollectionError(f"{source}: invalid JSON response: {exc}") from exc
+
+
+REPOSITORIES_QUERY = """
+query($owner: String!, $cursor: String) {
+  scope: repositoryOwner(login: $owner) {
+    items: repositories(first: 100, after: $cursor, ownerAffiliations: [OWNER]) {
+      totalCount pageInfo { hasNextPage endCursor }
+      nodes { name nameWithOwner isPrivate description stargazerCount forkCount primaryLanguage { name } }
+    }
+  }
+}
+"""
+
+
+def list_github_repositories():
+    records = _read_connection(REPOSITORIES_QUERY, {"owner": "HemSoft"},
+                               "GitHub repository enumeration for HemSoft", REPO_FIELDS, "nameWithOwner")
+    for item in records:
+        canonical = item["nameWithOwner"]
+        if canonical.lower() != f"HemSoft/{item['name']}".lower():
+            raise CollectionError(f"GitHub repository enumeration: invalid canonical identity {canonical}")
+    return {item["name"]: item for item in records}
+
+
+def _repository_activity(canonical, connection, fields, source):
+    owner, name = canonical.split("/", 1)
+    query = ("query($owner:String!, $name:String!, $cursor:String) { "
+             "scope:repository(owner:$owner, name:$name) { items:" + connection +
+             "(first:100, after:$cursor) { totalCount pageInfo { hasNextPage endCursor } nodes { " +
+             " ".join(fields) + " } } } }")
+    return _read_connection(query, {"owner": owner, "name": name}, source, fields, "number")
 
 
 def _write_cache(cache_file, data):
@@ -311,44 +377,36 @@ def collect_commits(base_dir, start_dt, end_dt):
     return sorted(commits, key=lambda x: x["author_date"], reverse=True)
 
 def collect_github_metadata(active_repo_names, start_dt, end_dt):
-    start_iso = start_dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
-    end_iso = end_dt.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
-    
-    repo_cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json",
-                ",".join(REPO_FIELDS)]
-    repo_meta = {item["name"]: item for item in _read_items(
-        repo_cmd, "GitHub repository enumeration for HemSoft", REPO_FIELDS)}
+    # The legacy positional argument is retained for callers; GitHub owns discovery.
+    repo_meta = list_github_repositories()
     prs_by_repo = defaultdict(list)
     issues_by_repo = defaultdict(list)
-
-    for r in active_repo_names:
-        p_cmd = ["gh", "pr", "list", "--repo", f"HemSoft/{r}",
-                 "--state", "all", "--limit", "500", "--json",
-                 ",".join(PR_FIELDS)]
-        for item in _read_items(p_cmd, f"GitHub pull requests for HemSoft/{r}",
-                                PR_FIELDS):
-            if not any(item.get(key) and start_iso <= item[key] <= end_iso
-                       for key in ("createdAt", "mergedAt", "closedAt")):
+    for r, meta in repo_meta.items():
+        canonical = meta["nameWithOwner"]
+        for item in _repository_activity(canonical, "pullRequests", PR_FIELDS,
+                                         f"GitHub pull requests for {canonical}"):
+            if not _has_event(item, ("createdAt", "mergedAt", "closedAt"), start_dt, end_dt):
                 continue
             item["cycle_hours"] = None
-            if item.get("mergedAt") and item.get("createdAt"):
+            if item["mergedAt"]:
                 created = datetime.fromisoformat(item["createdAt"].replace("Z", "+00:00"))
                 merged = datetime.fromisoformat(item["mergedAt"].replace("Z", "+00:00"))
                 item["cycle_hours"] = round((merged - created).total_seconds() / 3600.0, 2)
             item["repo"] = r
             prs_by_repo[r].append(item)
-
-        i_cmd = ["gh", "issue", "list", "--repo", f"HemSoft/{r}",
-                 "--state", "all", "--limit", "500", "--json",
-                 ",".join(ISSUE_FIELDS)]
-        for item in _read_items(i_cmd, f"GitHub issues for HemSoft/{r}",
-                                ISSUE_FIELDS):
-            if any(item.get(key) and start_iso <= item[key] <= end_iso
-                   for key in ("createdAt", "closedAt")):
+        for item in _repository_activity(canonical, "issues", ISSUE_FIELDS,
+                                         f"GitHub issues for {canonical}"):
+            if _has_event(item, ("createdAt", "closedAt"), start_dt, end_dt):
                 item["repo"] = r
                 issues_by_repo[r].append(item)
-
     return repo_meta, dict(prs_by_repo), dict(issues_by_repo)
+
+
+def _has_event(item, keys, start, end):
+    return any(item.get(key) and start.astimezone(timezone.utc) <=
+               datetime.fromisoformat(item[key].replace("Z", "+00:00")).astimezone(timezone.utc) <=
+               end.astimezone(timezone.utc) for key in keys)
+
 
 def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=None, refresh=False):
     start_dt, end_dt = get_date_range(weeks, start_str, end_str)
@@ -360,6 +418,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
                 cached_start = data.get("range", {}).get("start_iso")
                 cached_end = data.get("range", {}).get("end_iso")
                 if (data.get("collection_complete") is True
+                        and data.get("collection_scope") == "all-owned-paginated-v1"
                         and cached_start == start_dt.isoformat()
                         and cached_end == end_dt.isoformat()):
                     print(f"Loaded cached audit data from {cache_file}")
@@ -380,6 +439,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     
     data = {
         "collection_complete": True,
+        "collection_scope": "all-owned-paginated-v1",
         "generated_at": datetime.now(EDT).isoformat(),
         "range": {
             "weeks": weeks,
@@ -403,8 +463,13 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     return data
 
 if __name__ == "__main__":
-    cache_path = os.path.join(os.path.dirname(__file__), "..", "data", "cache_12weeks.json")
-    data = collect_all(r"D:\github\HemSoft", weeks=12, cache_file=cache_path)
-    total_prs = sum(len(v) for v in data["prs"].values())
-    total_issues = sum(len(v) for v in data["issues"].values())
-    print(f"Done. Commits: {len(data['commits'])}, PRs: {total_prs}, Issues: {total_issues}")
+    import argparse
+    parser = argparse.ArgumentParser(description="List every accessible HemSoft-owned repository.")
+    parser.add_argument("--list-repositories", action="store_true", required=True)
+    parser.parse_args()
+    try:
+        for repository in list_github_repositories().values():
+            print(repository["nameWithOwner"])
+    except CollectionError as exc:
+        print(f"Collection failed: {exc}", file=sys.stderr)
+        raise SystemExit(1) from exc

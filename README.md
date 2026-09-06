@@ -95,7 +95,16 @@ available from the Actions tab.
 3. Run the workflow once via Actions -> Publish report to GitHub Pages ->
    Run workflow, then open the Pages URL.
 
-The workflow clones all HemSoft repos into `checkouts/`, runs
+Repository discovery follows every GitHub GraphQL cursor for repositories owned
+by HemSoft and accessible to the authenticated account. PR and issue histories
+are paginated in full, then filtered by creation, closure, or merge events in the
+selected interval. Activity without commits still appears in metrics and profiles.
+Duplicate records, changing totals, GraphQL errors, missing pages, or stalled
+cursors stop collection. A token cannot reveal repositories it cannot access;
+use credentials covering the intended repository set. Large histories require
+more API requests, and rate-limit failures remain explicit.
+
+The workflow clones all discovered HemSoft repos into `checkouts/`, runs
 `python cli.py --weeks 12 --base-dir ./checkouts --output ./public/index.html`,
 and uploads `public/` as the Pages artifact. Both `public/` and
 `checkouts/` are gitignored build outputs.
