@@ -24,6 +24,11 @@ interval. Without file-derived language, it uses GitHub's primary language.
 Missing, null, or empty language metadata displays `Unknown`, including repositories
 whose commits change no files.
 
+PR cycle-time medians use merged PRs with a known creation-to-merge duration.
+Even-sized samples average the middle two values; odd-sized samples use the
+middle value. The result is rounded to two decimal places in hours. With no
+known durations, the reported median is `0.0`.
+
 ## Architecture
 
 ```

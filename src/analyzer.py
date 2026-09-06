@@ -1,6 +1,7 @@
 import os
 import sys
 import json
+import statistics
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from collections import defaultdict, Counter
@@ -61,7 +62,7 @@ def analyze_data(data):
     # Cycle times for merged PRs
     cycle_times = [p["cycle_hours"] for p in merged_prs if p.get("cycle_hours") is not None]
     avg_cycle_time = round(sum(cycle_times) / len(cycle_times), 2) if cycle_times else 0.0
-    median_cycle_time = round(sorted(cycle_times)[len(cycle_times)//2], 2) if cycle_times else 0.0
+    median_cycle_time = round(statistics.median(cycle_times), 2) if cycle_times else 0.0
     
     cycle_distribution = {
         "under_1h": sum(1 for t in cycle_times if t < 1.0),
