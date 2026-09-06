@@ -1,0 +1,10 @@
+{
+  "readyMs": 10000,
+  "frameP95Ms": 500,
+  "heapBytes": 25000000,
+  "heapGrowthBytes": 4000000,
+  "nodeGrowth": 30,
+  "listenerGrowth": 0,
+  "processRssBytes": 1500000000,
+  "processRssGrowthBytes": 256000000
+}
