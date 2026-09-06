@@ -56,6 +56,13 @@ look back the requested number of weeks through today, inclusively. Weekly
 charts include a final partial bucket when needed. Custom dates must be supplied
 together, with the start on or before the end; `--weeks` must be positive.
 
+Commit cadence and interval membership use Git author dates, converted to
+`America/New_York`. Collection reads all refs without Git's committer-date
+limits so rebased or imported commits keep their original author-date placement.
+Filtering compares timezone-aware instants and is independent of the host zone.
+Large local histories require a full history read, subject to the command timeout.
+Caches collected with the old date prefilter are recollected automatically.
+
 ### Force refresh (bypass cache)
 
 ```powershell

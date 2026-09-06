@@ -273,9 +273,7 @@ def categorize_author(name, email):
     return "Human (Franz Hemmer)"
 
 def collect_commits(base_dir, start_dt, end_dt):
-    start_str = start_dt.strftime("%Y-%m-%dT00:00:00")
-    end_str = end_dt.strftime("%Y-%m-%dT23:59:59")
-    
+    # Git date limits use committer dates. Read all refs and filter author instants below.
     try:
         candidate_dirs = [os.path.join(base_dir, d) for d in os.listdir(base_dir)
                           if os.path.isdir(os.path.join(base_dir, d))]
@@ -299,8 +297,6 @@ def collect_commits(base_dir, start_dt, end_dt):
         try:
             cmd = [
                 "git", "-C", d, "log", "--all",
-                f"--since={start_str}",
-                f"--until={end_str}",
                 "--format=COMMIT_META%x09%H%x09%an%x09%ae%x09%aI%x09%cn%x09%ce%x09%cI%x09%s",
                 "--numstat"
             ]
@@ -329,7 +325,8 @@ def collect_commits(base_dir, start_dt, end_dt):
                     except (ValueError, TypeError) as exc:
                         raise CollectionError(f"Git history in {d}: invalid author date") from exc
                     
-                    if dt_edt < start_dt or dt_edt > end_dt:
+                    if not (start_dt.astimezone(timezone.utc) <= dt_orig.astimezone(timezone.utc)
+                            <= end_dt.astimezone(timezone.utc)):
                         cur = None
                         continue
                         
@@ -418,7 +415,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
                 cached_start = data.get("range", {}).get("start_iso")
                 cached_end = data.get("range", {}).get("end_iso")
                 if (data.get("collection_complete") is True
-                        and data.get("collection_scope") == "all-owned-paginated-v1"
+                        and data.get("collection_scope") == "all-owned-author-date-v2"
                         and cached_start == start_dt.isoformat()
                         and cached_end == end_dt.isoformat()):
                     print(f"Loaded cached audit data from {cache_file}")
@@ -439,7 +436,7 @@ def collect_all(base_dir, weeks=12, start_str=None, end_str=None, cache_file=Non
     
     data = {
         "collection_complete": True,
-        "collection_scope": "all-owned-paginated-v1",
+        "collection_scope": "all-owned-author-date-v2",
         "generated_at": datetime.now(EDT).isoformat(),
         "range": {
             "weeks": weeks,
