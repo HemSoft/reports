@@ -210,7 +210,6 @@ def build_html_report(analytics_data):
       font-family: var(--font-sans);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
       background-image: 
         radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
         radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
@@ -228,6 +227,8 @@ def build_html_report(analytics_data):
     /* Header & Hero */
     header {{
       display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 2.5rem;
@@ -238,11 +239,14 @@ def build_html_report(analytics_data):
 
     .header-brand {{
       display: flex;
+      flex: 1 1 34rem;
+      min-width: 0;
       align-items: center;
       gap: 1.25rem;
     }}
 
     .avatar-wrapper {{
+      flex-shrink: 0;
       width: 72px;
       height: 72px;
       border-radius: 20px;
@@ -259,6 +263,8 @@ def build_html_report(analytics_data):
       background: var(--bg-secondary);
     }}
 
+    .title-group {{ min-width: 0; }}
+
     .title-group h1 {{
       font-size: 2.2rem;
       font-weight: 800;
@@ -271,11 +277,14 @@ def build_html_report(analytics_data):
 
     .title-group .meta-bar {{
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       gap: 1rem;
       font-size: 0.9rem;
       color: var(--text-secondary);
     }}
+
+    .meta-bar > span:last-child {{ flex-basis: 100%; }}
 
     .badge {{
       display: inline-flex;
@@ -309,12 +318,16 @@ def build_html_report(analytics_data):
 
     .header-actions {{
       display: flex;
+      flex: 1 1 22rem;
+      max-width: 100%;
       flex-direction: column;
       align-items: flex-end;
       gap: 0.75rem;
     }}
 
     .time-badge {{
+      max-width: 100%;
+      overflow-wrap: anywhere;
       font-family: var(--font-mono);
       font-size: 0.85rem;
       padding: 0.5rem 1rem;
@@ -330,6 +343,7 @@ def build_html_report(analytics_data):
 
     .btn-group {{
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
     }}
 
@@ -512,18 +526,19 @@ def build_html_report(analytics_data):
     /* 3D Visualizer Containers */
     .three-row {{
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
       margin-bottom: 3rem;
     }}
 
     @media (max-width: 1200px) {{
       .three-row {{
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }}
     }}
 
     .three-card {{
+      min-width: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 20px;
@@ -535,6 +550,8 @@ def build_html_report(analytics_data):
 
     .three-header {{
       display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
@@ -543,6 +560,8 @@ def build_html_report(analytics_data):
     }}
 
     .three-title {{
+      flex: 1 1 20rem;
+      min-width: 0;
       font-size: 1.1rem;
       font-weight: 600;
       color: var(--text-primary);
@@ -553,6 +572,8 @@ def build_html_report(analytics_data):
 
     .three-controls {{
       display: flex;
+      flex-wrap: wrap;
+      flex-shrink: 0;
       gap: 0.5rem;
     }}
 
@@ -662,18 +683,19 @@ def build_html_report(analytics_data):
     /* 2D Chart Cards Grid */
     .chart-grid {{
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1.5rem;
       margin-bottom: 3rem;
     }}
 
     @media (max-width: 1024px) {{
       .chart-grid {{
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }}
     }}
 
     .chart-card {{
+      min-width: 0;
       background: var(--bg-card);
       border: 1px solid var(--border-color);
       border-radius: 18px;
@@ -723,6 +745,7 @@ def build_html_report(analytics_data):
 
     .table-toolbar {{
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.25rem;
@@ -737,6 +760,7 @@ def build_html_report(analytics_data):
       color: var(--text-primary);
       font-size: 0.85rem;
       width: 320px;
+      max-width: 100%;
       font-family: var(--font-sans);
     }}
 
@@ -748,6 +772,8 @@ def build_html_report(analytics_data):
 
     .table-wrap {{
       overflow-x: auto;
+      min-width: 0;
+      max-width: 100%;
     }}
 
     table {{
@@ -818,6 +844,7 @@ def build_html_report(analytics_data):
     /* Tabs */
     .tabs-nav {{
       display: flex;
+      flex-wrap: wrap;
       gap: 0.5rem;
       margin-bottom: 1.5rem;
       border-bottom: 1px solid var(--border-color);
@@ -861,6 +888,9 @@ def build_html_report(analytics_data):
       padding-top: 2rem;
       border-top: 1px solid var(--border-color);
       display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      overflow-wrap: anywhere;
       justify-content: space-between;
       align-items: center;
       color: var(--text-muted);
@@ -870,6 +900,24 @@ def build_html_report(analytics_data):
     footer a {{
       color: var(--accent-cyan);
       text-decoration: none;
+    }}
+
+    @media (max-width: 600px) {{
+      .dashboard-container {{ padding: 1.25rem 1rem 2rem; }}
+      .header-brand {{ flex-direction: column; align-items: flex-start; gap: 1rem; }}
+      .header-brand, .header-actions {{ flex-basis: 100%; }}
+      .header-actions {{ align-items: stretch; }}
+      .title-group .meta-bar {{ gap: 0.5rem; }}
+      .btn-group .btn {{ flex: 1 1 10rem; justify-content: center; }}
+      .btn, .three-btn, .tab-btn {{ min-height: 44px; }}
+      .three-card, .chart-card, .table-card {{ padding: 1rem; }}
+      .three-title {{ flex-basis: 100%; }}
+      .three-viewport {{ height: 360px; }}
+      .three-hint {{ left: 0.5rem; right: 0.5rem; bottom: 0.5rem; }}
+      .table-toolbar {{ align-items: stretch; }}
+      .tabs-nav, .search-input {{ width: 100%; }}
+      .tabs-nav {{ gap: 0.25rem; }}
+      .tab-btn {{ flex: 1 1 100%; text-align: left; }}
     }}
 
     @media print {{

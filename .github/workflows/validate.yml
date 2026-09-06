@@ -91,6 +91,14 @@ jobs:
           path: test-results/browser/
           if-no-files-found: ignore
           retention-days: 7
+      - name: Preserve responsive layout evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: responsive-layout
+          path: test-results/layout-*
+          if-no-files-found: ignore
+          retention-days: 7
 
   mutation:
     name: Mutation qualification
