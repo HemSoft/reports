@@ -78,6 +78,13 @@ A refresh keeps the previous cache until complete data can replace it atomically
 collection failures leave existing report and metrics files untouched. Older
 caches without a completeness marker are recollected once.
 
+Caches store a schema version and exact collection inputs: normalized real source
+path, dates, weeks, timezone, GitHub owner, and collection policy. Equivalent
+relative/absolute source paths share an identity; different source directories
+use separate cache files. Missing, incompatible, or malformed cache envelopes
+are recollected. Same-input caches are snapshots until `--refresh` or an interval
+change; refresh after local history or GitHub access changes.
+
 ### Export raw metrics JSON
 
 ```powershell
