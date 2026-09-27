@@ -29,7 +29,7 @@
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0",
     "chart.js": "4.4.1",
-    "markdownlint-cli2": "0.23.2",
+    "markdownlint-cli2": "0.23.3",
     "three": "0.128.0"
   }
 }
