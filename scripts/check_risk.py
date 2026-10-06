@@ -1,6 +1,7 @@
 """Measure function risk with Radon and coverage.py; enforce reviewed risk caps."""
 
 import argparse
+from importlib import metadata
 import json
 from pathlib import Path
 import subprocess
@@ -85,7 +86,10 @@ def violations(rows, baseline):
 def write_report(rows, errors):
     output = ROOT / "test-results"
     report = {
-        "tools": {"complexity": "radon 6.0.1", "coverage": "coverage.py 7.16.0"},
+        "tools": {
+            "complexity": f"radon {metadata.version('radon')}",
+            "coverage": f"coverage.py {metadata.version('coverage')}",
+        },
         "formula": "complexity^2 * (1 - coverage)^3 + complexity",
         "scope": "All functions/methods/closures in src/**/*.py and cli.py, including unexecuted code",
         "exclusions": "Tests and development scripts; module/class bodies and embedded JavaScript are not Python functions. No pragma coverage exclusions.",

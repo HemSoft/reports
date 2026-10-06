@@ -1,14 +1,32 @@
 """Regression controls for the risk gate's calculation and failure boundaries."""
 
 import copy
+import json
 import tempfile
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
+from scripts import check_risk
 from scripts.check_risk import crap_score, measure, violations
 
 
 class TestRiskGate(unittest.TestCase):
+    def test_report_records_the_installed_tool_versions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "test-results").mkdir()
+            versions = {"radon": "88.1", "coverage": "99.2"}
+            with (
+                patch.object(check_risk, "ROOT", root),
+                patch("importlib.metadata.version", side_effect=versions.__getitem__),
+            ):
+                check_risk.write_report([], [])
+            report = json.loads((root / "test-results/risk.json").read_text(encoding="utf-8"))
+            self.assertEqual(
+                report["tools"], {"complexity": "radon 88.1", "coverage": "coverage.py 99.2"}
+            )
+
     def test_formula_and_boundaries(self):
         self.assertEqual(crap_score(10, 0), 110)
         self.assertEqual(crap_score(10, 0.5), 22.5)
