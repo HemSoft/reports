@@ -268,8 +268,10 @@ into validation jobs.
 
 ### Function risk and coverage
 
-`python scripts/check_risk.py` runs fresh guarded tests with coverage.py 7.16.0
-branch tracing, then measures cyclomatic complexity with Radon 6.0.1. It writes
+`python scripts/check_risk.py` runs fresh guarded tests with coverage.py branch
+tracing, then measures cyclomatic complexity with Radon. Tool versions are pinned
+in [requirements-dev.txt](requirements-dev.txt); `risk.json` records their installed
+versions. It writes
 `test-results/coverage.json`, `risk.json`, and a sorted `risk.md`; CI retains these
 for seven days. All Python functions, methods, and closures under `src/` and in
 `cli.py` are included, even when never imported or executed. Tests, development
