@@ -14,15 +14,15 @@
           "highlights": [
             {
               "label": "Commits",
-              "value": "1,577"
+              "value": "1,586"
             },
             {
               "label": "PRs merged",
-              "value": "914"
+              "value": "917"
             },
             {
               "label": "Net lines",
-              "value": "−2.48M"
+              "value": "−2.46M"
             },
             {
               "label": "Median PR cycle",
@@ -37,7 +37,7 @@
               "value": "56 days"
             }
           ],
-          "published_at": "2026-10-06T09:52:27+00:00",
+          "published_at": "2026-10-06T20:00:27+00:00",
           "path": "reports/productivity/2026-10-06/",
           "payload": "reports/productivity/2026-10-06/payload.json"
         }
@@ -46,6 +46,45 @@
       "summary": "Throughput, pull request velocity, code churn and coding cadence across HemSoft repositories, with WebGL views of weekly velocity and the 168 hours of the week.",
       "category": "Engineering",
       "cadence": "Weekly · Mondays 12:00 UTC"
+    },
+    {
+      "id": "dune-awakening",
+      "editions": [
+        {
+          "id": "2026-10-05",
+          "title": "Overland loot, checked Oct 05, 2026",
+          "period": null,
+          "highlights": [
+            {
+              "label": "Schematics",
+              "value": "192"
+            },
+            {
+              "label": "Augments",
+              "value": "104"
+            },
+            {
+              "label": "Locations",
+              "value": "6"
+            },
+            {
+              "label": "S-tier items",
+              "value": "44"
+            },
+            {
+              "label": "Database",
+              "value": "1.5.3.3"
+            }
+          ],
+          "published_at": "2026-10-06T20:00:27+00:00",
+          "path": "reports/dune-awakening/2026-10-05/",
+          "payload": "reports/dune-awakening/2026-10-05/payload.json"
+        }
+      ],
+      "title": "Dune: Awakening loot reference",
+      "summary": "Augments and unique schematics by Overland Testing Station and community usefulness tier, with searchable item names, farming locations and optional database chest chances.",
+      "category": "Gaming",
+      "cadence": "Static reference"
     }
   ]
 }
