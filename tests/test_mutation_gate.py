@@ -3,14 +3,38 @@
 import unittest
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
 
 from cosmic_ray.work_db import use_db
 from cosmic_ray.work_item import MutationSpec, TestOutcome, WorkerOutcome, WorkItem, WorkResult
 
-from scripts.check_mutations import qualifies, score_counts, summarize, target_spans
+from scripts.check_mutations import (
+    copy_test_source,
+    qualifies,
+    score_counts,
+    summarize,
+    target_spans,
+)
 
 
 class TestMutationGate(unittest.TestCase):
+    def test_disposable_workspace_can_load_verified_graphics_without_node(self):
+        with tempfile.TemporaryDirectory() as directory:
+            copy_test_source(Path(directory))
+            result = subprocess.run(
+                [
+                    sys.executable,
+                    "-c",
+                    "from src.browser_assets import graphics_script; graphics_script(); print('Graphics load: PASS')",
+                ],
+                cwd=directory,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(result.stdout.strip(), "Graphics load: PASS")
+
     def test_cosmic_ray_database_outcomes_are_classified_without_crediting_timeouts(self):
         results = [
             WorkResult(WorkerOutcome.NORMAL, test_outcome=TestOutcome.KILLED),

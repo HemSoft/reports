@@ -99,6 +99,18 @@ def run_cosmic(directory, *args):
     )
 
 
+def copy_test_source(directory):
+    """Copy the complete Python test runtime into the disposable workspace."""
+    for folder in ("src", "tests", "scripts", "assets"):
+        shutil.copytree(
+            ROOT / folder,
+            directory / folder,
+            ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+        )
+    for filename in ("cli.py", "package.json"):
+        shutil.copy2(ROOT / filename, directory / filename)
+
+
 def summarize(database, excluded):
     counts = Counter({"killed": 0, "survived": 0, "timeout": 0, "error": 0, "pending": 0})
     details = []
@@ -155,13 +167,7 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="reports-mutation-") as temporary:
         directory = Path(temporary)
-        for folder in ("src", "tests", "scripts"):
-            shutil.copytree(
-                ROOT / folder,
-                directory / folder,
-                ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
-            )
-        shutil.copy2(ROOT / "cli.py", directory / "cli.py")
+        copy_test_source(directory)
         command = [sys.executable, "-B", "scripts/run_tests.py"]
         subprocess.run(command, cwd=directory, check=True, stdout=subprocess.DEVNULL)
         if not negative_median_probe(directory, command):
