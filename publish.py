@@ -21,10 +21,13 @@ def sync_editions(site_dir, editions_dir):
     source = Path(editions_dir)
     if not source.is_dir():
         raise CatalogError(f"Static editions folder does not exist: {source}")
-    manifests = sorted(source.glob("*/*/manifest.json"))
+    manifests = [
+        (directory / "manifest.json", load_manifest(directory / "manifest.json"))
+        for directory in sorted(source.glob("*/*"))
+        if directory.is_dir()
+    ]
     stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    for path in manifests:
-        manifest = load_manifest(path)
+    for path, manifest in manifests:
         report = next(
             (r for r in load_catalog(site_dir)["reports"] if r["id"] == manifest["report"]["id"]),
             {"editions": []},

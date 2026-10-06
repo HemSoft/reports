@@ -20,6 +20,16 @@ test('static loot snapshot works offline with combined filters and station links
   await page.getByLabel('Find an item or station').fill('195');
   await expect(page.locator('#status')).toHaveText('68 matching items · 1 locations');
   await expect(page.locator('.station-group')).toHaveCount(1);
+  await page.getByLabel('Find an item or station').fill('station 195');
+  await expect(page.locator('#status')).toHaveText('68 matching items · 1 locations');
+  await expect(page.locator('.station-group')).toHaveCount(1);
+  const stationExpand = page.locator('[data-expand="stations"]');
+  await expect(stationExpand).toHaveText('Collapse all');
+  await stationExpand.click();
+  await expect(page.locator('#station-195')).not.toHaveAttribute('open', '');
+  await expect(stationExpand).toHaveText('Expand all');
+  await page.locator('#station-195 summary').click();
+  await expect(stationExpand).toHaveText('Collapse all');
   await page.getByRole('button', { name: 'Reset filters' }).click();
   await page.getByLabel('Item type', { exact: true }).selectOption('Augment');
   await page.getByLabel('Community tier', { exact: true }).selectOption('S');
@@ -35,6 +45,7 @@ test('static loot snapshot works offline with combined filters and station links
   await expect(page.locator('#stations')).toContainText('JABAL Spitdart Focuser');
   await page.getByLabel('Find an item or station').fill('no-such-schematic');
   await expect(page.getByText('No loot matches these filters.')).toBeVisible();
+  await expect(stationExpand).toBeDisabled();
   await page.getByRole('button', { name: 'Clear filters' }).first().click();
   await page.locator('#tier-S .place').first().click();
   await expect(page.locator(page.url().slice(page.url().indexOf('#')))).toHaveAttribute('open', '');
@@ -50,6 +61,8 @@ test('branded report is accessible and fits desktop and mobile viewports', async
     await page.setViewportSize({ width, height: 1000 });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await expect(page.getByRole('heading', { level: 1 })).toContainText('Dune: Awakening');
+    await expect(page.locator('#station-24 table').nth(1).getByRole('columnheader', { name: 'Schematic / loot' })).toHaveCount(1);
+    await expect(page.locator('#tier-S table').nth(1).getByRole('columnheader', { name: 'Where to farm' })).toHaveCount(1);
     const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
     expect(scan.violations).toEqual([]);
     if (width === 1440 || width === 390) {

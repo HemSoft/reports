@@ -2,6 +2,7 @@
 
 import json
 import re
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -82,3 +83,14 @@ class TestStaticEditions(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             self.assertEqual(publish.main(["sync", folder, "--editions", folder + "/missing"]), 1)
             self.assertFalse((Path(folder) / "catalog.json").exists())
+
+    def test_incomplete_edition_fails_before_any_editions_are_published(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source = Path(folder) / "editions"
+            shutil.copytree(DUNE, source / "dune-awakening" / "2026-10-05")
+            incomplete = source / "dune-awakening" / "2026-10-06"
+            incomplete.mkdir()
+            (incomplete / "manifest-misnamed.json").write_text("{}")
+            site = Path(folder) / "site"
+            self.assertEqual(publish.main(["sync", str(site), "--editions", str(source)]), 1)
+            self.assertFalse(site.exists())
