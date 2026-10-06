@@ -210,7 +210,8 @@ are public. Private repository visibility does not restrict access to the site.
 
 ## Running tests
 
-Install development tools in the active Python environment and Node.js 22+:
+Install development tools in the active Python environment and Node.js 22.22.2
+or a later 22.x release, matching the CI runtime:
 
 ```powershell
 python -m pip install -r requirements-dev.txt
@@ -378,6 +379,8 @@ This avoids the mutable nested `upload-artifact@v4` reference in the v3 wrapper.
 
 All three executable CDN scripts require SHA-384 Subresource Integrity (SRI) and
 anonymous CORS. Their bytes match the exact npm versions in `package-lock.json`.
+The security gate also compares browser URL versions with the declared, locked,
+and installed npm versions. Matching bytes alone must not hide a stale CDN URL.
 The Chart.js URL deliberately uses the package's UMD file, avoiding a CDN-only
 minification transform. For a browser-library update, update the npm pin/lock,
 script URL, fixture mapping, security-check inventory, and SRI together. Compare

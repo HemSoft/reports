@@ -3,7 +3,7 @@ const fs = require('node:fs/promises');
 
 const root = path.resolve(__dirname, '../..');
 const scripts = new Map([
-  ['https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js', 'node_modules/chart.js/dist/chart.umd.js'],
+  ['https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js', 'node_modules/chart.js/dist/chart.umd.js'],
   ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'node_modules/three/build/three.min.js'],
   ['https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', 'node_modules/three/examples/js/controls/OrbitControls.js'],
 ]);
