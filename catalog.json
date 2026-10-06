@@ -14,15 +14,15 @@
           "highlights": [
             {
               "label": "Commits",
-              "value": "1,586"
+              "value": "1,595"
             },
             {
               "label": "PRs merged",
-              "value": "917"
+              "value": "925"
             },
             {
               "label": "Net lines",
-              "value": "−2.46M"
+              "value": "−2.45M"
             },
             {
               "label": "Median PR cycle",
@@ -37,7 +37,7 @@
               "value": "56 days"
             }
           ],
-          "published_at": "2026-10-06T20:00:27+00:00",
+          "published_at": "2026-10-06T21:53:38+00:00",
           "path": "reports/productivity/2026-10-06/",
           "payload": "reports/productivity/2026-10-06/payload.json"
         }

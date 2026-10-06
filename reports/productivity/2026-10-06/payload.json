@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-06T16:00:16.827824-04:00",
+  "generated_at": "2026-10-06T17:53:23.815122-04:00",
   "range": {
     "weeks": 12,
     "start_iso": "2026-07-14T00:00:00-04:00",
@@ -10,66 +10,66 @@
     "end_formatted": "Oct 06, 2026"
   },
   "kpis": {
-    "total_commits": 1586,
-    "total_additions": 837927,
-    "total_deletions": 3295562,
-    "net_lines": -2457635,
-    "total_unique_files": 7865,
-    "total_prs": 1011,
-    "merged_prs": 917,
+    "total_commits": 1595,
+    "total_additions": 852954,
+    "total_deletions": 3300882,
+    "net_lines": -2447928,
+    "total_unique_files": 7877,
+    "total_prs": 1019,
+    "merged_prs": 925,
     "open_prs": 16,
-    "pr_merge_rate": 90.7,
-    "avg_pr_cycle_hours": 17.5,
+    "pr_merge_rate": 90.8,
+    "avg_pr_cycle_hours": 17.36,
     "median_pr_cycle_hours": 0.55,
     "pr_cycle_distribution": {
-      "under_1h": 581,
+      "under_1h": 589,
       "1h_to_4h": 178,
       "4h_to_24h": 77,
       "1d_to_3d": 48,
       "over_3d": 33
     },
-    "total_issues": 907,
-    "closed_issues": 837,
-    "open_issues": 70,
-    "issue_close_rate": 92.3,
+    "total_issues": 913,
+    "closed_issues": 842,
+    "open_issues": 71,
+    "issue_close_rate": 92.2,
     "active_repos_count": 53,
     "total_calendar_days": 85,
     "active_days_count": 81,
     "active_days_pct": 95.3,
     "longest_streak": 56,
     "current_streak": 56,
-    "avg_commits_per_active_day": 19.6,
-    "avg_commits_per_day": 18.7,
+    "avg_commits_per_active_day": 19.7,
+    "avg_commits_per_day": 18.8,
     "peak_day": {
       "date": "2026-09-05",
       "commits": 86,
       "additions": 39275
     },
-    "peak_hour_edt": 19,
+    "peak_hour_edt": 17,
     "peak_day_name": "Saturday",
     "day_parts": {
       "morning": 269,
-      "afternoon": 394,
+      "afternoon": 403,
       "evening": 351,
       "night_owl": 572
     },
-    "night_owl_ratio": 36.1,
+    "night_owl_ratio": 35.9,
     "weekend_commits": 474,
-    "weekday_commits": 1112,
-    "weekend_ratio": 29.9
+    "weekday_commits": 1121,
+    "weekend_ratio": 29.7
   },
   "author_distribution": {
-    "Human (Franz Hemmer)": 1470,
-    "CI Bot": 36,
+    "Human (Franz Hemmer)": 1475,
+    "CI Bot": 40,
     "Dependabot": 79,
     "AI Agent (Cursor)": 1
   },
   "category_distribution": {
-    "Testing": 82,
-    "Feature": 557,
-    "Chore / Maintenance": 162,
-    "Bug Fix": 407,
-    "Documentation": 257,
+    "Documentation": 262,
+    "Bug Fix": 410,
+    "Feature": 558,
+    "Chore / Maintenance": 163,
+    "Testing": 81,
     "CI / DevOps": 85,
     "Refactoring": 12,
     "Agent / Automation": 18,
@@ -298,16 +298,16 @@
       "range_str": "Oct 06 - Oct 06",
       "start_date": "2026-10-06",
       "end_date": "2026-10-06",
-      "commits": 28,
-      "additions": 31621,
-      "deletions": 698,
-      "net_lines": 30923,
-      "prs_opened": 9,
-      "prs_merged": 21,
-      "issues_closed": 4,
+      "commits": 37,
+      "additions": 46648,
+      "deletions": 6018,
+      "net_lines": 40630,
+      "prs_opened": 17,
+      "prs_merged": 29,
+      "issues_closed": 9,
       "active_days": 1,
       "top_repo": "reports",
-      "human_commits": 14,
+      "human_commits": 19,
       "ai_commits": 0
     }
   ],
@@ -320,7 +320,7 @@
       "forks": 0,
       "primary_language": "Other",
       "commits": 307,
-      "commits_share": 19.4,
+      "commits_share": 19.2,
       "additions": 91106,
       "deletions": 1978278,
       "net_lines": -1887172,
@@ -339,18 +339,18 @@
       "stars": 0,
       "forks": 0,
       "primary_language": "Swift",
-      "commits": 230,
+      "commits": 231,
       "commits_share": 14.5,
-      "additions": 125179,
-      "deletions": 21743,
-      "net_lines": 103436,
-      "prs_total": 184,
-      "prs_merged": 180,
+      "additions": 125195,
+      "deletions": 21753,
+      "net_lines": 103442,
+      "prs_total": 185,
+      "prs_merged": 181,
       "issues_total": 182,
       "issues_closed": 179,
       "active_days": 60,
       "first_commit": "2026-07-14T11:32:37-04:00",
-      "last_commit": "2026-10-06T14:42:38-04:00"
+      "last_commit": "2026-10-06T17:00:22-04:00"
     },
     {
       "name": "codexbar-mac",
@@ -360,7 +360,7 @@
       "forks": 0,
       "primary_language": "Swift",
       "commits": 179,
-      "commits_share": 11.3,
+      "commits_share": 11.2,
       "additions": 53568,
       "deletions": 15319,
       "net_lines": 38249,
@@ -373,6 +373,26 @@
       "last_commit": "2026-09-09T20:20:04-04:00"
     },
     {
+      "name": "gh-x",
+      "description": "GitHub CLI extension for richer repository workflows",
+      "is_private": false,
+      "stars": 0,
+      "forks": 0,
+      "primary_language": "Go",
+      "commits": 135,
+      "commits_share": 8.5,
+      "additions": 53646,
+      "deletions": 18418,
+      "net_lines": 35228,
+      "prs_total": 126,
+      "prs_merged": 116,
+      "issues_total": 59,
+      "issues_closed": 56,
+      "active_days": 26,
+      "first_commit": "2026-08-01T07:58:56-04:00",
+      "last_commit": "2026-10-06T17:45:51-04:00"
+    },
+    {
       "name": "skills",
       "description": "Repository",
       "is_private": true,
@@ -380,7 +400,7 @@
       "forks": 0,
       "primary_language": "JSON",
       "commits": 133,
-      "commits_share": 8.4,
+      "commits_share": 8.3,
       "additions": 154752,
       "deletions": 1149186,
       "net_lines": -994434,
@@ -393,44 +413,24 @@
       "last_commit": "2026-10-03T14:43:49-04:00"
     },
     {
-      "name": "gh-x",
-      "description": "GitHub CLI extension for richer repository workflows",
-      "is_private": false,
-      "stars": 0,
-      "forks": 0,
-      "primary_language": "Go",
-      "commits": 131,
-      "commits_share": 8.3,
-      "additions": 53229,
-      "deletions": 18410,
-      "net_lines": 34819,
-      "prs_total": 121,
-      "prs_merged": 110,
-      "issues_total": 59,
-      "issues_closed": 53,
-      "active_days": 26,
-      "first_commit": "2026-08-01T07:58:56-04:00",
-      "last_commit": "2026-10-06T15:53:59-04:00"
-    },
-    {
       "name": "set-it-free-loop",
       "description": "Solving Software Engineering Development through the art of the Agentic Loop -- The Set it Free Loop\u2122 \ud83d\ude80",
       "is_private": true,
       "stars": 1,
       "forks": 0,
       "primary_language": "JSON",
-      "commits": 112,
-      "commits_share": 7.1,
-      "additions": 92666,
-      "deletions": 69469,
-      "net_lines": 23197,
-      "prs_total": 72,
+      "commits": 117,
+      "commits_share": 7.3,
+      "additions": 102925,
+      "deletions": 69587,
+      "net_lines": 33338,
+      "prs_total": 73,
       "prs_merged": 70,
-      "issues_total": 58,
-      "issues_closed": 57,
-      "active_days": 13,
+      "issues_total": 63,
+      "issues_closed": 58,
+      "active_days": 14,
       "first_commit": "2026-07-25T19:23:37-04:00",
-      "last_commit": "2026-08-20T00:21:55-04:00"
+      "last_commit": "2026-10-06T17:46:21-04:00"
     },
     {
       "name": "hoarders-heaven",
@@ -440,7 +440,7 @@
       "forks": 0,
       "primary_language": "C++",
       "commits": 106,
-      "commits_share": 6.7,
+      "commits_share": 6.6,
       "additions": 81704,
       "deletions": 4555,
       "net_lines": 77149,
@@ -500,7 +500,7 @@
       "forks": 0,
       "primary_language": "Markdown",
       "commits": 39,
-      "commits_share": 2.5,
+      "commits_share": 2.4,
       "additions": 286,
       "deletions": 204,
       "net_lines": 82,
@@ -533,26 +533,6 @@
       "last_commit": "2026-10-03T16:17:51-04:00"
     },
     {
-      "name": "reports",
-      "description": "Repository",
-      "is_private": false,
-      "stars": 0,
-      "forks": 0,
-      "primary_language": "JSON",
-      "commits": 38,
-      "commits_share": 2.4,
-      "additions": 38494,
-      "deletions": 1450,
-      "net_lines": 37044,
-      "prs_total": 35,
-      "prs_merged": 31,
-      "issues_total": 18,
-      "issues_closed": 18,
-      "active_days": 4,
-      "first_commit": "2026-09-05T13:22:22-04:00",
-      "last_commit": "2026-10-06T15:46:57-04:00"
-    },
-    {
       "name": "codexbar",
       "description": "Repository",
       "is_private": false,
@@ -571,6 +551,26 @@
       "active_days": 5,
       "first_commit": "2026-07-21T20:34:27-04:00",
       "last_commit": "2026-10-03T19:33:08-04:00"
+    },
+    {
+      "name": "reports",
+      "description": "Repository",
+      "is_private": false,
+      "stars": 0,
+      "forks": 0,
+      "primary_language": "JSON",
+      "commits": 37,
+      "commits_share": 2.3,
+      "additions": 42829,
+      "deletions": 6634,
+      "net_lines": 36195,
+      "prs_total": 36,
+      "prs_merged": 32,
+      "issues_total": 19,
+      "issues_closed": 19,
+      "active_days": 4,
+      "first_commit": "2026-09-05T13:22:22-04:00",
+      "last_commit": "2026-10-06T17:39:30-04:00"
     },
     {
       "name": "minibot",
@@ -1376,30 +1376,30 @@
   "language_breakdown": [
     {
       "language": "Other",
-      "additions": 31974,
-      "deletions": 1833129,
-      "net_lines": -1801155,
-      "total_churn": 1865103,
-      "files_count": 2005,
-      "commits_count": 285
+      "additions": 32094,
+      "deletions": 1833130,
+      "net_lines": -1801036,
+      "total_churn": 1865224,
+      "files_count": 2006,
+      "commits_count": 286
     },
     {
       "language": "JSON",
-      "additions": 203801,
-      "deletions": 923139,
-      "net_lines": -719338,
-      "total_churn": 1126940,
-      "files_count": 780,
-      "commits_count": 421
+      "additions": 217445,
+      "deletions": 927595,
+      "net_lines": -710150,
+      "total_churn": 1145040,
+      "files_count": 783,
+      "commits_count": 425
     },
     {
       "language": "Markdown",
-      "additions": 100027,
-      "deletions": 139053,
-      "net_lines": -39026,
-      "total_churn": 239080,
-      "files_count": 2492,
-      "commits_count": 1214
+      "additions": 100261,
+      "deletions": 139098,
+      "net_lines": -38837,
+      "total_churn": 239359,
+      "files_count": 2493,
+      "commits_count": 1221
     },
     {
       "language": "Swift",
@@ -1421,48 +1421,48 @@
     },
     {
       "language": "YAML",
-      "additions": 53525,
-      "deletions": 47034,
-      "net_lines": 6491,
-      "total_churn": 100559,
-      "files_count": 148,
+      "additions": 53555,
+      "deletions": 47033,
+      "net_lines": 6522,
+      "total_churn": 100588,
+      "files_count": 149,
       "commits_count": 338
     },
     {
       "language": "HTML",
-      "additions": 12981,
-      "deletions": 71009,
-      "net_lines": -58028,
-      "total_churn": 83990,
-      "files_count": 114,
+      "additions": 13170,
+      "deletions": 71179,
+      "net_lines": -58009,
+      "total_churn": 84349,
+      "files_count": 117,
       "commits_count": 70
     },
     {
       "language": "PowerShell",
-      "additions": 23733,
+      "additions": 23735,
       "deletions": 53488,
-      "net_lines": -29755,
-      "total_churn": 77221,
+      "net_lines": -29753,
+      "total_churn": 77223,
       "files_count": 412,
-      "commits_count": 168
+      "commits_count": 167
     },
     {
       "language": "Go",
-      "additions": 62593,
-      "deletions": 13743,
-      "net_lines": 48850,
-      "total_churn": 76336,
+      "additions": 62847,
+      "deletions": 13747,
+      "net_lines": 49100,
+      "total_churn": 76594,
       "files_count": 224,
-      "commits_count": 126
+      "commits_count": 127
     },
     {
       "language": "Python",
-      "additions": 35610,
-      "deletions": 31067,
-      "net_lines": 4543,
-      "total_churn": 66677,
-      "files_count": 255,
-      "commits_count": 110
+      "additions": 36132,
+      "deletions": 31708,
+      "net_lines": 4424,
+      "total_churn": 67840,
+      "files_count": 257,
+      "commits_count": 112
     },
     {
       "language": "C++",
@@ -1475,12 +1475,12 @@
     },
     {
       "language": "JavaScript",
-      "additions": 18363,
+      "additions": 18391,
       "deletions": 1985,
-      "net_lines": 16378,
-      "total_churn": 20348,
-      "files_count": 53,
-      "commits_count": 28
+      "net_lines": 16406,
+      "total_churn": 20376,
+      "files_count": 54,
+      "commits_count": 27
     },
     {
       "language": "TypeScript (React)",
@@ -1520,12 +1520,12 @@
     },
     {
       "language": "Shell",
-      "additions": 5480,
-      "deletions": 700,
+      "additions": 5484,
+      "deletions": 704,
       "net_lines": 4780,
-      "total_churn": 6180,
+      "total_churn": 6188,
       "files_count": 50,
-      "commits_count": 63
+      "commits_count": 64
     },
     {
       "language": "CSS",
@@ -1558,7 +1558,7 @@
   "temporal": {
     "day_counts": {
       "Monday": 164,
-      "Tuesday": 249,
+      "Tuesday": 258,
       "Wednesday": 274,
       "Thursday": 233,
       "Friday": 192,
@@ -1581,9 +1581,9 @@
       "12": 70,
       "13": 72,
       "14": 56,
-      "15": 42,
-      "16": 69,
-      "17": 85,
+      "15": 37,
+      "16": 72,
+      "17": 96,
       "18": 78,
       "19": 96,
       "20": 84,
@@ -1634,9 +1634,9 @@
         12,
         10,
         12,
-        13,
-        12,
-        13,
+        8,
+        15,
+        24,
         10,
         14,
         21,
@@ -1787,14 +1787,102 @@
   },
   "recent_prs": [
     {
-      "number": 180,
-      "title": "chore: apply Go quality gates to release and review helpers",
+      "number": 185,
+      "title": "docs: record v0.15.4 release",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T21:45:53Z",
+      "closedAt": "2026-10-06T21:52:45Z",
+      "mergedAt": "2026-10-06T21:52:45Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/185",
+      "cycle_hours": 0.11,
+      "repo": "gh-x"
+    },
+    {
+      "number": 55,
+      "title": "Replace landing page with a factual report table",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T21:31:04Z",
+      "closedAt": "2026-10-06T21:39:31Z",
+      "mergedAt": "2026-10-06T21:39:31Z",
+      "url": "https://github.com/HemSoft/reports/pull/55",
+      "cycle_hours": 0.14,
+      "repo": "reports"
+    },
+    {
+      "number": 140,
+      "title": "Prepare the organization migration inventory and runbook",
       "state": "OPEN",
-      "createdAt": "2026-10-06T19:48:06Z",
+      "createdAt": "2026-10-06T21:27:31Z",
       "closedAt": null,
       "mergedAt": null,
-      "url": "https://github.com/HemSoft/gh-x/pull/180",
+      "url": "https://github.com/HemSoft/set-it-free-loop/pull/140",
       "cycle_hours": null,
+      "repo": "set-it-free-loop"
+    },
+    {
+      "number": 184,
+      "title": "fix: preserve session disclosure focus across dashboard refreshes",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T21:24:28Z",
+      "closedAt": "2026-10-06T21:37:35Z",
+      "mergedAt": "2026-10-06T21:37:35Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/184",
+      "cycle_hours": 0.22,
+      "repo": "gh-x"
+    },
+    {
+      "number": 183,
+      "title": "docs: record v0.15.3 release",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T21:09:52Z",
+      "closedAt": "2026-10-06T21:17:09Z",
+      "mergedAt": "2026-10-06T21:17:09Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/183",
+      "cycle_hours": 0.12,
+      "repo": "gh-x"
+    },
+    {
+      "number": 182,
+      "title": "test: isolate status cache authentication fixtures",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T20:50:35Z",
+      "closedAt": "2026-10-06T21:02:06Z",
+      "mergedAt": "2026-10-06T21:02:06Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/182",
+      "cycle_hours": 0.19,
+      "repo": "gh-x"
+    },
+    {
+      "number": 181,
+      "title": "docs: record v0.15.2 release",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T20:34:47Z",
+      "closedAt": "2026-10-06T20:42:53Z",
+      "mergedAt": "2026-10-06T20:42:53Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/181",
+      "cycle_hours": 0.14,
+      "repo": "gh-x"
+    },
+    {
+      "number": 412,
+      "title": "fix: require all 27 manual release UI journeys",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T20:07:39Z",
+      "closedAt": "2026-10-06T21:00:22Z",
+      "mergedAt": "2026-10-06T21:00:22Z",
+      "url": "https://github.com/HemSoft/codexbar-ios/pull/412",
+      "cycle_hours": 0.88,
+      "repo": "codexbar-ios"
+    },
+    {
+      "number": 180,
+      "title": "chore: apply Go quality gates to release and review helpers",
+      "state": "MERGED",
+      "createdAt": "2026-10-06T19:48:06Z",
+      "closedAt": "2026-10-06T20:25:32Z",
+      "mergedAt": "2026-10-06T20:25:32Z",
+      "url": "https://github.com/HemSoft/gh-x/pull/180",
+      "cycle_hours": 0.62,
       "repo": "gh-x"
     },
     {
@@ -2247,122 +2335,660 @@
       "url": "https://github.com/HemSoft/yahtzee/pull/66",
       "cycle_hours": null,
       "repo": "yahtzee"
-    },
-    {
-      "number": 65,
-      "title": "chore(deps): bump @react-native-async-storage/async-storage from 2.2.0 to 3.1.1",
-      "state": "OPEN",
-      "createdAt": "2026-10-02T14:05:24Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "url": "https://github.com/HemSoft/yahtzee/pull/65",
-      "cycle_hours": null,
-      "repo": "yahtzee"
-    },
-    {
-      "number": 64,
-      "title": "chore(deps): bump github/gh-aw-actions/setup from 0.89.17 to 0.90.0",
-      "state": "OPEN",
-      "createdAt": "2026-10-02T14:05:23Z",
-      "closedAt": null,
-      "mergedAt": null,
-      "url": "https://github.com/HemSoft/yahtzee/pull/64",
-      "cycle_hours": null,
-      "repo": "yahtzee"
-    },
-    {
-      "number": 392,
-      "title": "feat: add an opt-in Codex credits pool metric",
-      "state": "MERGED",
-      "createdAt": "2026-10-02T07:32:02Z",
-      "closedAt": "2026-10-02T10:03:53Z",
-      "mergedAt": "2026-10-02T10:03:53Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/392",
-      "cycle_hours": 2.53,
-      "repo": "codexbar-ios"
-    },
-    {
-      "number": 390,
-      "title": "fix: label Claude usage windows 5-hour and Weekly",
-      "state": "MERGED",
-      "createdAt": "2026-10-02T03:41:48Z",
-      "closedAt": "2026-10-02T04:32:36Z",
-      "mergedAt": "2026-10-02T04:32:36Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/390",
-      "cycle_hours": 0.85,
-      "repo": "codexbar-ios"
-    },
-    {
-      "number": 389,
-      "title": "fix: restore Cursor spending and clarify Grok usage",
-      "state": "MERGED",
-      "createdAt": "2026-10-02T00:58:19Z",
-      "closedAt": "2026-10-02T02:27:12Z",
-      "mergedAt": "2026-10-02T02:27:11Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/389",
-      "cycle_hours": 1.48,
-      "repo": "codexbar-ios"
-    },
-    {
-      "number": 387,
-      "title": "fix: keep History chart dates readable at viewport edges",
-      "state": "MERGED",
-      "createdAt": "2026-10-01T14:40:24Z",
-      "closedAt": "2026-10-01T22:11:00Z",
-      "mergedAt": "2026-10-01T22:11:00Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/387",
-      "cycle_hours": 7.51,
-      "repo": "codexbar-ios"
-    },
-    {
-      "number": 52,
-      "title": "chore: refresh model prices and deployment packaging",
-      "state": "MERGED",
-      "createdAt": "2026-10-01T14:38:23Z",
-      "closedAt": "2026-10-03T17:18:45Z",
-      "mergedAt": "2026-10-03T17:18:45Z",
-      "url": "https://github.com/HemSoft/hs-tui-launcher/pull/52",
-      "cycle_hours": 50.67,
-      "repo": "hs-tui-launcher"
-    },
-    {
-      "number": 385,
-      "title": "chore: prepare 1.4.0 storefront assets and security review",
-      "state": "MERGED",
-      "createdAt": "2026-10-01T07:45:54Z",
-      "closedAt": "2026-10-01T21:30:12Z",
-      "mergedAt": "2026-10-01T21:30:12Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/385",
-      "cycle_hours": 13.74,
-      "repo": "codexbar-ios"
     }
   ],
   "recent_commits": [
     {
-      "hash": "783e34e32d96a223726c4c058ff45a2062cd5c79",
+      "hash": "b8fb055cc2c48ebc29afda59d8d4c4d8d06cbd57",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:46:21-04:00",
+      "timestamp": 1791323181.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "docs: record effective protections and organization avatar",
+      "additions": 408,
+      "deletions": 6,
+      "files": [
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 13,
+          "dels": 4,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/owner-verification.json",
+          "adds": 395,
+          "dels": 2,
+          "language": "JSON"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 402
+    },
+    {
+      "hash": "2c8b634eece1ede6e3abbe8d491f6d74af7bebea",
+      "repo": "gh-x",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-06T17:45:51-04:00",
+      "timestamp": 1791323151.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "docs: record v0.15.4 release",
+      "additions": 7,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "adds": 7,
+          "dels": 1,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 6
+    },
+    {
+      "hash": "bb12bf5f47c5655c489a31087dedb51c7bb279e5",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:43:09-04:00",
+      "timestamp": 1791322989.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "docs: verify organization setup and App installation coverage",
+      "additions": 336,
+      "deletions": 101,
+      "files": [
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 37,
+          "dels": 26,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/inventory.json",
+          "adds": 104,
+          "dels": 75,
+          "language": "JSON"
+        },
+        {
+          "path": "docs/organization-migration/owner-verification.json",
+          "adds": 195,
+          "dels": 0,
+          "language": "JSON"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 235
+    },
+    {
+      "hash": "3f7f881504871c261b23742d190052f658a6f50d",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:40:30-04:00",
+      "timestamp": 1791322830.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "fix: enforce complete inventory and destination validation",
+      "additions": 113,
+      "deletions": 11,
+      "files": [
+        {
+          "path": "deployment/scripts/capture-org-migration.py",
+          "adds": 45,
+          "dels": 3,
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_migration.py",
+          "adds": 52,
+          "dels": 0,
+          "language": "Python"
+        },
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 15,
+          "dels": 7,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/inventory.json",
+          "adds": 1,
+          "dels": 1,
+          "language": "JSON"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 102
+    },
+    {
+      "hash": "f4b3be8903c36d1b47b4af25ab59e34d4103fa9a",
+      "repo": "reports",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:39:30-04:00",
+      "timestamp": 1791322770.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "feat: replace landing page with factual report table (#54) (#55)",
+      "additions": 364,
+      "deletions": 643,
+      "files": [
+        {
+          "path": "README.md",
+          "adds": 6,
+          "dels": 3,
+          "language": "Markdown"
+        },
+        {
+          "path": "scripts/generate_fixture.py",
+          "adds": 36,
+          "dels": 0,
+          "language": "Python"
+        },
+        {
+          "path": "src/landing.py",
+          "adds": 108,
+          "dels": 571,
+          "language": "Python"
+        },
+        {
+          "path": "tests/browser/landing.spec.js",
+          "adds": 108,
+          "dels": 0,
+          "language": "JavaScript"
+        },
+        {
+          "path": "tests/test_landing.py",
+          "adds": 106,
+          "dels": 69,
+          "language": "Python"
+        }
+      ],
+      "category": "Feature",
+      "net_lines": -279
+    },
+    {
+      "hash": "d79e450c9dbaa1c174d0a17f4c60b3c953809131",
       "repo": "gh-x",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
       "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T15:53:59-04:00",
-      "timestamp": 1791316439.0,
+      "author_date": "2026-10-06T17:37:35-04:00",
+      "timestamp": 1791322655.0,
       "day_of_week": "Tuesday",
       "day_index": 1,
-      "hour": 15,
+      "hour": 17,
       "date_str": "2026-10-06",
-      "subject": "test: return success after asserted failing audit fixtures",
-      "additions": 4,
+      "subject": "fix: preserve dashboard session keyboard focus across refreshes (#184)",
+      "additions": 138,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "src/codex-dashboard/dashboard-ui.mjs",
+          "adds": 13,
+          "dels": 1,
+          "language": "Other"
+        },
+        {
+          "path": "src/codex-dashboard/dashboard-ui.test.mjs",
+          "adds": 47,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "tests/browser/session-focus.html",
+          "adds": 18,
+          "dels": 0,
+          "language": "HTML"
+        },
+        {
+          "path": "tests/browser/session-focus.mjs",
+          "adds": 60,
+          "dels": 0,
+          "language": "Other"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 137
+    },
+    {
+      "hash": "8d83bc06449719a2765be04e6774fa7fdad4a97c",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:31:20-04:00",
+      "timestamp": 1791322280.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "fix: verify source coverage and collision capture",
+      "additions": 21,
       "deletions": 0,
       "files": [
         {
-          "path": ".agents/skills/perfection/scripts/test-audit.ps1",
-          "adds": 4,
+          "path": "deployment/scripts/capture-org-migration.py",
+          "adds": 2,
           "dels": 0,
-          "language": "PowerShell"
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_migration.py",
+          "adds": 19,
+          "dels": 0,
+          "language": "Python"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 21
+    },
+    {
+      "hash": "e2ef1fa9e35e811fdd0d879257032d2d398bf115",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:27:09-04:00",
+      "timestamp": 1791322029.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "chore: prepare organization migration inventory (#135)",
+      "additions": 9381,
+      "deletions": 0,
+      "files": [
+        {
+          "path": ".github/workflows/validate-org-migration.yml",
+          "adds": 32,
+          "dels": 0,
+          "language": "YAML"
+        },
+        {
+          "path": "deployment/scripts/capture-org-migration.py",
+          "adds": 196,
+          "dels": 0,
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_migration.py",
+          "adds": 103,
+          "dels": 0,
+          "language": "Python"
+        },
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 203,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/inventory.json",
+          "adds": 8847,
+          "dels": 0,
+          "language": "JSON"
+        }
+      ],
+      "category": "Chore / Maintenance",
+      "net_lines": 9381
+    },
+    {
+      "hash": "fbac8e49f1df53e42949b4c1fd0305a1f23be06e",
+      "repo": "gh-x",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-06T17:17:08-04:00",
+      "timestamp": 1791321428.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "docs: record v0.15.3 release (#183)",
+      "additions": 7,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "adds": 7,
+          "dels": 1,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 6
+    },
+    {
+      "hash": "9f16d12fdbe7bf7afe55d52071cc2489bdf4855b",
+      "repo": "gh-x",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:02:05-04:00",
+      "timestamp": 1791320525.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "test: isolate status cache authentication fixtures (#175) (#182)",
+      "additions": 87,
+      "deletions": 0,
+      "files": [
+        {
+          "path": "src/statuscache_test.go",
+          "adds": 87,
+          "dels": 0,
+          "language": "Go"
         }
       ],
       "category": "Testing",
-      "net_lines": 4
+      "net_lines": 87
+    },
+    {
+      "hash": "ed82400c5e730365cc2c6666cb9a9ee008d440c4",
+      "repo": "codexbar-ios",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T17:00:22-04:00",
+      "timestamp": 1791320422.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 17,
+      "date_str": "2026-10-06",
+      "subject": "fix: require all 27 manual release UI journeys (#412)",
+      "additions": 16,
+      "deletions": 10,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "adds": 6,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "CI-POLICY.md",
+          "adds": 2,
+          "dels": 2,
+          "language": "Markdown"
+        },
+        {
+          "path": "UI-TESTING.md",
+          "adds": 1,
+          "dels": 1,
+          "language": "Markdown"
+        },
+        {
+          "path": "scripts/run-ui-tests.sh",
+          "adds": 4,
+          "dels": 4,
+          "language": "Shell"
+        },
+        {
+          "path": "scripts/tests/test_ci_policy.py",
+          "adds": 3,
+          "dels": 3,
+          "language": "Python"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 6
+    },
+    {
+      "hash": "ee6246247870c5ed424c34f58e684528e4f45a3e",
+      "repo": "gh-x",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-06T16:42:52-04:00",
+      "timestamp": 1791319372.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 16,
+      "date_str": "2026-10-06",
+      "subject": "docs: record v0.15.2 release (#181)",
+      "additions": 7,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "adds": 7,
+          "dels": 1,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 6
+    },
+    {
+      "hash": "e81cd570b381c7766e3e1cc34811e76a3c96d97f",
+      "repo": "gh-x",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T16:25:31-04:00",
+      "timestamp": 1791318331.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 16,
+      "date_str": "2026-10-06",
+      "subject": "chore: apply Go quality gates to release and review helpers (#180)",
+      "additions": 888,
+      "deletions": 268,
+      "files": [
+        {
+          "path": ".agents/skills/perfection/History/2026-10-06.md",
+          "adds": 3,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": ".agents/skills/perfection/SKILL.md",
+          "adds": 3,
+          "dels": 1,
+          "language": "Markdown"
+        },
+        {
+          "path": ".agents/skills/perfection/scripts/audit-plan.ps1",
+          "adds": 11,
+          "dels": 11,
+          "language": "PowerShell"
+        },
+        {
+          "path": ".agents/skills/perfection/scripts/perfection-audit.ps1",
+          "adds": 24,
+          "dels": 11,
+          "language": "PowerShell"
+        },
+        {
+          "path": ".agents/skills/perfection/scripts/test-audit.ps1",
+          "adds": 35,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": ".github/scripts/audit_inventory_test.go",
+          "adds": 85,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-check/main.go",
+          "adds": 35,
+          "dels": 28,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-check/main_test.go",
+          "adds": 1,
+          "dels": 1,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-merge/main.go",
+          "adds": 26,
+          "dels": 11,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-merge/main_test.go",
+          "adds": 35,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-merge/request.go",
+          "adds": 22,
+          "dels": 13,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-merge/request_test.go",
+          "adds": 3,
+          "dels": 2,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/changelog-merge/reviews.go",
+          "adds": 53,
+          "dels": 46,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/release-plan/commands_test.go",
+          "adds": 261,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/release-plan/main.go",
+          "adds": 46,
+          "dels": 29,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/release-targets/main.go",
+          "adds": 23,
+          "dels": 18,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/release-targets/main_test.go",
+          "adds": 59,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/validate-main-ruleset.go",
+          "adds": 126,
+          "dels": 6,
+          "language": "Go"
+        },
+        {
+          "path": ".github/scripts/validate-main-ruleset_test.go",
+          "adds": 14,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": ".github/workflows/ci.yml",
+          "adds": 14,
+          "dels": 91,
+          "language": "YAML"
+        },
+        {
+          "path": "README.md",
+          "adds": 9,
+          "dels": 0,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Chore / Maintenance",
+      "net_lines": 620
+    },
+    {
+      "hash": "8aafe31ba36ecfd1b0f70fa2deb375323f1f1ef4",
+      "repo": "reports",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898283+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-06T16:00:27-04:00",
+      "timestamp": 1791316827.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 16,
+      "date_str": "2026-10-06",
+      "subject": "Publish productivity edition 2026-10-06 and sync static reports",
+      "additions": 10142,
+      "deletions": 4554,
+      "files": [
+        {
+          "path": "catalog.json",
+          "adds": 43,
+          "dels": 4,
+          "language": "JSON"
+        },
+        {
+          "path": "index.html",
+          "adds": 6,
+          "dels": 6,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/dune-awakening/2026-10-05/index.html",
+          "adds": 221,
+          "dels": 0,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/dune-awakening/2026-10-05/payload.json",
+          "adds": 5603,
+          "dels": 0,
+          "language": "JSON"
+        },
+        {
+          "path": "reports/dune-awakening/index.html",
+          "adds": 1,
+          "dels": 0,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/productivity/2026-10-06/index.html",
+          "adds": 170,
+          "dels": 170,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/productivity/2026-10-06/payload.json",
+          "adds": 4098,
+          "dels": 4374,
+          "language": "JSON"
+        }
+      ],
+      "category": "Feature",
+      "net_lines": 5588
     },
     {
       "hash": "bcd7272dc1540c389f28f50cb6bde493719fc9a5",
@@ -2449,314 +3075,6 @@
       ],
       "category": "Feature",
       "net_lines": 6158
-    },
-    {
-      "hash": "272db58b1ad48efe33bf45b89f52d036669cc414",
-      "repo": "gh-x",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T15:44:16-04:00",
-      "timestamp": 1791315856.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 15,
-      "date_str": "2026-10-06",
-      "subject": "chore: apply Go quality gates to release and review helpers (#174)",
-      "additions": 713,
-      "deletions": 264,
-      "files": [
-        {
-          "path": ".agents/skills/perfection/History/2026-10-06.md",
-          "adds": 3,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": ".agents/skills/perfection/SKILL.md",
-          "adds": 3,
-          "dels": 1,
-          "language": "Markdown"
-        },
-        {
-          "path": ".agents/skills/perfection/scripts/audit-plan.ps1",
-          "adds": 11,
-          "dels": 11,
-          "language": "PowerShell"
-        },
-        {
-          "path": ".agents/skills/perfection/scripts/perfection-audit.ps1",
-          "adds": 24,
-          "dels": 11,
-          "language": "PowerShell"
-        },
-        {
-          "path": ".agents/skills/perfection/scripts/test-audit.ps1",
-          "adds": 29,
-          "dels": 0,
-          "language": "PowerShell"
-        },
-        {
-          "path": ".github/scripts/audit_inventory_test.go",
-          "adds": 41,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-check/main.go",
-          "adds": 35,
-          "dels": 28,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-check/main_test.go",
-          "adds": 1,
-          "dels": 1,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-merge/main.go",
-          "adds": 26,
-          "dels": 11,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-merge/main_test.go",
-          "adds": 29,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-merge/request.go",
-          "adds": 22,
-          "dels": 13,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-merge/request_test.go",
-          "adds": 3,
-          "dels": 2,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/changelog-merge/reviews.go",
-          "adds": 53,
-          "dels": 46,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/release-plan/commands_test.go",
-          "adds": 258,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/release-plan/main.go",
-          "adds": 46,
-          "dels": 29,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/release-targets/main.go",
-          "adds": 23,
-          "dels": 18,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/release-targets/main_test.go",
-          "adds": 32,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/validate-main-ruleset.go",
-          "adds": 48,
-          "dels": 2,
-          "language": "Go"
-        },
-        {
-          "path": ".github/scripts/validate-main-ruleset_test.go",
-          "adds": 5,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 14,
-          "dels": 91,
-          "language": "YAML"
-        },
-        {
-          "path": "README.md",
-          "adds": 7,
-          "dels": 0,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Chore / Maintenance",
-      "net_lines": 449
-    },
-    {
-      "hash": "aeda9ac6e7aad4ed094e0f6ef5d05d51a021d22f",
-      "repo": "reports",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T15:37:54-04:00",
-      "timestamp": 1791315474.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 15,
-      "date_str": "2026-10-06",
-      "subject": "fix: validate static editions and preserve loot lookup accessibility",
-      "additions": 40,
-      "deletions": 9,
-      "files": [
-        {
-          "path": "editions/dune-awakening/2026-10-05/report.html",
-          "adds": 9,
-          "dels": 6,
-          "language": "HTML"
-        },
-        {
-          "path": "publish.py",
-          "adds": 6,
-          "dels": 3,
-          "language": "Python"
-        },
-        {
-          "path": "tests/browser/static-report.spec.js",
-          "adds": 13,
-          "dels": 0,
-          "language": "JavaScript"
-        },
-        {
-          "path": "tests/test_static_editions.py",
-          "adds": 12,
-          "dels": 0,
-          "language": "Python"
-        }
-      ],
-      "category": "Bug Fix",
-      "net_lines": 31
-    },
-    {
-      "hash": "0ff0fd0c128c570a96dc531c648f20227bb04fd1",
-      "repo": "reports",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T15:32:38-04:00",
-      "timestamp": 1791315158.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 15,
-      "date_str": "2026-10-06",
-      "subject": "test: lock Dune snapshot size and link its published edition",
-      "additions": 2,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "README.md",
-          "adds": 1,
-          "dels": 1,
-          "language": "Markdown"
-        },
-        {
-          "path": "tests/test_static_editions.py",
-          "adds": 1,
-          "dels": 0,
-          "language": "Python"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": 1
-    },
-    {
-      "hash": "29b5fac832ec67069b140f4ec2e3f70c9c6a6f78",
-      "repo": "reports",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T15:27:29-04:00",
-      "timestamp": 1791314849.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 15,
-      "date_str": "2026-10-06",
-      "subject": "feat: publish branded Dune Awakening loot report",
-      "additions": 6129,
-      "deletions": 3,
-      "files": [
-        {
-          "path": ".github/workflows/pages.yml",
-          "adds": 2,
-          "dels": 1,
-          "language": "YAML"
-        },
-        {
-          "path": "README.md",
-          "adds": 25,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "editions/dune-awakening/2026-10-05/manifest.json",
-          "adds": 39,
-          "dels": 0,
-          "language": "JSON"
-        },
-        {
-          "path": "editions/dune-awakening/2026-10-05/payload.json",
-          "adds": 5603,
-          "dels": 0,
-          "language": "JSON"
-        },
-        {
-          "path": "editions/dune-awakening/2026-10-05/report.html",
-          "adds": 218,
-          "dels": 0,
-          "language": "HTML"
-        },
-        {
-          "path": "editions/dune-awakening/2026-10-05/sources.md",
-          "adds": 46,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "publish.py",
-          "adds": 30,
-          "dels": 1,
-          "language": "Python"
-        },
-        {
-          "path": "scripts/check_mutations.py",
-          "adds": 1,
-          "dels": 1,
-          "language": "Python"
-        },
-        {
-          "path": "tests/browser/static-report.spec.js",
-          "adds": 67,
-          "dels": 0,
-          "language": "JavaScript"
-        },
-        {
-          "path": "tests/test_mutation_gate.py",
-          "adds": 15,
-          "dels": 0,
-          "language": "Python"
-        },
-        {
-          "path": "tests/test_static_editions.py",
-          "adds": 83,
-          "dels": 0,
-          "language": "Python"
-        }
-      ],
-      "category": "Feature",
-      "net_lines": 6126
     },
     {
       "hash": "cf0c4b6ae77687a93dfb6afb7d195841e87d3176",
@@ -7774,744 +8092,6 @@
       ],
       "category": "Chore / Maintenance",
       "net_lines": 92
-    },
-    {
-      "hash": "6bc017ec414360dda5428f3d39d8e663b61ad4b9",
-      "repo": "survival-shelter-opus55",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-03T01:44:49-04:00",
-      "timestamp": 1791006289.0,
-      "day_of_week": "Saturday",
-      "day_index": 5,
-      "hour": 1,
-      "date_str": "2026-10-03",
-      "subject": "chore: add PROMPTS.md and cleanup history",
-      "additions": 10,
-      "deletions": 0,
-      "files": [
-        {
-          "path": "History/2026-10-03.md",
-          "adds": 5,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "PROMPTS.md",
-          "adds": 5,
-          "dels": 0,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Chore / Maintenance",
-      "net_lines": 10
-    },
-    {
-      "hash": "987ede0e961ea67914c629b199d7d4e29018ef6a",
-      "repo": "codexbar-ios",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-03T01:16:59-04:00",
-      "timestamp": 1791004619.0,
-      "day_of_week": "Saturday",
-      "day_index": 5,
-      "hour": 1,
-      "date_str": "2026-10-03",
-      "subject": "fix: label Codex 30-day limits in days (#394)",
-      "additions": 185,
-      "deletions": 10,
-      "files": [
-        {
-          "path": "CHANGELOG.md",
-          "adds": 4,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "CI-POLICY.md",
-          "adds": 2,
-          "dels": 2,
-          "language": "Markdown"
-        },
-        {
-          "path": "CodexBarIOS/Services/CodexUsageParser.swift",
-          "adds": 2,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "CodexBarIOS/Services/UITestFixtures.swift",
-          "adds": 17,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "CodexBarIOSUITests/CodexCreditsPoolUITests.swift",
-          "adds": 49,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "CodexUsageTests/CodexWindowLabelTests.swift",
-          "adds": 95,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "UI-TESTING.md",
-          "adds": 9,
-          "dels": 1,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/run-ui-tests.sh",
-          "adds": 4,
-          "dels": 4,
-          "language": "Shell"
-        },
-        {
-          "path": "scripts/tests/test_ci_policy.py",
-          "adds": 3,
-          "dels": 3,
-          "language": "Python"
-        }
-      ],
-      "category": "Bug Fix",
-      "net_lines": 175
-    },
-    {
-      "hash": "f53bd8ee4abcb62193f1f9b361be57872941bd74",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-03T00:23:58-04:00",
-      "timestamp": 1791001438.0,
-      "day_of_week": "Saturday",
-      "day_index": 5,
-      "hour": 0,
-      "date_str": "2026-10-03",
-      "subject": "ci: qualify launcher handoff across supported platforms (#51)",
-      "additions": 778,
-      "deletions": 4,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 83,
-          "dels": 2,
-          "language": "YAML"
-        },
-        {
-          "path": "CONTRIBUTING.md",
-          "adds": 52,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "README.md",
-          "adds": 5,
-          "dels": 2,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/Test-LauncherHandoff.ps1",
-          "adds": 466,
-          "dels": 0,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/handoff-fixtures/child.go.txt",
-          "adds": 81,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "scripts/handoff-fixtures/launcher.go.txt",
-          "adds": 91,
-          "dels": 0,
-          "language": "Other"
-        }
-      ],
-      "category": "CI / DevOps",
-      "net_lines": 774
-    },
-    {
-      "hash": "b3bb2bf83da3662e4341bc1c6fdb7cbb6454d7c5",
-      "repo": "hs-pi-dashboard",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-03T00:02:02-04:00",
-      "timestamp": 1791000122.0,
-      "day_of_week": "Saturday",
-      "day_index": 5,
-      "hour": 0,
-      "date_str": "2026-10-03",
-      "subject": "feat: report Claude Code sessions in the fleet dashboard",
-      "additions": 632,
-      "deletions": 23,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 2,
-          "dels": 2,
-          "language": "YAML"
-        },
-        {
-          "path": "History/2026-10-01.md",
-          "adds": 39,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "History/2026-10-03.md",
-          "adds": 13,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "README.md",
-          "adds": 18,
-          "dels": 5,
-          "language": "Markdown"
-        },
-        {
-          "path": "internal/agent/agent.go",
-          "adds": 13,
-          "dels": 7,
-          "language": "Go"
-        },
-        {
-          "path": "internal/agent/agent_test.go",
-          "adds": 51,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "internal/fleet/claude_test.go",
-          "adds": 50,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "internal/sessions/claude.go",
-          "adds": 175,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "internal/sessions/claude_test.go",
-          "adds": 182,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "internal/sessions/scan.go",
-          "adds": 38,
-          "dels": 7,
-          "language": "Go"
-        },
-        {
-          "path": "main.go",
-          "adds": 5,
-          "dels": 2,
-          "language": "Go"
-        },
-        {
-          "path": "scripts/sessions.test.cjs",
-          "adds": 46,
-          "dels": 0,
-          "language": "Other"
-        }
-      ],
-      "category": "Feature",
-      "net_lines": 609
-    },
-    {
-      "hash": "c649fea580c1ad07e67ae5cd43c057454778a678",
-      "repo": "hemsoft-bench",
-      "author_name": "Franz Hemmer",
-      "author_email": "8227352+HemSoft@users.noreply.github.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-03T00:01:57-04:00",
-      "timestamp": 1791000117.0,
-      "day_of_week": "Saturday",
-      "day_index": 5,
-      "hour": 0,
-      "date_str": "2026-10-03",
-      "subject": "fix: correct visual grading and clarify benchmark results",
-      "additions": 563,
-      "deletions": 145,
-      "files": [
-        {
-          "path": "DESIGN.md",
-          "adds": 1,
-          "dels": 1,
-          "language": "Markdown"
-        },
-        {
-          "path": "History/2026-09-30.md",
-          "adds": 8,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "History/2026-10-01.md",
-          "adds": 7,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "History/2026-10-03.md",
-          "adds": 3,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "internal/bench/types.go",
-          "adds": 14,
-          "dels": 13,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/model.go",
-          "adds": 68,
-          "dels": 19,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/model_test.go",
-          "adds": 21,
-          "dels": 1,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/results_detail_test.go",
-          "adds": 78,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/retry_test.go",
-          "adds": 1,
-          "dels": 1,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/score.go",
-          "adds": 24,
-          "dels": 15,
-          "language": "Go"
-        },
-        {
-          "path": "internal/tui/testdata/completed-narrow.txt",
-          "adds": 3,
-          "dels": 3,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/completed-small.txt",
-          "adds": 3,
-          "dels": 3,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/completed-wide.txt",
-          "adds": 4,
-          "dels": 4,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/delete-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/delete-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/delete-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/empty-history-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/empty-history-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/empty-history-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/history-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/history-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/history-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/home-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/home-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/home-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/interrupted-narrow.txt",
-          "adds": 5,
-          "dels": 5,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/interrupted-small.txt",
-          "adds": 4,
-          "dels": 4,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/interrupted-wide.txt",
-          "adds": 7,
-          "dels": 7,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/mixed-results-narrow.txt",
-          "adds": 26,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/mixed-results-small.txt",
-          "adds": 18,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/mixed-results-wide.txt",
-          "adds": 34,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/models-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/models-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/models-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/results-table-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/results-table-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/results-table-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/run-narrow.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/run-small.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/run-wide.txt",
-          "adds": 1,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-rated-narrow.txt",
-          "adds": 3,
-          "dels": 3,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-rated-small.txt",
-          "adds": 3,
-          "dels": 3,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-rated-wide.txt",
-          "adds": 5,
-          "dels": 5,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-results-narrow.txt",
-          "adds": 5,
-          "dels": 5,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-results-small.txt",
-          "adds": 5,
-          "dels": 5,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/testdata/visual-results-wide.txt",
-          "adds": 8,
-          "dels": 8,
-          "language": "Other"
-        },
-        {
-          "path": "internal/tui/visual_test.go",
-          "adds": 5,
-          "dels": 5,
-          "language": "Go"
-        },
-        {
-          "path": "package.json",
-          "adds": 1,
-          "dels": 1,
-          "language": "JSON"
-        },
-        {
-          "path": "src/cli.mjs",
-          "adds": 4,
-          "dels": 2,
-          "language": "Other"
-        },
-        {
-          "path": "src/scheduler-task.mjs",
-          "adds": 2,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "src/visual.mjs",
-          "adds": 9,
-          "dels": 3,
-          "language": "Other"
-        },
-        {
-          "path": "src/web-visual.mjs",
-          "adds": 18,
-          "dels": 6,
-          "language": "Other"
-        },
-        {
-          "path": "test/scheduler.integration.mjs",
-          "adds": 30,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "test/visual.integration.mjs",
-          "adds": 20,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "test/web-visual.integration.mjs",
-          "adds": 75,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "version.go",
-          "adds": 20,
-          "dels": 0,
-          "language": "Go"
-        }
-      ],
-      "category": "Bug Fix",
-      "net_lines": 418
-    },
-    {
-      "hash": "a3229d7cb09db1281923b3676772df8be98c1000",
-      "repo": "yahtzee",
-      "author_name": "dependabot[bot]",
-      "author_email": "49699333+dependabot[bot]@users.noreply.github.com",
-      "author_category": "Dependabot",
-      "author_date": "2026-10-02T10:05:40-04:00",
-      "timestamp": 1790949940.0,
-      "day_of_week": "Friday",
-      "day_index": 4,
-      "hour": 10,
-      "date_str": "2026-10-02",
-      "subject": "chore(deps-dev): bump vite from 7.3.6 to 8.3.1",
-      "additions": 26,
-      "deletions": 44,
-      "files": [
-        {
-          "path": "apps/desktop/package.json",
-          "adds": 1,
-          "dels": 1,
-          "language": "JSON"
-        },
-        {
-          "path": "apps/web/package.json",
-          "adds": 1,
-          "dels": 1,
-          "language": "JSON"
-        },
-        {
-          "path": "bun.lock",
-          "adds": 24,
-          "dels": 42,
-          "language": "Lockfile"
-        }
-      ],
-      "category": "Chore / Maintenance",
-      "net_lines": -18
-    },
-    {
-      "hash": "2352891b032fdd10fc6b0f24da2e61e2149480ec",
-      "repo": "yahtzee",
-      "author_name": "dependabot[bot]",
-      "author_email": "49699333+dependabot[bot]@users.noreply.github.com",
-      "author_category": "Dependabot",
-      "author_date": "2026-10-02T10:05:31-04:00",
-      "timestamp": 1790949931.0,
-      "day_of_week": "Friday",
-      "day_index": 4,
-      "hour": 10,
-      "date_str": "2026-10-02",
-      "subject": "chore(deps): bump react-native from 0.86.3 to 0.87.1",
-      "additions": 48,
-      "deletions": 62,
-      "files": [
-        {
-          "path": "apps/mobile/package.json",
-          "adds": 1,
-          "dels": 1,
-          "language": "JSON"
-        },
-        {
-          "path": "bun.lock",
-          "adds": 47,
-          "dels": 61,
-          "language": "Lockfile"
-        }
-      ],
-      "category": "Chore / Maintenance",
-      "net_lines": -14
-    },
-    {
-      "hash": "07b685500ecd7d56f55454aafb50763068092baa",
-      "repo": "yahtzee",
-      "author_name": "dependabot[bot]",
-      "author_email": "49699333+dependabot[bot]@users.noreply.github.com",
-      "author_category": "Dependabot",
-      "author_date": "2026-10-02T10:05:22-04:00",
-      "timestamp": 1790949922.0,
-      "day_of_week": "Friday",
-      "day_index": 4,
-      "hour": 10,
-      "date_str": "2026-10-02",
-      "subject": "chore(deps): bump @react-native-async-storage/async-storage",
-      "additions": 5,
-      "deletions": 7,
-      "files": [
-        {
-          "path": "apps/mobile/package.json",
-          "adds": 1,
-          "dels": 1,
-          "language": "JSON"
-        },
-        {
-          "path": "bun.lock",
-          "adds": 4,
-          "dels": 6,
-          "language": "Lockfile"
-        }
-      ],
-      "category": "Chore / Maintenance",
-      "net_lines": -2
-    },
-    {
-      "hash": "9fdfd1b96ba7ac31ef807631ce766b05fb831341",
-      "repo": "yahtzee",
-      "author_name": "dependabot[bot]",
-      "author_email": "49699333+dependabot[bot]@users.noreply.github.com",
-      "author_category": "Dependabot",
-      "author_date": "2026-10-02T10:05:22-04:00",
-      "timestamp": 1790949922.0,
-      "day_of_week": "Friday",
-      "day_index": 4,
-      "hour": 10,
-      "date_str": "2026-10-02",
-      "subject": "chore(deps): bump github/gh-aw-actions/setup from 0.89.17 to 0.90.0",
-      "additions": 4,
-      "deletions": 4,
-      "files": [
-        {
-          "path": ".github/workflows/self-hosted-agentic-smoke.lock.yml",
-          "adds": 4,
-          "dels": 4,
-          "language": "YAML"
-        }
-      ],
-      "category": "CI / DevOps",
-      "net_lines": 0
     }
   ]
 }
