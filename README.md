@@ -230,6 +230,12 @@ actionlint
 npm run test:browser
 ```
 
+Markdown linting uses `markdownlint-cli` with the existing rules and exclusions.
+The former CLI2 dependency chain included an unpatched `braces` vulnerability.
+The npm overrides pin patched YAML, Markdown, TOML, and math-parser dependencies;
+keep them until the CLI's dependency ranges select audited versions without them.
+CI still rejects every advisory reported by `npm audit --audit-level=low`.
+
 Use actionlint 1.7.12. CI installs that exact version through Go. The ordinary
 `python -m unittest discover tests` command remains available, while the CI runner
 also clears GitHub credentials and rejects accidental external commands or Python
