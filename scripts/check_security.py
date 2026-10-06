@@ -14,8 +14,6 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_FILES = {
     "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
-    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js": "node_modules/three/build/three.min.js",
-    "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js": "node_modules/three/examples/js/controls/OrbitControls.js",
 }
 
 
@@ -45,7 +43,7 @@ def check_browser_versions():
             raise ValueError(f"Browser URL version differs from npm dependency: {url}")
 
 
-def verified_digest_pattern():
+def verified_digest_pattern(rendered_html=None):
     """Only verified public SRI values are exempt from secret entropy detection."""
 
     class Scripts(HTMLParser):
@@ -59,22 +57,43 @@ def verified_digest_pattern():
                 self.external.append(attributes)
 
     parser = Scripts()
-    parser.feed((ROOT / "src/template.py").read_text(encoding="utf-8"))
+    parser.feed(
+        rendered_html
+        if rendered_html is not None
+        else (ROOT / "src/template.py").read_text(encoding="utf-8")
+    )
     tags = []
     for attributes in parser.external:
         integrity = attributes.get("integrity", "")
         if attributes.get("crossorigin") != "anonymous" or not integrity.startswith("sha384-"):
             raise ValueError("External browser script lacks SHA-384 SRI or anonymous CORS")
         tags.append((attributes["src"], integrity.removeprefix("sha384-")))
-    if len(tags) != len(SCRIPT_FILES) or {url for url, _ in tags} != set(SCRIPT_FILES):
+    bundled = [
+        (url, digest)
+        for url, digest in tags
+        if url.startswith("data:application/javascript;base64,")
+    ]
+    external = [(url, digest) for url, digest in tags if (url, digest) not in bundled]
+    if (
+        len(external) != len(SCRIPT_FILES)
+        or {url for url, _ in external} != set(SCRIPT_FILES)
+        or len(bundled) != (1 if rendered_html is not None else 0)
+    ):
         raise ValueError("Browser script/SRI inventory differs from pinned dependencies")
     digests = []
     for url, digest in tags:
-        expected = base64.b64encode(
-            hashlib.sha384((ROOT / SCRIPT_FILES[url]).read_bytes()).digest()
-        ).decode()
+        if url.startswith("data:"):
+            if not url.endswith("#report-graphics.js"):
+                raise ValueError("Unknown embedded graphics asset")
+            data = base64.b64decode(url.split(",", 1)[1].split("#", 1)[0], validate=True)
+            if data != (ROOT / "assets/report-graphics.js").read_bytes():
+                raise ValueError("Embedded graphics bytes differ from verified bundle")
+        else:
+            data = (ROOT / SCRIPT_FILES[url]).read_bytes()
+        expected = base64.b64encode(hashlib.sha384(data).digest()).decode()
         if digest != expected:
-            raise ValueError(f"Browser integrity digest does not match npm bytes: {url}")
+            label = "report-graphics.js" if url.startswith("data:") else url
+            raise ValueError(f"Browser integrity digest does not match pinned bytes: {label}")
         digests.append(re.escape(digest))
     return "^(?:sha384-)?(?:" + "|".join(digests) + ")$"
 
@@ -126,7 +145,7 @@ def check_policy():
                 raise ValueError(f"Unexpected permissions in {path.name}/{name}")
 
 
-def scan_secrets(digest_pattern=None):
+def scan_secrets(digest_pattern=None, verified_vendor=()):
     """Scan tracked files without network verification; never print secret values."""
     command = [sys.executable, "-X", "utf8", "-m", "detect_secrets", "scan", "--no-verify"]
     if digest_pattern:
@@ -140,7 +159,11 @@ def scan_secrets(digest_pattern=None):
         check=True,
         timeout=120,
     )
-    findings = json.loads(result.stdout)["results"]
+    findings = {
+        filename: items
+        for filename, items in json.loads(result.stdout)["results"].items()
+        if filename.replace("\\", "/") not in verified_vendor
+    }
     for filename, items in findings.items():
         for item in items:
             print(f"Potential secret: {filename}:{item['line_number']} ({item['type']})")
@@ -152,7 +175,15 @@ def scan_secrets(digest_pattern=None):
 def main():
     check_policy()
     check_browser_versions()
-    scan_secrets(verified_digest_pattern())
+    # Rebuild before allowing the exact generated vendor file in the secret scan.
+    subprocess.run(
+        ["node", "scripts/build_browser_assets.js", "--check"], cwd=ROOT, check=True, timeout=120
+    )
+    subprocess.run(
+        [sys.executable, "scripts/generate_fixture.py"], cwd=ROOT, check=True, timeout=120
+    )
+    rendered = (ROOT / "test-results/report.html").read_text(encoding="utf-8")
+    scan_secrets(verified_digest_pattern(rendered), ("assets/report-graphics.js",))
     subprocess.run(
         [sys.executable, "-m", "bandit", "-r", "src", "scripts", "cli.py", "-ll"],
         cwd=ROOT,

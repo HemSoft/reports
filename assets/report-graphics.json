@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "versions": {
+    "three": "0.186.1",
+    "esbuild": "0.28.2"
+  },
+  "bytes": 568388,
+  "integrity": "sha384-YPMwHsL+zCpB0ATtfWLxp+1huagDOjXphkjQc4qvOGQLPhOB0ZzBmiQqFU3JDT6m"
+}

@@ -13,7 +13,9 @@
     "test:browser": "npm run fixture && playwright test",
     "benchmark": "python scripts/generate_benchmark.py && node scripts/benchmark_browser.js",
     "test:budget": "node --test tests/performance/budget.test.js",
-    "benchmark:probe": "python scripts/generate_benchmark.py && node scripts/verify_budget_probe.js"
+    "benchmark:probe": "python scripts/generate_benchmark.py && node scripts/verify_budget_probe.js",
+    "assets:build": "node scripts/build_browser_assets.js",
+    "assets:check": "node scripts/build_browser_assets.js --check"
   },
   "keywords": [
     "productivity",
@@ -29,8 +31,9 @@
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0",
     "chart.js": "4.5.1",
+    "esbuild": "0.28.2",
     "markdownlint-cli": "0.49.1",
-    "three": "0.128.0"
+    "three": "0.186.1"
   },
   "overrides": {
     "js-yaml": "5.4.1",

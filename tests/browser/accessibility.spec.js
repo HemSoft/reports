@@ -96,7 +96,7 @@ test('keyboard controls expose rotation, selected tabs and named search', async 
 });
 
 test('data alternatives remain available when graphics dependencies fail', async ({ page }) => {
-  await openReport(page, { block: url => /three|OrbitControls|chart.umd/.test(url) });
+  await openReport(page, { block: url => /report-graphics|chart.umd/.test(url) });
   await expect(page.locator('.visualization-fallback')).toHaveCount(9);
   for (const summary of await page.locator('.chart-data summary').all()) {
     await summary.focus();

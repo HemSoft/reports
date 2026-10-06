@@ -124,7 +124,7 @@ class TestTemplate(unittest.TestCase):
                 data["weekly_data"][0]["top_repo"] = payload
                 parser = ScriptParser()
                 parser.feed(build_html_report(data))
-                self.assertEqual(len(parser.scripts), 4)
+                self.assertEqual(len(parser.scripts), 3)
                 script = parser.scripts[-1]
                 self.assertNotIn("<", script.split("// ===", 1)[0])
                 expected = {

@@ -4,8 +4,6 @@ const fs = require('node:fs/promises');
 const root = path.resolve(__dirname, '../..');
 const scripts = new Map([
   ['https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js', 'node_modules/chart.js/dist/chart.umd.js'],
-  ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'node_modules/three/build/three.min.js'],
-  ['https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js', 'node_modules/three/examples/js/controls/OrbitControls.js'],
 ]);
 
 async function openReport(page, { block = () => false, appendScript = () => '', corruptScript = () => false,
@@ -16,11 +14,20 @@ async function openReport(page, { block = () => false, appendScript = () => '', 
       let body = await fs.readFile(reportPath, 'utf8');
       // Fault simulations run separately after the real dependency passes SRI.
       body = body.replace(/<script src="([^"]+)"[^>]*><\/script>/g, (tag, src) => {
+        if (src.startsWith('data:application/javascript;base64,')) {
+          if (block(src)) tag = tag.replace(src, 'http://report.test/blocked-graphics.js');
+          else if (corruptScript(src)) {
+            const original = Buffer.from(src.split(',')[1].split('#')[0], 'base64');
+            const corrupt = Buffer.concat([original, Buffer.from('\nwindow.integrityProbe = true;')]);
+            tag = tag.replace(src, `data:application/javascript;base64,${corrupt.toString('base64')}#report-graphics.js`);
+          }
+        }
         const injection = appendScript(src);
         return tag + (injection ? `<script>${injection}</script>` : '');
       });
       return route.fulfill({ body, contentType: 'text/html' });
     }
+    if (url === 'http://report.test/blocked-graphics.js') return route.abort('blockedbyclient');
     if (block(url)) return route.abort('blockedbyclient');
     if (scripts.has(url)) {
       const body = await fs.readFile(path.join(root, scripts.get(url)), 'utf8');

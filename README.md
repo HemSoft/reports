@@ -7,13 +7,13 @@ The tool generates standalone interactive HTML dashboards with Three.js 3D bar m
 ## Output
 
 - Primary report location: `D:\hemsoft-productivity.html`
-- Single HTML file with embedded report data and CSS; chart libraries load from CDNs.
+- Single HTML file with embedded report data, CSS and the Three.js graphics bundle; Chart.js loads from a CDN.
 - No local server required. Open directly in any modern browser.
 
-Interactive charts require access to `cdn.jsdelivr.net` (Chart.js and OrbitControls)
-and `cdnjs.cloudflare.com` (Three.js). Google Fonts and GitHub avatars are optional
+The seven Chart.js charts require access to `cdn.jsdelivr.net`. Three.js and
+OrbitControls are bundled in the HTML and work offline. Google Fonts and GitHub avatars are optional
 network resources; browser fonts and report text remain usable without them.
-3D views also require WebGL. The generated file is not a fully bundled offline app.
+3D views require WebGL 2. The generated file is not a fully bundled offline app.
 
 If a visualization library is blocked or graphics initialization fails, each affected
 view displays an unavailable notice. A failed scene or chart leaves the independent
@@ -377,8 +377,8 @@ Pages packaging follows the official upload-pages-artifact tar format, then
 uploads `artifact.tar` as `github-pages` with the pinned upload-artifact action.
 This avoids the mutable nested `upload-artifact@v4` reference in the v3 wrapper.
 
-All three executable CDN scripts require SHA-384 Subresource Integrity (SRI) and
-anonymous CORS. Their bytes match the exact npm versions in `package-lock.json`.
+Both executable library scripts require SHA-384 Subresource Integrity (SRI) and
+anonymous CORS. Chart.js bytes match the exact npm version in `package-lock.json`.
 The security gate also compares browser URL versions with the declared, locked,
 and installed npm versions. Matching bytes alone must not hide a stale CDN URL.
 The Chart.js URL deliberately uses the package's UMD file, avoiding a CDN-only
@@ -386,10 +386,19 @@ minification transform. For a browser-library update, update the npm pin/lock,
 script URL, fixture mapping, security-check inventory, and SRI together. Compare
 downloaded bytes with the
 installed package, calculate `sha384-` plus the Base64 SHA-384 digest, then run
-every browser test. Do not remove SRI to make an update pass. Three regression
-cases alter one response each and require browser rejection, no injected-code
+every browser test. Do not remove SRI to make an update pass. Two regression
+cases alter the CDN response or embedded bundle and require browser rejection, no injected-code
 execution, and usable fallback content. Fonts and avatars remain external
 non-script resources and are outside these integrity checks.
+
+Three.js and its ESM OrbitControls addon are built from the pinned npm package
+with pinned esbuild into `assets/report-graphics.js`. The upstream MIT license
+is retained. The committed manifest records versions, byte count and SHA-384.
+`npm run assets:build` regenerates both files; `npm run assets:check` rebuilds in
+memory and rejects any difference. Python verifies the manifest and embeds an
+integrity-protected data URL, so report generation and Pages need no Node runtime.
+When updating Three.js, regenerate the bundle, commit both outputs, and run all
+browser and performance checks. The security job performs the fresh-build check.
 
 Install `requirements-security.txt` alongside the development requirements, then
 run these same commands used by the required security job:
@@ -406,8 +415,9 @@ files with network verification disabled, and runs Bandit on Python production a
 scripts. Potential secrets fail without printing values. Bandit fails on medium
 or high severity; low-severity findings remain visible in its counts and need
 manual review. It does not analyze embedded JavaScript. No source or secret
-values are suppressed except the three public SRI digests, and only after
-recomputing them from installed npm files. An altered digest fails before scanning.
+values are suppressed except the two verified public SRI digests and the exact
+generated vendor file, after its bytes and manifest match a fresh pinned build.
+Other tracked files remain scanned. An altered digest or bundle fails before scanning.
 No source or secret
 values are uploaded to an analyzer. pip-audit and npm audit send public package
 names/versions to their advisory services; dependency installation also uses

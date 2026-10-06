@@ -1,0 +1,3 @@
+# Integrity and reproducibility depend on exact bundle bytes on every platform.
+assets/report-graphics.js text eol=lf
+assets/report-graphics.json text eol=lf

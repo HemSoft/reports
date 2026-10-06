@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test');
 const { openReport } = require('./fixture');
 test.use({ video: { mode: 'on', size: { width: 1440, height: 1000 } } });
 test('blocked 3D libraries show notices while charts and filtering work', async ({ page }) => {
-  await openReport(page, { block: url => /three|OrbitControls/.test(url) });
+  await openReport(page, { block: url => url.includes('report-graphics.js') });
   await page.locator('#viewport-velocity').scrollIntoViewIfNeeded();
   await expect(page.locator('.three-viewport [role="status"]')).toHaveCount(2);
   await page.screenshot({ path: 'test-results/fallback-notices.png' });
