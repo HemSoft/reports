@@ -1,5 +1,6 @@
 import os
 import json
+from datetime import date
 from zoneinfo import ZoneInfo
 from .collector import cache_source_key, collect_all
 from .analyzer import analyze_data
@@ -82,7 +83,7 @@ REPORT = {
         "repositories, with WebGL views of weekly velocity and the 168 hours of the week."
     ),
     "category": "Engineering",
-    "cadence": "Weekly · Mondays 08:00 ET",
+    "cadence": "Weekly · Mondays 12:00 UTC",
 }
 
 
@@ -97,13 +98,25 @@ def _hours(value):
     return f"{value * 60:.0f} min" if value < 1 else f"{value:.1f} h"
 
 
+def _edition_identity(period):
+    """Relative windows are named by their end date; custom ranges by both dates."""
+    days = (date.fromisoformat(period["end_date"]) - date.fromisoformat(period["start_date"])).days
+    if days == period["weeks"] * 7:
+        return period["end_date"], f"{period['weeks']} weeks to {period['end_formatted']}"
+    return (
+        f"{period['start_date']}-to-{period['end_date']}",
+        f"{period['start_formatted']} – {period['end_formatted']}",
+    )
+
+
 def edition_manifest(analysis):
     kpis, period = analysis["kpis"], analysis["range"]
+    edition_id, title = _edition_identity(period)
     return {
         "report": REPORT,
         "edition": {
-            "id": period["end_date"],
-            "title": f"{period['weeks']} weeks to {period['end_formatted']}",
+            "id": edition_id,
+            "title": title,
             "period": {"start": period["start_formatted"], "end": period["end_formatted"]},
             "highlights": [
                 {"label": "Commits", "value": f"{kpis['total_commits']:,}"},

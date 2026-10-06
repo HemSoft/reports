@@ -24,6 +24,13 @@ class TestProductivityEdition(unittest.TestCase):
         self.assertEqual(labels[0], "Commits")
         self.assertEqual(len(labels), 6)
 
+    def test_custom_range_is_named_by_both_dates(self):
+        raw = load_report_fixture()
+        raw["range"].update(start_date="2026-09-01", start_formatted="Sep 01, 2026")
+        manifest = edition_manifest(analyze_data(raw))
+        self.assertEqual(manifest["edition"]["id"], "2026-09-01-to-2026-09-05")
+        self.assertEqual(manifest["edition"]["title"], "Sep 01, 2026 – Sep 05, 2026")
+
     def test_highlight_formatting(self):
         self.assertEqual(_signed(-2_501_295), "−2.50M")
         self.assertEqual(_signed(12345), "+12,345")

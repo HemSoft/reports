@@ -63,6 +63,10 @@ class TestManifest(unittest.TestCase):
             },
             "highlight without value": {"edition": {"id": "e", "highlights": [{"label": "a"}]}},
             "missing file": {"files": {"html": "missing.html", "payload": "payload.json"}},
+            "absolute file": {"files": {"html": os.path.abspath("x.html"), "payload": "p.json"}},
+            "escaping file": {"files": {"html": "../report.html", "payload": "payload.json"}},
+            "report not object": {"report": ["ops"]},
+            "highlight not object": {"edition": {"id": "e", "highlights": ["Incidents: 0"]}},
         }
         for name, override in cases.items():
             with self.subTest(name), tempfile.TemporaryDirectory() as tmp:
@@ -70,7 +74,55 @@ class TestManifest(unittest.TestCase):
                     load_manifest(write_manifest(tmp, **override))
 
 
+class TestManifestShape(unittest.TestCase):
+    def test_non_object_manifest_is_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, "m.json")
+            with open(path, "w", encoding="utf-8") as f:
+                f.write("[]")
+            with self.assertRaisesRegex(CatalogError, "manifest must be a JSON object"):
+                load_manifest(path)
+
+
+def write_catalog(folder, reports):
+    with open(os.path.join(folder, "catalog.json"), "w", encoding="utf-8") as f:
+        json.dump({"schema": 1, "reports": reports}, f)
+
+
 class TestCatalog(unittest.TestCase):
+    def test_malformed_records_are_rejected(self):
+        edition = {
+            "id": "e1",
+            "title": "E1",
+            "published_at": "2026-10-05T12:00:00+00:00",
+            "highlights": [],
+        }
+        report = {"id": "ops", "title": "Ops", "summary": "s", "editions": [edition]}
+        cases = {
+            "reports not list": {"reports": {}},
+            "report not object": ["ops"],
+            "bad report id": [dict(report, id="../x")],
+            "editions missing": [dict(report, editions=None)],
+            "bad edition id": [dict(report, editions=[dict(edition, id="E 1")])],
+            "bad timestamp": [dict(report, editions=[dict(edition, published_at="soon")])],
+            "naive timestamp": [
+                dict(report, editions=[dict(edition, published_at="2026-10-05T12:00:00")])
+            ],
+            "highlights missing": [dict(report, editions=[dict(edition, highlights=None)])],
+        }
+        with tempfile.TemporaryDirectory() as tmp:
+            write_catalog(tmp, [report])
+            self.assertEqual(load_catalog(tmp)["reports"][0]["id"], "ops")
+            for name, reports in cases.items():
+                with self.subTest(name):
+                    if name == "reports not list":
+                        with open(os.path.join(tmp, "catalog.json"), "w", encoding="utf-8") as f:
+                            json.dump({"schema": 1, "reports": {}}, f)
+                    else:
+                        write_catalog(tmp, reports)
+                    with self.assertRaises(CatalogError):
+                        load_catalog(tmp)
+
     def test_missing_catalog_is_empty_and_round_trips(self):
         with tempfile.TemporaryDirectory() as tmp:
             catalog = load_catalog(tmp)
@@ -113,7 +165,7 @@ class TestCatalog(unittest.TestCase):
 
     def test_publish_copies_edition_and_records_it(self):
         with tempfile.TemporaryDirectory() as src, tempfile.TemporaryDirectory() as site:
-            report_id, record = publish(site, write_manifest(src), "2026-10-05T12:00:00+00:00")
+            report_id, record = publish(site, write_manifest(src), "2026-10-05T08:00:00-04:00")
             folder = os.path.join(site, "reports", "ops", "2026-10-05")
             with open(os.path.join(folder, "index.html"), encoding="utf-8") as f:
                 self.assertEqual(f.read(), "<html>report</html>")

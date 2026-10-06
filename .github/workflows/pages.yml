@@ -75,6 +75,8 @@ jobs:
   # The only job with write access: it holds no PAT and runs no collected code.
   archive:
     needs: build
+    # Manual runs from other branches may build, but only main writes the archive.
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: write
     runs-on: ubuntu-latest
