@@ -267,9 +267,12 @@ source dates, ranking caveats and item alias. It publishes at
 `reports/dune-awakening/2026-10-05/`, with `reports/dune-awakening/` opening the
 latest edition. Adding a future snapshot uses a new edition folder and manifest.
 
-The index's hero is a transit map: each line is a report series, branching off
-the index, and each stop is an edition placed on its publication date. The map
-covers the last year of editions; older editions remain in the lists below it.
+The index lists published reports in a table with Name, Link and Date created
+columns. Report links open the latest edition. Date created is the earliest
+recorded publication timestamp for that report, displayed in Eastern time
+(`America/New_York`). Expand **Archived editions** to open any edition or its JSON
+payload. The directory uses native HTML tables and disclosure controls without
+JavaScript or external fonts.
 
 ### One-time setup
 
