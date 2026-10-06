@@ -25,6 +25,7 @@ class TestStaticEditions(unittest.TestCase):
         )
         self.assertEqual(json.loads(embedded[1]), data)
         self.assertEqual(manifest["edition"]["id"], data["checked"])
+        self.assertEqual(len(data["items"]), 192)
         expected = {
             "Schematics": str(len(data["items"])),
             "Augments": str(sum(i["category"] == "Augment" for i in data["items"])),

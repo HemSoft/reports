@@ -257,7 +257,7 @@ imports preserve each static edition's first publication timestamp, update its
 HTML and JSON, and retain all other archived reports. Missing source folders or
 invalid manifests stop publication.
 
-The [Dune: Awakening loot reference](editions/dune-awakening/2026-10-05/report.html)
+The [Dune: Awakening loot reference](https://hemsoft.github.io/reports/reports/dune-awakening/2026-10-05/)
 is a snapshot checked on October 5, 2026. Its 192 schematics, community tier
 ratings, station memberships and chest chances remain as supplied. Search,
 filters and the embedded Geist font work offline. The report links back to the
