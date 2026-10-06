@@ -107,7 +107,7 @@ def copy_test_source(directory):
             directory / folder,
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
-    for filename in ("cli.py", "package.json"):
+    for filename in ("cli.py", "publish.py", "package.json"):
         shutil.copy2(ROOT / filename, directory / filename)
 
 
