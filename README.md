@@ -242,6 +242,31 @@ python cli.py --weeks 12 --edition-dir edition
 That folder holds `report.html` (with an **All reports** link back to the
 index), `payload.json` (the same analytics as `--json-out`) and `manifest.json`.
 
+### Static report editions
+
+Checked-in static reports live under `editions/<report>/<edition>/`, with
+`report.html`, `payload.json` and `manifest.json`. Import them before rebuilding:
+
+```bash
+python publish.py sync site --editions editions
+python publish.py build site
+```
+
+The Pages workflow runs this import alongside the productivity edition. Repeated
+imports preserve each static edition's first publication timestamp, update its
+HTML and JSON, and retain all other archived reports. Missing source folders or
+invalid manifests stop publication.
+
+The [Dune: Awakening loot reference](editions/dune-awakening/2026-10-05/report.html)
+is a snapshot checked on October 5, 2026. Its 192 schematics, community tier
+ratings, station memberships and chest chances remain as supplied. Search,
+filters and the embedded Geist font work offline. The report links back to the
+catalog and provides its [JSON payload](editions/dune-awakening/2026-10-05/payload.json).
+Its [research notes](editions/dune-awakening/2026-10-05/sources.md) explain the
+source dates, ranking caveats and item alias. It publishes at
+`reports/dune-awakening/2026-10-05/`, with `reports/dune-awakening/` opening the
+latest edition. Adding a future snapshot uses a new edition folder and manifest.
+
 The index's hero is a transit map: each line is a report series, branching off
 the index, and each stop is an edition placed on its publication date. The map
 covers the last year of editions; older editions remain in the lists below it.

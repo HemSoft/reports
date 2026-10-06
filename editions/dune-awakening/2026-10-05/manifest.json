@@ -1,0 +1,39 @@
+{
+  "report": {
+    "id": "dune-awakening",
+    "title": "Dune: Awakening loot reference",
+    "summary": "Augments and unique schematics by Overland Testing Station and community usefulness tier, with searchable item names, farming locations and optional database chest chances.",
+    "category": "Gaming",
+    "cadence": "Static reference"
+  },
+  "edition": {
+    "id": "2026-10-05",
+    "title": "Overland loot, checked Oct 05, 2026",
+    "highlights": [
+      {
+        "label": "Schematics",
+        "value": "192"
+      },
+      {
+        "label": "Augments",
+        "value": "104"
+      },
+      {
+        "label": "Locations",
+        "value": "6"
+      },
+      {
+        "label": "S-tier items",
+        "value": "44"
+      },
+      {
+        "label": "Database",
+        "value": "1.5.3.3"
+      }
+    ]
+  },
+  "files": {
+    "html": "report.html",
+    "payload": "payload.json"
+  }
+}

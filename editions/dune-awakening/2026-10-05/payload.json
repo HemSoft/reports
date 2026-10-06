@@ -1,0 +1,5603 @@
+{
+  "checked": "2026-10-05",
+  "rankingSource": "Method community usefulness rankings, as shown in live Overland Companion",
+  "rankingDate": "2026-05-19",
+  "lootSource": "https://dune.gaming.tools/dungeons",
+  "notes": [
+    "S/A/B/C are Method community usefulness ratings, not game progression Grades. Source ranks dated May 19, 2026; balance changes can affect usefulness.",
+    "Current item names and chest probabilities verified against gaming.tools game version 1.5.3.3, updated September 24, 2026.",
+    "Rates are database-reported container chances, not guaranteed drops or Grade-specific per-run rates. Grade availability depends on selected difficulty.",
+    "All 192 entries are schematics according to current game database, including the toxin-absorption pill recipe and two tools.",
+    "JABAL Spitdart Focuser is matched to Method's older Ranger entry by identical Grade 3–5 effects; retained searchable alias.",
+    "The Old Quarry is an additional Overland Testing Station introduced in Update 1.4."
+  ],
+  "stations": [
+    {
+      "id": "24",
+      "number": 24,
+      "name": "Testing Station 24",
+      "theme": "Darkness",
+      "boss": "Doctor Lemenger",
+      "url": "https://dune.gaming.tools/dungeons/dgn_024_darkness",
+      "hazard": "Darkness",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/testing-station-24"
+    },
+    {
+      "id": "89",
+      "number": 89,
+      "name": "Testing Station 89",
+      "theme": "Radiation",
+      "boss": "Lieutenant Aman",
+      "url": "https://dune.gaming.tools/dungeons/dgn_089_radiation",
+      "hazard": "Radiation",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/testing-station-89"
+    },
+    {
+      "id": "136",
+      "number": 136,
+      "name": "Testing Station 136",
+      "theme": "Fire",
+      "boss": "Masano the Burned",
+      "url": "https://dune.gaming.tools/dungeons/dgn_136_fire",
+      "hazard": "Fire",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/testing-station-136"
+    },
+    {
+      "id": "152",
+      "number": 152,
+      "name": "Testing Station 152",
+      "theme": "Electric",
+      "boss": "Planetologist Takulki",
+      "url": "https://dune.gaming.tools/dungeons/dgn_152_electric",
+      "hazard": "Electric",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/testing-station-152"
+    },
+    {
+      "id": "195",
+      "number": 195,
+      "name": "Testing Station 195",
+      "theme": "Poison",
+      "boss": "Burrbridge",
+      "url": "https://dune.gaming.tools/dungeons/dgn_195_poison",
+      "hazard": "Poison",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/testing-station-195"
+    },
+    {
+      "id": "quarry",
+      "number": null,
+      "name": "The Old Quarry",
+      "theme": "Multiple",
+      "boss": "Dr. Jalanta",
+      "url": "https://dune.gaming.tools/dungeons/dgn_pit",
+      "hazard": "Multiple",
+      "methodUrl": "https://www.method.gg/dune-awakening/testing-stations/the-old-quarry"
+    }
+  ],
+  "items": [
+    {
+      "id": "circuit-gauntlets",
+      "name": "Circuit Gauntlets",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_powerefficient_gloves_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.1%",
+          "probability": 0.13101608,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_powerefficient_gloves_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_powerefficient_gloves_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/circuit-gauntlets"
+    },
+    {
+      "id": "power-harness",
+      "name": "Power Harness",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_powerincrease_top_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.1%",
+          "probability": 0.13101608,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_powerincrease_top_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_powerincrease_top_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/power-harness"
+    },
+    {
+      "id": "tabr-softstep-boots",
+      "name": "Tabr Softstep Boots",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_wormthreat_boots_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "4.8%",
+          "probability": 0.04765744,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_wormthreat_boots_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_wormthreat_boots_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/tabr-softstep-boots"
+    },
+    {
+      "id": "tactical-radiation-suit",
+      "name": "Tactical Radiation Suit ",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/radiation_suit_t6_unique_armored_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "11.9%",
+          "probability": 0.11927857,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "radiation_suit_t6_unique_armored_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/radiation_suit_t6_unique_armored_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/tactical-radiation-suit"
+    },
+    {
+      "id": "the-forge-boots",
+      "name": "The Forge Boots",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_hark_medunique02_boots_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_hark_medunique02_boots_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_hark_medunique02_boots_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/the-forge-boots"
+    },
+    {
+      "id": "the-forge-chestpiece",
+      "name": "The Forge Chestpiece",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_hark_medunique02_top_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_hark_medunique02_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_hark_medunique02_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/the-forge-chestpiece"
+    },
+    {
+      "id": "the-forge-gloves",
+      "name": "The Forge Gloves",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_hark_medunique02_gloves_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_hark_medunique02_gloves_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_hark_medunique02_gloves_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/the-forge-gloves"
+    },
+    {
+      "id": "the-forge-helmet",
+      "name": "The Forge Helmet",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_hark_medunique02_helmet_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_hark_medunique02_helmet_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_hark_medunique02_helmet_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/the-forge-helmet"
+    },
+    {
+      "id": "the-forge-pants",
+      "name": "The Forge Pants",
+      "category": "Armor",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/combat_hark_medunique02_bottom_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_hark_medunique02_bottom_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_hark_medunique02_bottom_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/the-forge-pants"
+    },
+    {
+      "id": "blade-sharpener",
+      "name": "Blade Sharpener",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-sharpener"
+    },
+    {
+      "id": "blade-warding-weave",
+      "name": "Blade-warding Weave",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor14_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor14_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor14_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-warding-weave"
+    },
+    {
+      "id": "dart-proof-latticing",
+      "name": "Dart-proof Latticing",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor12_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor12_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor12_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/dart-proof-latticing"
+    },
+    {
+      "id": "disruptor-m11-sprayer",
+      "name": "Disruptor M11 Sprayer",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg4_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-sprayer"
+    },
+    {
+      "id": "drillshot-fk7-optimizer",
+      "name": "Drillshot FK7 Optimizer",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_shotgun3_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shotgun3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shotgun3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-optimizer"
+    },
+    {
+      "id": "drillshot-fk7-sprayer",
+      "name": "Drillshot FK7 Sprayer",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_shotgun4_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shotgun4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shotgun4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-sprayer"
+    },
+    {
+      "id": "flamethrower-amplifier",
+      "name": "Flamethrower Amplifier",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_flamethrower1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_flamethrower1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_flamethrower1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flamethrower-amplifier"
+    },
+    {
+      "id": "grda-44-amplifier",
+      "name": "GRDA 44 Amplifier",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun5_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-amplifier"
+    },
+    {
+      "id": "heavy-blade-adjuster",
+      "name": "Heavy Blade Adjuster",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee6_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/heavy-blade-adjuster"
+    },
+    {
+      "id": "heavy-caliber-upgrade",
+      "name": "Heavy Caliber Upgrade",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_damage1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "13.6%",
+          "probability": 0.13648257,
+          "methodRate": "14%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "12.3%",
+          "probability": 0.12297592,
+          "methodRate": "12%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "12.9%",
+          "probability": 0.12868845,
+          "methodRate": "13%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "10.8%",
+          "probability": 0.108062424,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_damage1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_damage1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/heavy-caliber-upgrade"
+    },
+    {
+      "id": "heavy-metal-blade-coating",
+      "name": "Heavy Metal Blade Coating",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_melee1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_melee1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_melee1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/heavy-metal-blade-coating"
+    },
+    {
+      "id": "jabal-spitdart-amplifier",
+      "name": "JABAL Spitdart Amplifier",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle5_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-amplifier"
+    },
+    {
+      "id": "jabal-spitdart-expander",
+      "name": "JABAL Spitdart Expander",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle7_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle7_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle7_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-expander"
+    },
+    {
+      "id": "lasgun-amplifier",
+      "name": "Lasgun Amplifier",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_lasgun4_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lasgun4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lasgun4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lasgun-amplifier"
+    },
+    {
+      "id": "maula-pistol-antipersonnel-rounds",
+      "name": "Maula Pistol Antipersonnel Rounds",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_maulapistol1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_maulapistol1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_maulapistol1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-antipersonnel-rounds"
+    },
+    {
+      "id": "missile-launcher-fragmenter",
+      "name": "Missile Launcher Fragmenter",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_rocketlauncher1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_rocketlauncher1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_rocketlauncher1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/missile-launcher-fragmenter"
+    },
+    {
+      "id": "missile-launcher-heavy-payload",
+      "name": "Missile Launcher Heavy Payload",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_rocketlauncher4_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_rocketlauncher4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_rocketlauncher4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/missile-launcher-heavy-payload"
+    },
+    {
+      "id": "penetrative-reinforcement",
+      "name": "Penetrative Reinforcement",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor4_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/penetrative-reinforcement"
+    },
+    {
+      "id": "pyrocket-supercharger",
+      "name": "Pyrocket Supercharger",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_fireballer1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_fireballer1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_fireballer1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/pyrocket-supercharger"
+    },
+    {
+      "id": "rafiq-snubnose-heavy-kit",
+      "name": "Rafiq Snubnose Heavy Kit",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_heavypistol1_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_heavypistol1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_heavypistol1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-heavy-kit"
+    },
+    {
+      "id": "scattergun-rampage-enhancement",
+      "name": "Scattergun Rampage-Enhancement",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_scattergun1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_scattergun1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_scattergun1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/scattergun-rampage-enhancement"
+    },
+    {
+      "id": "vulcan-gau-92-disruptive-coating",
+      "name": "VULCAN GAU-92 Disruptive Coating",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_lmg5_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "10.1%",
+          "probability": 0.100596376,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lmg5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lmg5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/vulcan-gau-92-disruptive-coating"
+    },
+    {
+      "id": "vulcan-gau-92-expander",
+      "name": "VULCAN GAU-92 Expander",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_lmg1_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "10.1%",
+          "probability": 0.100596376,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lmg1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lmg1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/vulcan-gau-92-expander"
+    },
+    {
+      "id": "woven-reinforcement",
+      "name": "Woven Reinforcement",
+      "category": "Augment",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor3_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/woven-reinforcement"
+    },
+    {
+      "id": "black-market-k-28-lasgun",
+      "name": "Black Market K-28 Lasgun",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/t6_choamlg2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "0.7%",
+          "probability": 0.0074326233,
+          "methodRate": "<1%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "0.7%",
+          "probability": 0.0070861215,
+          "methodRate": "<1%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "0.8%",
+          "probability": 0.007814755,
+          "methodRate": "<1%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "0.8%",
+          "probability": 0.007814755,
+          "methodRate": "<1%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "0.7%",
+          "probability": 0.0074326233,
+          "methodRate": "<1%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "0.8%",
+          "probability": 0.007814755,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "t6_choamlg2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_choamlg2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/black-market-k-28-lasgun"
+    },
+    {
+      "id": "blind-fury",
+      "name": "Blind Fury",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_smugdmr1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_smugdmr1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_smugdmr1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/blind-fury"
+    },
+    {
+      "id": "perforator",
+      "name": "Perforator",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/uniquescattergun5_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquescattergun5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquescattergun5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/perforator"
+    },
+    {
+      "id": "prescient-edge",
+      "name": "Prescient Edge",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_rapier2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_rapier2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_rapier2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/prescient-edge"
+    },
+    {
+      "id": "regis-disruptor-pistol",
+      "name": "Regis Disruptor Pistol",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/heavypistol_unique_bleed_06_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.1%",
+          "probability": 0.15142377,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "heavypistol_unique_bleed_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/heavypistol_unique_bleed_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/regis-disruptor-pistol"
+    },
+    {
+      "id": "regis-tripleshot-repeating-rifle",
+      "name": "Regis Tripleshot Repeating Rifle",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/longrifle_unique_largemag_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "longrifle_unique_largemag_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/longrifle_unique_largemag_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/regis-tripleshot-repeating-rifle"
+    },
+    {
+      "id": "replica-pulse-knife",
+      "name": "Replica Pulse-knife",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/kindjal_unique_stamina_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "16.7%",
+          "probability": 0.1674053,
+          "methodRate": "17%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "kindjal_unique_stamina_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/kindjal_unique_stamina_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/replica-pulse-knife"
+    },
+    {
+      "id": "replica-pulse-sword",
+      "name": "Replica Pulse-sword",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/uniquesword_05_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "23.9%",
+          "probability": 0.23913078,
+          "methodRate": "24%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquesword_05_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquesword_05_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/replica-pulse-sword"
+    },
+    {
+      "id": "seethe",
+      "name": "Seethe",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/heavypistol_unique_headshot_06_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.1%",
+          "probability": 0.15142377,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "heavypistol_unique_headshot_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/heavypistol_unique_headshot_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/seethe"
+    },
+    {
+      "id": "spitting-cobra",
+      "name": "Spitting Cobra",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_smg2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_smg2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_smg2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/spitting-cobra"
+    },
+    {
+      "id": "the-ancient-way",
+      "name": "The Ancient Way",
+      "category": "Weapon",
+      "tier": "S",
+      "url": "https://dune.gaming.tools/items/rocketlauncher_unique_homing_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "3.0%",
+          "probability": 0.029511185,
+          "methodRate": "3%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "2.8%",
+          "probability": 0.028145142,
+          "methodRate": "3%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "3.1%",
+          "probability": 0.031016586,
+          "methodRate": "3%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "3.1%",
+          "probability": 0.031016586,
+          "methodRate": "3%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.0%",
+          "probability": 0.029511185,
+          "methodRate": "3%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "3.1%",
+          "probability": 0.031016586,
+          "methodRate": "14%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "rocketlauncher_unique_homing_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/rocketlauncher_unique_homing_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/the-ancient-way"
+    },
+    {
+      "id": "bulwark-boots",
+      "name": "Bulwark Boots",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_boots_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_reinforced_boots_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_boots_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/bulwark-boots"
+    },
+    {
+      "id": "bulwark-chest",
+      "name": "Bulwark Chest",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_top_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_reinforced_top_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_top_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/bulwark-chest"
+    },
+    {
+      "id": "bulwark-gloves",
+      "name": "Bulwark Gloves",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_gloves_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_reinforced_gloves_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_gloves_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/bulwark-gloves"
+    },
+    {
+      "id": "bulwark-helmet",
+      "name": "Bulwark Helmet",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_helmet_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_reinforced_helmet_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_helmet_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/bulwark-helmet"
+    },
+    {
+      "id": "bulwark-leggings",
+      "name": "Bulwark Leggings",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_bottom_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_heavy_unique_reinforced_bottom_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_heavy_unique_reinforced_bottom_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/bulwark-leggings"
+    },
+    {
+      "id": "combat-exoskeleton-chestpiece",
+      "name": "Combat Exoskeleton Chestpiece",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/exoskeleton_heavy06_unique_top_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "exoskeleton_heavy06_unique_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/exoskeleton_heavy06_unique_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/combat-exoskeleton-chestpiece"
+    },
+    {
+      "id": "ix-core-leggings",
+      "name": "Ix-core Leggings",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_stamina_bottom_06_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.4%",
+          "probability": 0.15440744,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_stamina_bottom_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_stamina_bottom_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/ix-core-leggings"
+    },
+    {
+      "id": "pincushion-boots",
+      "name": "Pincushion Boots",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_boots_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_smugglerdeserterunique06_boots_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_boots_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pincushion-boots"
+    },
+    {
+      "id": "pincushion-chestpiece",
+      "name": "Pincushion Chestpiece",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_top_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_smugglerdeserterunique06_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pincushion-chestpiece"
+    },
+    {
+      "id": "pincushion-gauntlets",
+      "name": "Pincushion Gauntlets",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_gloves_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_smugglerdeserterunique06_gloves_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_gloves_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pincushion-gauntlets"
+    },
+    {
+      "id": "pincushion-helmet",
+      "name": "Pincushion Helmet",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_helmet_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_smugglerdeserterunique06_helmet_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_helmet_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pincushion-helmet"
+    },
+    {
+      "id": "pincushion-pants",
+      "name": "Pincushion Pants",
+      "category": "Armor",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_bottom_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_smugglerdeserterunique06_bottom_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_smugglerdeserterunique06_bottom_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pincushion-pants"
+    },
+    {
+      "id": "disruptive-coating",
+      "name": "Disruptive Coating",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_shielddamage1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shielddamage1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shielddamage1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptive-coating"
+    },
+    {
+      "id": "disruptor-m11-amplifier",
+      "name": "Disruptor M11 Amplifier",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg5_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-amplifier"
+    },
+    {
+      "id": "edge-optimizer",
+      "name": "Edge Optimizer",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee9_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee9_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee9_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/edge-optimizer"
+    },
+    {
+      "id": "flamethrower-superheater",
+      "name": "Flamethrower Superheater",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_flamethrower2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_flamethrower2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_flamethrower2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flamethrower-superheater"
+    },
+    {
+      "id": "grda-44-expander",
+      "name": "GRDA 44 Expander",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun4_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-expander"
+    },
+    {
+      "id": "grda-44-optimizer",
+      "name": "GRDA 44 Optimizer",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun6_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-optimizer"
+    },
+    {
+      "id": "garment-reinforcement",
+      "name": "Garment Reinforcement",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor6_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/garment-reinforcement"
+    },
+    {
+      "id": "karpov-38-heavy-kit",
+      "name": "Karpov 38 Heavy Kit",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_br3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_br3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_br3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-heavy-kit"
+    },
+    {
+      "id": "karpov-38-precision-kit",
+      "name": "Karpov 38 Precision Kit",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_br8_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_br8_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_br8_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-precision-kit"
+    },
+    {
+      "id": "karpov-38-pressurizer",
+      "name": "Karpov 38 Pressurizer",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_br1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_br1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_br1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-pressurizer"
+    },
+    {
+      "id": "lasgun-harmonizer",
+      "name": "Lasgun Harmonizer",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_lasgun3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lasgun3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lasgun3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lasgun-harmonizer"
+    },
+    {
+      "id": "maula-pistol-disruptive-coating",
+      "name": "Maula Pistol Disruptive Coating",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_maulapistol2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_maulapistol2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_maulapistol2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-disruptive-coating"
+    },
+    {
+      "id": "maula-pistol-expander",
+      "name": "Maula Pistol Expander",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_maulapistol3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_maulapistol3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_maulapistol3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-expander"
+    },
+    {
+      "id": "quick-release-trigger",
+      "name": "Quick-release Trigger",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_rateoffire1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_rateoffire1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_rateoffire1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/quick-release-trigger"
+    },
+    {
+      "id": "rafiq-snubnose-expander",
+      "name": "Rafiq Snubnose Expander",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_heavypistol4_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_heavypistol4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_heavypistol4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-expander"
+    },
+    {
+      "id": "tactical-enhancer",
+      "name": "Tactical Enhancer",
+      "category": "Augment",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/t6_augment_headshotdamage1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_headshotdamage1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_headshotdamage1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/tactical-enhancer"
+    },
+    {
+      "id": "ambition",
+      "name": "Ambition",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/shotgun_unique_largemag_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "shotgun_unique_largemag_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/shotgun_unique_largemag_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/ambition"
+    },
+    {
+      "id": "cauterizer",
+      "name": "Cauterizer",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/uniquedirk_04_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquedirk_04_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquedirk_04_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/cauterizer"
+    },
+    {
+      "id": "dunewatcher",
+      "name": "Dunewatcher",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/longrifle_unique_poison_06_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.4%",
+          "probability": 0.15440744,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "longrifle_unique_poison_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/longrifle_unique_poison_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/dunewatcher"
+    },
+    {
+      "id": "hell-fury-pistol",
+      "name": "Hell-Fury Pistol",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_heavypistol2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_heavypistol2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_heavypistol2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/hell-fury-pistol"
+    },
+    {
+      "id": "leechs-maw",
+      "name": "Leech’s Maw",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_dualblades1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_dualblades1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_dualblades1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/leechs-maw"
+    },
+    {
+      "id": "shellburster",
+      "name": "Shellburster",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/uniquescattergun_fire_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "14.5%",
+          "probability": 0.14483774,
+          "methodRate": "14%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquescattergun_fire_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquescattergun_fire_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/shellburster"
+    },
+    {
+      "id": "spike-hilt-sword",
+      "name": "Spike Hilt Sword",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/unique_sword_bleedyblocky_6_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "unique_sword_bleedyblocky_6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/unique_sword_bleedyblocky_6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/spike-hilt-sword"
+    },
+    {
+      "id": "static-needle",
+      "name": "Static Needle",
+      "category": "Weapon",
+      "tier": "A",
+      "url": "https://dune.gaming.tools/items/uniquerapier_power_06_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquerapier_power_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquerapier_power_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/static-needle"
+    },
+    {
+      "id": "executors-boots",
+      "name": "Executor's Boots",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_boots_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_atreidesdeserterunique05_boots_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_boots_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/executors-boots"
+    },
+    {
+      "id": "executors-chestpiece",
+      "name": "Executor's Chestpiece",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_top_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_atreidesdeserterunique05_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/executors-chestpiece"
+    },
+    {
+      "id": "executors-gauntlets",
+      "name": "Executor's Gauntlets",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_gloves_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_atreidesdeserterunique05_gloves_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_gloves_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/executors-gauntlets"
+    },
+    {
+      "id": "executors-helmet",
+      "name": "Executor's Helmet",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_helmet_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_atreidesdeserterunique05_helmet_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_helmet_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/executors-helmet"
+    },
+    {
+      "id": "executors-pants",
+      "name": "Executor's Pants",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_bottom_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_neut_atreidesdeserterunique05_bottom_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_neut_atreidesdeserterunique05_bottom_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/executors-pants"
+    },
+    {
+      "id": "idahos-charge",
+      "name": "Idaho's Charge",
+      "category": "Armor",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_reducesuspensor_top_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.1%",
+          "probability": 0.13101608,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_reducesuspensor_top_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_reducesuspensor_top_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/idahos-charge"
+    },
+    {
+      "id": "aggressive-grip-adjuster",
+      "name": "Aggressive Grip Adjuster",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee4_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/aggressive-grip-adjuster"
+    },
+    {
+      "id": "blade-grip-adjuster",
+      "name": "Blade Grip Adjuster",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-grip-adjuster"
+    },
+    {
+      "id": "capacity-expander",
+      "name": "Capacity Expander",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_magazinecapacity1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_magazinecapacity1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_magazinecapacity1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/capacity-expander"
+    },
+    {
+      "id": "disruptor-m11-heavy-kit",
+      "name": "Disruptor M11 Heavy Kit",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg7_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg7_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg7_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-heavy-kit"
+    },
+    {
+      "id": "disruptor-m11-personnel-buster",
+      "name": "Disruptor M11 Personnel-Buster",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_smg1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_smg1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_smg1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-personnel-buster"
+    },
+    {
+      "id": "disruptor-m11-precision-tuning",
+      "name": "Disruptor M11 Precision Tuning",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg1_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-precision-tuning"
+    },
+    {
+      "id": "disruptor-m11-quickloader",
+      "name": "Disruptor M11 Quickloader",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg2_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-quickloader"
+    },
+    {
+      "id": "disruptor-m11-shield-breaker",
+      "name": "Disruptor M11 Shield Breaker",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_smg3_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_smg3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_smg3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/disruptor-m11-shield-breaker"
+    },
+    {
+      "id": "drillshot-fk7-amplifier",
+      "name": "Drillshot FK7 Amplifier",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_shotgun2_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shotgun2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shotgun2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-amplifier"
+    },
+    {
+      "id": "energy-dispersing-padding",
+      "name": "Energy Dispersing Padding",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor5_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "6.7%",
+          "probability": 0.0670167,
+          "methodRate": "7%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/energy-dispersing-padding"
+    },
+    {
+      "id": "energy-resistant-weave",
+      "name": "Energy Resistant Weave",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor10_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "6.7%",
+          "probability": 0.0670167,
+          "methodRate": "7%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor10_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor10_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/energy-resistant-weave"
+    },
+    {
+      "id": "flame-resistant-fabrics",
+      "name": "Flame-resistant Fabrics",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor13_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "7.4%",
+          "probability": 0.07427504,
+          "methodRate": "7%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor13_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor13_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flame-resistant-fabrics"
+    },
+    {
+      "id": "flamethrower-nozzle-extension",
+      "name": "Flamethrower Nozzle Extension",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_flamethrower3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_flamethrower3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_flamethrower3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flamethrower-nozzle-extension"
+    },
+    {
+      "id": "grda-44-sprayer",
+      "name": "GRDA 44 Sprayer",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun7_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun7_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun7_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-sprayer"
+    },
+    {
+      "id": "jabal-spitdart-tactical-enhancer",
+      "name": "JABAL Spitdart Tactical Enhancer",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle2_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-tactical-enhancer"
+    },
+    {
+      "id": "jabal-spitdart-toxicity-amplifier",
+      "name": "JABAL Spitdart Toxicity Amplifier",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle8_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle8_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle8_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-toxicity-amplifier"
+    },
+    {
+      "id": "karpov-38-dart-sprayer",
+      "name": "Karpov 38 Dart Sprayer",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_br2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_br2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_br2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-dart-sprayer"
+    },
+    {
+      "id": "karpov-38-sniper-barrel",
+      "name": "Karpov 38 Sniper Barrel",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_br1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_br1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_br1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-sniper-barrel"
+    },
+    {
+      "id": "lasgun-concentrator",
+      "name": "Lasgun Concentrator",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_lasgun1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_lasgun1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_lasgun1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lasgun-concentrator"
+    },
+    {
+      "id": "lasgun-extender",
+      "name": "Lasgun Extender",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_lasgun2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lasgun2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lasgun2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lasgun-extender"
+    },
+    {
+      "id": "lasgun-focuser",
+      "name": "Lasgun Focuser",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_lasgun1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lasgun1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lasgun1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lasgun-focuser"
+    },
+    {
+      "id": "maula-pistol-sprayer",
+      "name": "Maula Pistol Sprayer",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_maulapistol1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_maulapistol1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_maulapistol1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-sprayer"
+    },
+    {
+      "id": "missile-launcher-obliterator",
+      "name": "Missile Launcher Obliterator",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_rocketlauncher1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_rocketlauncher1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_rocketlauncher1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/missile-launcher-obliterator"
+    },
+    {
+      "id": "protective-coating",
+      "name": "Protective Coating",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_deathdurabilityoff_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_deathdurabilityoff_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_deathdurabilityoff_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/protective-coating"
+    },
+    {
+      "id": "pyrocket-quickloader",
+      "name": "Pyrocket Quickloader",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_fireballer2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_fireballer2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_fireballer2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/pyrocket-quickloader"
+    },
+    {
+      "id": "radiation-absorbing-fabrics",
+      "name": "Radiation Absorbing Fabrics",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor16_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "12.1%",
+          "probability": 0.12066898,
+          "methodRate": "12%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor16_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor16_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/radiation-absorbing-fabrics"
+    },
+    {
+      "id": "rafiq-snubnose-disruptive-coating",
+      "name": "Rafiq Snubnose Disruptive Coating",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_heavypistol2_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_heavypistol2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_heavypistol2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-disruptive-coating"
+    },
+    {
+      "id": "rafiq-snubnose-marksman",
+      "name": "Rafiq Snubnose Marksman",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_heavypistol1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_heavypistol1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_heavypistol1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-marksman"
+    },
+    {
+      "id": "vulcan-gau-92-sprayer",
+      "name": "VULCAN GAU-92 Sprayer",
+      "category": "Augment",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/t6_augment_lmg6_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "10.1%",
+          "probability": 0.100596376,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lmg6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lmg6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/vulcan-gau-92-sprayer"
+    },
+    {
+      "id": "a-dart-for-every-man",
+      "name": "A Dart for Every Man",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/smg_unique_largemag_06_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.1%",
+          "probability": 0.15142377,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "smg_unique_largemag_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/smg_unique_largemag_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/a-dart-for-every-man"
+    },
+    {
+      "id": "branding-blade",
+      "name": "Branding Blade",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_sword2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_sword2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_sword2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/branding-blade"
+    },
+    {
+      "id": "burning-blades",
+      "name": "Burning Blades",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/uniquedualblades_6_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquedualblades_6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquedualblades_6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/burning-blades"
+    },
+    {
+      "id": "eels-tooth",
+      "name": "Eel’s Tooth",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_dirk2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_dirk2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_dirk2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/eels-tooth"
+    },
+    {
+      "id": "experimental-lightning-gun",
+      "name": "Experimental Lightning Gun",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/uniquear6_electric_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.1%",
+          "probability": 0.13101608,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquear6_electric_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquear6_electric_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/experimental-lightning-gun"
+    },
+    {
+      "id": "hallecks-pick",
+      "name": "Halleck's Pick",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/uniquerapier_03_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "10.3%",
+          "probability": 0.103122644,
+          "methodRate": "10%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.4%",
+          "probability": 0.15440744,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquerapier_03_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquerapier_03_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/hallecks-pick"
+    },
+    {
+      "id": "plasma-cannon",
+      "name": "Plasma Cannon",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/lmg_unique_power_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "lmg_unique_power_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/lmg_unique_power_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/plasma-cannon"
+    },
+    {
+      "id": "sardaukar-intimidator",
+      "name": "Sardaukar Intimidator",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/uniquesmg3_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "15.1%",
+          "probability": 0.15142377,
+          "methodRate": "15%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquesmg3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquesmg3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/sardaukar-intimidator"
+    },
+    {
+      "id": "serpents-fang",
+      "name": "Serpent’s Fang",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_kindjal2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_kindjal2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_kindjal2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/serpents-fang"
+    },
+    {
+      "id": "the-angry-adder",
+      "name": "The Angry Adder",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_harkar2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_harkar2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_harkar2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/the-angry-adder"
+    },
+    {
+      "id": "way-of-the-misr",
+      "name": "Way of the Misr",
+      "category": "Weapon",
+      "tier": "B",
+      "url": "https://dune.gaming.tools/items/uniquesda6_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquesda6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquesda6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/way-of-the-misr"
+    },
+    {
+      "id": "crew-chiefs-stillsuit-garment",
+      "name": "Crew Chief’s Stillsuit Garment",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_choam_unique_dashed06_top_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.08620997,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_choam_unique_dashed06_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_choam_unique_dashed06_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/crew-chiefs-stillsuit-garment"
+    },
+    {
+      "id": "desert-garb",
+      "name": "Desert Garb",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_biomeheat_top_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_biomeheat_top_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_biomeheat_top_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/desert-garb"
+    },
+    {
+      "id": "hook-claw-gloves",
+      "name": "Hook-claw Gloves",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_climbing_gloves_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "4.8%",
+          "probability": 0.04765744,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_climbing_gloves_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_climbing_gloves_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/hook-claw-gloves"
+    },
+    {
+      "id": "imperial-stillsuit-boots",
+      "name": "Imperial Stillsuit Boots",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_boots_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_armored_06_boots_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_boots_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/imperial-stillsuit-boots"
+    },
+    {
+      "id": "imperial-stillsuit-garment",
+      "name": "Imperial Stillsuit Garment",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_top_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_armored_06_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/imperial-stillsuit-garment"
+    },
+    {
+      "id": "imperial-stillsuit-gloves",
+      "name": "Imperial Stillsuit Gloves",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_gloves_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_armored_06_gloves_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_gloves_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/imperial-stillsuit-gloves"
+    },
+    {
+      "id": "imperial-stillsuit-mask",
+      "name": "Imperial Stillsuit Mask",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_mask_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_armored_06_mask_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_armored_06_mask_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/imperial-stillsuit-mask"
+    },
+    {
+      "id": "pardots-hood",
+      "name": "Pardot's Hood",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_heatmitigation_06_mask_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_heatmitigation_06_mask_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_heatmitigation_06_mask_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/pardots-hood"
+    },
+    {
+      "id": "phantom-whisper-chestpiece",
+      "name": "Phantom Whisper Chestpiece",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/assassin_light06_unique_top_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "assassin_light06_unique_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/assassin_light06_unique_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/phantom-whisper-chestpiece"
+    },
+    {
+      "id": "phantom-whisper-helm",
+      "name": "Phantom Whisper Helm",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/assassin_light06_unique_helmet_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "assassin_light06_unique_helmet_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/assassin_light06_unique_helmet_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/phantom-whisper-helm"
+    },
+    {
+      "id": "shaddams-bladder",
+      "name": "Shaddam's Bladder",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_highcapacity_06_top_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.8%",
+          "probability": 0.07774723,
+          "methodRate": "8%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_highcapacity_06_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_highcapacity_06_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/shaddams-bladder"
+    },
+    {
+      "id": "villaris-stillsuit-boots",
+      "name": "Villari's Stillsuit Boots",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_boots_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_efficient_06_boots_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_boots_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/villaris-stillsuit-boots"
+    },
+    {
+      "id": "villaris-stillsuit-garment",
+      "name": "Villari's Stillsuit Garment",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_top_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_efficient_06_top_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_top_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/villaris-stillsuit-garment"
+    },
+    {
+      "id": "villaris-stillsuit-gloves",
+      "name": "Villari's Stillsuit Gloves",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_gloves_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_efficient_06_gloves_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_gloves_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/villaris-stillsuit-gloves"
+    },
+    {
+      "id": "villaris-stillsuit-mask",
+      "name": "Villari's Stillsuit Mask",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_mask_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "stillsuit_unique_efficient_06_mask_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/stillsuit_unique_efficient_06_mask_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/villaris-stillsuit-mask"
+    },
+    {
+      "id": "wayfinder-helm",
+      "name": "Wayfinder Helm",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_scanning_helmet_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "23.9%",
+          "probability": 0.23913078,
+          "methodRate": "24%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_scanning_helmet_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_scanning_helmet_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/wayfinder-helm"
+    },
+    {
+      "id": "yuehs-reaper-gloves",
+      "name": "Yueh's Reaper Gloves",
+      "category": "Armor",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/combat_light_unique_dewreap_gloves_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "5.0%",
+          "probability": 0.049954258,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Armor",
+      "gameId": "combat_light_unique_dewreap_gloves_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/combat_light_unique_dewreap_gloves_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/garments/yuehs-reaper-gloves"
+    },
+    {
+      "id": "barrel-extender",
+      "name": "Barrel Extender",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_range1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_range1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_range1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/barrel-extender"
+    },
+    {
+      "id": "blade-blood-grooves",
+      "name": "Blade Blood Grooves",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_melee3_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_melee3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_melee3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-blood-grooves"
+    },
+    {
+      "id": "blade-flexi-coating",
+      "name": "Blade Flexi-Coating",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "13.6%",
+          "probability": 0.13648257,
+          "methodRate": "14%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "12.3%",
+          "probability": 0.12297592,
+          "methodRate": "12%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "12.9%",
+          "probability": 0.12868845,
+          "methodRate": "13%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "10.8%",
+          "probability": 0.108062424,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-flexi-coating"
+    },
+    {
+      "id": "blade-optimizer",
+      "name": "Blade Optimizer",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee8_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee8_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee8_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/blade-optimizer"
+    },
+    {
+      "id": "concussive-dampening",
+      "name": "Concussive Dampening",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor1_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/concussive-dampening"
+    },
+    {
+      "id": "concussive-redirection",
+      "name": "Concussive Redirection",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor2_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/concussive-redirection"
+    },
+    {
+      "id": "curative-infused-padding",
+      "name": "Curative-infused Padding",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor9_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "11.4%",
+          "probability": 0.11404188,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor9_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor9_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/curative-infused-padding"
+    },
+    {
+      "id": "defensive-grip-adjuster",
+      "name": "Defensive Grip Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee7_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee7_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee7_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/defensive-grip-adjuster"
+    },
+    {
+      "id": "desert-tested-weave",
+      "name": "Desert-tested Weave",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor8_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.5%",
+          "probability": 0.124872416,
+          "methodRate": "12%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor8_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor8_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/desert-tested-weave"
+    },
+    {
+      "id": "detoxifying-fabrics",
+      "name": "Detoxifying Fabrics",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor11_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "11.4%",
+          "probability": 0.11404188,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor11_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor11_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/detoxifying-fabrics"
+    },
+    {
+      "id": "drillshot-fk7-quickloader",
+      "name": "Drillshot FK7 Quickloader",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_shotgun5_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shotgun5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shotgun5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-quickloader"
+    },
+    {
+      "id": "drillshot-fk7-spray-and-pray",
+      "name": "Drillshot FK7 Spray-and-Pray",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_shotgun1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_shotgun1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_shotgun1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-spray-and-pray"
+    },
+    {
+      "id": "drillshot-fk7-tactical-adjuster",
+      "name": "Drillshot FK7 Tactical Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_shotgun1_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_shotgun1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_shotgun1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/drillshot-fk7-tactical-adjuster"
+    },
+    {
+      "id": "flamethrower-decimator",
+      "name": "Flamethrower Decimator",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_flamethrower1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_flamethrower1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_flamethrower1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flamethrower-decimator"
+    },
+    {
+      "id": "flamethrower-quickloader",
+      "name": "Flamethrower Quickloader",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_flamethrower4_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_flamethrower4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_flamethrower4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/flamethrower-quickloader"
+    },
+    {
+      "id": "grda-44-micro-rigidity-coating",
+      "name": "GRDA 44 Micro-Rigidity Coating",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun8_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun8_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun8_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-micro-rigidity-coating"
+    },
+    {
+      "id": "grda-44-tactical-amplifier",
+      "name": "GRDA 44 Tactical Amplifier",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_scattergun2_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_scattergun2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_scattergun2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/grda-44-tactical-amplifier"
+    },
+    {
+      "id": "jabal-spitdart-disruptive-coating",
+      "name": "JABAL Spitdart Disruptive Coating",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle6_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle6_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle6_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-disruptive-coating"
+    },
+    {
+      "id": "jabal-spitdart-ranger",
+      "name": "JABAL Spitdart Focuser",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_spitdart1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_spitdart1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_spitdart1_schematic",
+      "aliases": [
+        "JABAL Spitdart Ranger"
+      ],
+      "notes": "Method calls this JABAL Spitdart Ranger. Matched by identical Grade 3–5 effect values and Quarry source; current database name is Focuser.",
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-ranger"
+    },
+    {
+      "id": "jabal-spitdart-range-adjuster",
+      "name": "JABAL Spitdart Range Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_spitdartrifle3_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_spitdartrifle3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_spitdartrifle3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/jabal-spitdart-range-adjuster"
+    },
+    {
+      "id": "karpov-38-focuser",
+      "name": "Karpov 38 Focuser",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_br4_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_br4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_br4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/karpov-38-focuser"
+    },
+    {
+      "id": "lightweight-adjuster",
+      "name": "Lightweight Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_melee5_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "7.1%",
+          "probability": 0.07100308,
+          "methodRate": "7%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "10.4%",
+          "probability": 0.10389577,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_melee5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_melee5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/lightweight-adjuster"
+    },
+    {
+      "id": "maula-pistol-barrel-extender",
+      "name": "Maula Pistol Barrel Extender",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_maulapistol4_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_maulapistol4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_maulapistol4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-barrel-extender"
+    },
+    {
+      "id": "maula-pistol-tactical-enhancer",
+      "name": "Maula Pistol Tactical Enhancer",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_maulapistol5_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_maulapistol5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_maulapistol5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/maula-pistol-tactical-enhancer"
+    },
+    {
+      "id": "missile-launcher-disruptive-coating",
+      "name": "Missile Launcher Disruptive Coating",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_rocketlauncher2_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_rocketlauncher2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_rocketlauncher2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/missile-launcher-disruptive-coating"
+    },
+    {
+      "id": "missile-launcher-quickloader",
+      "name": "Missile Launcher Quickloader",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_rocketlauncher3_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "1.9%",
+          "probability": 0.019287633,
+          "methodRate": "2%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "1.9%",
+          "probability": 0.019461608,
+          "methodRate": "2%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_rocketlauncher3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_rocketlauncher3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/missile-launcher-quickloader"
+    },
+    {
+      "id": "precision-barrel-adjuster",
+      "name": "Precision Barrel Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_acuracy1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "13.6%",
+          "probability": 0.13648257,
+          "methodRate": "14%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "12.3%",
+          "probability": 0.12297592,
+          "methodRate": "12%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "13.3%",
+          "probability": 0.13302907,
+          "methodRate": "13%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "12.9%",
+          "probability": 0.12868845,
+          "methodRate": "13%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "10.8%",
+          "probability": 0.108062424,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_acuracy1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_acuracy1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/precision-barrel-adjuster"
+    },
+    {
+      "id": "pyrocket-decimator",
+      "name": "Pyrocket Decimator ",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_fireballer1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_fireballer1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_fireballer1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/pyrocket-decimator"
+    },
+    {
+      "id": "quickloader",
+      "name": "Quickloader",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_reloadspeed1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_reloadspeed1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_reloadspeed1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/quickloader"
+    },
+    {
+      "id": "radiation-shielded-latticing",
+      "name": "Radiation Shielded Latticing",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_armor17_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "12.1%",
+          "probability": 0.12066898,
+          "methodRate": "12%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "3.8%",
+          "probability": 0.03770999,
+          "methodRate": "4%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_armor17_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_armor17_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/radiation-shielded-latticing"
+    },
+    {
+      "id": "rafiq-snubnose-quickdraw-assembly",
+      "name": "Rafiq Snubnose Quickdraw Assembly",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_heavypistol3_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_heavypistol3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_heavypistol3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-quickdraw-assembly"
+    },
+    {
+      "id": "rafiq-snubnose-sprayer",
+      "name": "Rafiq Snubnose Sprayer",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_heavypistol5_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "12.2%",
+          "probability": 0.12151076,
+          "methodRate": "12%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_heavypistol5_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_heavypistol5_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/rafiq-snubnose-sprayer"
+    },
+    {
+      "id": "recoil-adjuster",
+      "name": "Recoil Adjuster",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_recoil1_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        },
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "8.6%",
+          "probability": 0.085611835,
+          "methodRate": "9%"
+        },
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "8.6%",
+          "probability": 0.08636247,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_recoil1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_recoil1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/recoil-adjuster"
+    },
+    {
+      "id": "vulcan-gau-92-accelerator",
+      "name": "VULCAN GAU-92 Accelerator",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_ch5_lmg1_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "9.4%",
+          "probability": 0.09432187,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_ch5_lmg1_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_ch5_lmg1_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/vulcan-gau-92-accelerator"
+    },
+    {
+      "id": "vulcan-gau-92-focuser",
+      "name": "VULCAN GAU-92 Focuser",
+      "category": "Augment",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_augment_lmg4_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "10.1%",
+          "probability": 0.100596376,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Augment",
+      "gameId": "t6_augment_lmg4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_augment_lmg4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/augmentations/vulcan-gau-92-focuser"
+    },
+    {
+      "id": "bashars-command",
+      "name": "Bashar's Command",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/lmg_unique_rapidfire_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "lmg_unique_rapidfire_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/lmg_unique_rapidfire_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/bashars-command"
+    },
+    {
+      "id": "feyds-drinker",
+      "name": "Feyd's Drinker",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/kindjal_unique_blood_06_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.8%",
+          "probability": 0.09823835,
+          "methodRate": "10%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "kindjal_unique_blood_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/kindjal_unique_blood_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/feyds-drinker"
+    },
+    {
+      "id": "glasser",
+      "name": "Glasser",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/t6_uniqueflamethrower_prototype_2_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "14.5%",
+          "probability": 0.14483774,
+          "methodRate": "14%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "t6_uniqueflamethrower_prototype_2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/t6_uniqueflamethrower_prototype_2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/glasser"
+    },
+    {
+      "id": "indaras-lullaby",
+      "name": "Indara's Lullaby",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/uniquear_burst_06_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquear_burst_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquear_burst_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/indaras-lullaby"
+    },
+    {
+      "id": "penetrator",
+      "name": "Penetrator",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/shotgun_unique_blood_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "shotgun_unique_blood_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/shotgun_unique_blood_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/penetrator"
+    },
+    {
+      "id": "plastanium-pyrocket",
+      "name": "Plastanium Pyrocket",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/fireballer_3_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "14.5%",
+          "probability": 0.14483774,
+          "methodRate": "14%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "fireballer_3_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/fireballer_3_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/plastanium-pyrocket"
+    },
+    {
+      "id": "regis-burst-drillshot",
+      "name": "Regis Burst Drillshot",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/shotgun_unique_explosive_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "9.4%",
+          "probability": 0.093795545,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "shotgun_unique_explosive_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/shotgun_unique_explosive_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/regis-burst-drillshot"
+    },
+    {
+      "id": "salusan-vengeance",
+      "name": "Salusan Vengeance",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/uniquear4_schematic",
+      "locations": [
+        {
+          "station": "152",
+          "stationId": "152",
+          "rate": "11.3%",
+          "probability": 0.11303299,
+          "methodRate": "11%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquear4_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquear4_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/salusan-vengeance"
+    },
+    {
+      "id": "shishaklis-bite",
+      "name": "Shishakli's Bite",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/uniquesda_doubleshot_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "25.0%",
+          "probability": 0.250497,
+          "methodRate": "25%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniquesda_doubleshot_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniquesda_doubleshot_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/shishaklis-bite"
+    },
+    {
+      "id": "the-hateful-barker",
+      "name": "The Hateful Barker",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/b1c4_unique_lmg2_schematic",
+      "locations": [
+        {
+          "station": "quarry",
+          "stationId": "quarry",
+          "rate": "13.7%",
+          "probability": 0.1365012,
+          "methodRate": "13%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "b1c4_unique_lmg2_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/b1c4_unique_lmg2_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/the-hateful-barker"
+    },
+    {
+      "id": "vaporizer",
+      "name": "Vaporizer",
+      "category": "Weapon",
+      "tier": "C",
+      "url": "https://dune.gaming.tools/items/uniqueflamethrower_02_schematic",
+      "locations": [
+        {
+          "station": "136",
+          "stationId": "136",
+          "rate": "14.5%",
+          "probability": 0.14483774,
+          "methodRate": "14%"
+        }
+      ],
+      "type": "Weapon",
+      "gameId": "uniqueflamethrower_02_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/uniqueflamethrower_02_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/weapons/vaporizer"
+    },
+    {
+      "id": "experimental-toxin-absorption-pills",
+      "name": "Experimental Toxin-Absorption Pills",
+      "category": "Consumable",
+      "tier": null,
+      "url": "https://dune.gaming.tools/items/consumable_buff_poisonstackincrease_schematic",
+      "locations": [
+        {
+          "station": "195",
+          "stationId": "195",
+          "rate": "9.0%",
+          "probability": 0.090305366,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Consumable",
+      "gameId": "consumable_buff_poisonstackincrease_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/consumable_buff_poisonstackincrease_schematic",
+      "aliases": [],
+      "methodUrl": null
+    },
+    {
+      "id": "accelerator-power-pack",
+      "name": "Accelerator Power Pack",
+      "category": "Tool",
+      "tier": null,
+      "url": "https://dune.gaming.tools/items/powerpack_unique_capacity_06_schematic",
+      "locations": [
+        {
+          "station": "89",
+          "stationId": "89",
+          "rate": "5.2%",
+          "probability": 0.052339077,
+          "methodRate": "5%"
+        }
+      ],
+      "type": "Tool",
+      "gameId": "powerpack_unique_capacity_06_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/powerpack_unique_capacity_06_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/tools/accelerator-power-pack"
+    },
+    {
+      "id": "elohim-class-suspensor-belt",
+      "name": "Elohim-Class Suspensor Belt",
+      "category": "Tool",
+      "tier": null,
+      "url": "https://dune.gaming.tools/items/unique_miscequipment_fullsuspensorbelt_durability_schematic",
+      "locations": [
+        {
+          "station": "24",
+          "stationId": "24",
+          "rate": "9.0%",
+          "probability": 0.090305366,
+          "methodRate": "9%"
+        }
+      ],
+      "type": "Tool",
+      "gameId": "unique_miscequipment_fullsuspensorbelt_durability_schematic",
+      "isSchematic": true,
+      "gameUrl": "https://dune.gaming.tools/items/unique_miscequipment_fullsuspensorbelt_durability_schematic",
+      "aliases": [],
+      "methodUrl": "https://www.method.gg/dune-awakening/database/tools/elohim-class-suspensor-belt"
+    }
+  ],
+  "databaseVersion": "1.5.3.3",
+  "databaseUpdated": "2026-09-24",
+  "rateLabel": "Database chest drop chance; Grade availability depends on difficulty"
+}

@@ -101,7 +101,7 @@ def run_cosmic(directory, *args):
 
 def copy_test_source(directory):
     """Copy the complete Python test runtime into the disposable workspace."""
-    for folder in ("src", "tests", "scripts", "assets"):
+    for folder in ("src", "tests", "scripts", "assets", "editions"):
         shutil.copytree(
             ROOT / folder,
             directory / folder,
