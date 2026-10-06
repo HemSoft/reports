@@ -124,6 +124,7 @@ jobs:
       - name: Add edition and rebuild the index
         run: |
           python publish.py add site --manifest edition/manifest.json
+          python publish.py sync site --editions editions
           python publish.py build site
 
       - name: Commit and push the archive
@@ -133,7 +134,7 @@ jobs:
           git -C site add --all
           git -C site config user.name "github-actions[bot]"
           git -C site config user.email "41898283+github-actions[bot]@users.noreply.github.com"
-          git -C site commit --quiet --message "Publish productivity edition ${edition}"
+          git -C site commit --quiet --message "Publish productivity edition ${edition} and sync static reports"
           timeout 120 git -C site push --quiet origin HEAD:published
 
       - name: Archive Pages artifact

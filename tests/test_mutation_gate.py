@@ -19,6 +19,21 @@ from scripts.check_mutations import (
 
 
 class TestMutationGate(unittest.TestCase):
+    def test_disposable_workspace_can_publish_static_editions(self):
+        with tempfile.TemporaryDirectory() as directory:
+            workspace = Path(directory)
+            copy_test_source(workspace)
+            result = subprocess.run(
+                [sys.executable, "publish.py", "sync", "site", "--editions", "editions"],
+                cwd=directory,
+                capture_output=True,
+                text=True,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertTrue(
+                (workspace / "site/reports/dune-awakening/2026-10-05/payload.json").is_file()
+            )
+
     def test_disposable_workspace_can_load_verified_graphics_without_node(self):
         with tempfile.TemporaryDirectory() as directory:
             copy_test_source(Path(directory))
