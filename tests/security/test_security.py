@@ -117,6 +117,32 @@ class SecurityChecks(unittest.TestCase):
                             check_security.check_policy()
                     path.unlink()
 
+    def test_only_the_pages_archive_job_may_write_contents(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workflows = root / ".github/workflows"
+            workflows.mkdir(parents=True)
+            cases = (
+                ("pages", "archive", "{contents: write}", True),
+                ("pages", "build", "{contents: write}", False),
+                ("pages", "archive", "{contents: write, pages: write}", False),
+                ("other", "archive", "{contents: write}", False),
+            )
+            for stem, job, permissions, allowed in cases:
+                with self.subTest(stem=stem, job=job, permissions=permissions):
+                    path = workflows / f"{stem}.yml"
+                    path.write_text(
+                        f"jobs:\n  {job}:\n    permissions: {permissions}\n    steps: []\n",
+                        encoding="utf-8",
+                    )
+                    with patch.object(check_security, "ROOT", root):
+                        if allowed:
+                            check_security.check_policy()
+                        else:
+                            with self.assertRaisesRegex(ValueError, "Unexpected permissions"):
+                                check_security.check_policy()
+                    path.unlink()
+
     def test_unicode_file_secret_is_detected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

@@ -136,11 +136,11 @@ def check_policy():
             check_reference(reference, set())
         for name, job in workflow["jobs"].items():
             permissions = job.get("permissions", workflow.get("permissions", {}))
-            expected = (
-                {"pages": "write", "id-token": "write"}
-                if path.stem == "pages" and name == "deploy"
-                else {"contents": "read"}
-            )
+            expected = {"contents": "read"}
+            if path.stem == "pages" and name == "deploy":
+                expected = {"pages": "write", "id-token": "write"}
+            elif path.stem == "pages" and name == "archive":
+                expected = {"contents": "write"}  # Commits editions to the published branch.
             if permissions != expected:
                 raise ValueError(f"Unexpected permissions in {path.name}/{name}")
 

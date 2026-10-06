@@ -57,11 +57,14 @@ known durations, the reported median is `0.0`.
 ```text
 reports/
 ├── cli.py               # Main CLI entry point
+├── publish.py           # Adds editions to the site and rebuilds the index
 ├── src/
 │   ├── collector.py     # Git numstats, worktree deduplication, and GitHub API queries
 │   ├── analyzer.py      # KPI aggregation, 7x24 matrices, and PR cycle times
 │   ├── template.py      # Standalone HTML dashboard generator with 3D/2D visualizers
-│   └── generator.py     # End-to-end orchestration and cache management
+│   ├── generator.py     # End-to-end orchestration, cache management and edition output
+│   ├── catalog.py       # catalog.json, edition manifests and publishing
+│   └── landing.py       # HemSoft Reports index page built from the catalog
 ├── tests/               # Automated unit and integration test suite
 │   ├── test_collector.py
 │   ├── test_analyzer.py
@@ -175,10 +178,73 @@ python cli.py --weeks 12 --json-out "data/audit-q3-metrics.json"
 
 ## Publishing to GitHub Pages
 
-The report publishes as a single page at the site root (`index.html`).
-A scheduled workflow (`.github/workflows/pages.yml`) rebuilds it every
-Monday at 08:00 EDT / 07:00 EST and deploys via Actions artifact. Manual runs are
-available from the Actions tab.
+The Pages site is **HemSoft Reports**, an index of every report HemSoft publishes.
+Reports don't need to have anything in common. Each published copy of a report is
+an *edition*, and every edition stays on file with the data behind it.
+
+```text
+catalog.json                              every report and edition (the source of truth)
+index.html                                landing page, rebuilt from catalog.json
+reports/<report>/index.html               redirect to the report's latest edition
+reports/<report>/<edition>/index.html     the edition's HTML
+reports/<report>/<edition>/payload.json   the edition's data
+```
+
+The site lives on the orphan `published` branch. A scheduled workflow
+(`.github/workflows/pages.yml`) publishes a new productivity edition every
+Monday at 08:00 EDT / 07:00 EST, commits it to `published`, and deploys the
+branch to Pages. Manual runs are available from the Actions tab. Rerunning on the
+same day replaces that day's edition.
+
+### Publishing any report
+
+A report joins the index when it publishes its first edition. Write the report
+as one HTML file and its data as JSON, then describe the edition in a manifest:
+
+```json
+{
+  "report": {
+    "id": "ops-review",
+    "title": "Operations Review",
+    "summary": "Incidents, deploys and on-call load.",
+    "category": "Operations",
+    "cadence": "Weekly"
+  },
+  "edition": {
+    "id": "2026-10-05",
+    "title": "Week 40",
+    "period": { "start": "Sep 29, 2026", "end": "Oct 05, 2026" },
+    "highlights": [{ "label": "Incidents", "value": "0" }]
+  },
+  "files": { "html": "report.html", "payload": "payload.json" }
+}
+```
+
+Report and edition ids are lowercase slugs (`a-z`, `0-9`, `-`); they become URL
+folders. `category`, `cadence`, `edition.title`, `period` and `highlights`
+(up to six label/value strings, shown on the index) are optional. File paths are
+relative to the manifest. Then publish into a checkout of the `published` branch:
+
+```powershell
+python publish.py add site --manifest edition/manifest.json
+python publish.py build site
+```
+
+`add` validates the manifest and payload JSON, copies both files into
+`reports/<report>/<edition>/`, and records the edition in `catalog.json`.
+`build` rebuilds `index.html` and the redirects from the catalog. The productivity
+report writes its own manifest with `--edition-dir`:
+
+```powershell
+python cli.py --weeks 12 --edition-dir edition
+```
+
+That folder holds `report.html` (with an **All reports** link back to the
+index), `payload.json` (the same analytics as `--json-out`) and `manifest.json`.
+
+The index's hero is a transit map: each line is a report series, branching off
+the index, and each stop is an edition placed on its publication date. The map
+covers the last year of editions; older editions remain in the lists below it.
 
 ### One-time setup
 
@@ -188,7 +254,7 @@ available from the Actions tab.
    secret is missing or a repository cannot be cloned.
 2. Enable Pages: repo Settings -> Pages -> Build and deployment ->
    Source: GitHub Actions.
-3. Run the workflow once via Actions -> Publish report to GitHub Pages ->
+3. Run the workflow once via Actions -> Publish reports to GitHub Pages ->
    Run workflow, then open the Pages URL.
 
 Repository discovery follows every GitHub GraphQL cursor for repositories owned
@@ -200,10 +266,11 @@ cursors stop collection. A token cannot reveal repositories it cannot access;
 use credentials covering the intended repository set. Large histories require
 more API requests, and rate-limit failures remain explicit.
 
-The workflow clones all discovered HemSoft repos into `checkouts/`, runs
-`python cli.py --weeks 12 --base-dir ./checkouts --output ./public/index.html`,
-and uploads `public/` as the Pages artifact. Both `public/` and
-`checkouts/` are gitignored build outputs.
+The `build` job clones all discovered HemSoft repos into `checkouts/` and runs
+`python cli.py --weeks 12 --base-dir ./checkouts --edition-dir ./edition`. The
+`archive` job, the only job with `contents: write`, holds no PAT. It adds that
+edition to the `published` branch, rebuilds the index, pushes the branch, and
+uploads it as the Pages artifact. `checkouts/` and `edition/` are build outputs.
 
 The repository remains private, but the Pages site and its exported metrics
 are public. Private repository visibility does not restrict access to the site.

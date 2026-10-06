@@ -149,7 +149,7 @@ def _generated_label(timestamp):
     return eastern.strftime("%b %d, %Y %H:%M:%S %Z (UTC%z)")
 
 
-def build_html_report(analytics_data):
+def build_html_report(analytics_data, home_href=None):
     kpis = analytics_data["kpis"]
     range_info = analytics_data["range"]
     weekly = analytics_data["weekly_data"]
@@ -162,6 +162,11 @@ def build_html_report(analytics_data):
     recent_commits = analytics_data.get("recent_commits", [])
     chart_tables = _visualization_tables(analytics_data)
     generated_label = _generated_label(analytics_data.get("generated_at"))
+    home_link = (
+        f'<a class="btn" href="{html.escape(home_href, quote=True)}">All reports</a>'
+        if home_href
+        else ""
+    )
     cycle_distribution = kpis["pr_cycle_distribution"]
     measured_prs = sum(cycle_distribution.values())
     under_hour_pct = 100 * cycle_distribution["under_1h"] / measured_prs if measured_prs else 0
@@ -978,6 +983,7 @@ def build_html_report(analytics_data):
     }</strong> | Timezone: <strong>America/New_York (ET)</strong>
       </div>
       <div class="btn-group">
+        {home_link}
         <button class="btn" onclick="window.print()">Print / Export PDF</button>
         <a class="btn" href="https://github.com/HemSoft" target="_blank" rel="noopener">GitHub Profile</a>
       </div>
@@ -1730,15 +1736,27 @@ def build_html_report(analytics_data):
     }}
   }}
 
+  // Damping decays per frame, so on slow devices a drag keeps drifting for seconds.
+  // Applying the leftover motion with damping off clears it before the reset.
+  function stopMomentum(controls) {{
+    controls.enableDamping = false;
+    controls.update();
+    controls.enableDamping = true;
+  }}
+
   function resetCamera(scene) {{
     if (scene === 'vel') {{
+      stopMomentum(velControls);
       velCamera.position.set(28, 26, 36);
       velControls.target.set(0, 4, 0);
       velScene.rotation.set(0, 0, 0);
+      velControls.update();
     }} else {{
+      stopMomentum(cadControls);
       cadCamera.position.set(32, 28, 32);
       cadControls.target.set(0, 2, 0);
       cadScene.rotation.set(0, 0, 0);
+      cadControls.update();
     }}
   }}
 
