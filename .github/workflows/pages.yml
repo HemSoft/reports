@@ -1,8 +1,8 @@
-name: Publish report to GitHub Pages
+name: Publish reports to GitHub Pages
 
 on:
   schedule:
-    # Mondays at 08:00 EDT / 07:00 EST. Regenerates the 12-week report.
+    # Mondays at 08:00 EDT / 07:00 EST. Publishes a new 12-week productivity edition.
     - cron: "0 12 * * 1"
   workflow_dispatch:
 
@@ -48,25 +48,95 @@ jobs:
         run: |
           test -n "$GH_TOKEN" || { echo "REPORTS_PAT is required to include private repositories."; exit 1; }
           timeout 120 gh auth setup-git
-          mkdir -p checkouts public
+          mkdir -p checkouts
           python -m src.collector --list-repositories > repositories.txt
           while read -r repo; do
             echo "Cloning $repo ..."
             timeout 300 gh repo clone "$repo" "checkouts/${repo#*/}" -- --quiet
           done < repositories.txt
 
-      - name: Generate report to public/index.html
+      - name: Generate productivity edition
         shell: bash
         env:
           GH_TOKEN: ${{ secrets.REPORTS_PAT }}
         run: |
-          python cli.py --weeks 12 --base-dir ./checkouts --output ./public/index.html --json-out ./public/metrics.json
-          touch ./public/.nojekyll
-          ls -lh ./public/
+          python cli.py --weeks 12 --base-dir ./checkouts --output ./edition/standalone.html --edition-dir ./edition
+          rm ./edition/standalone.html
+          ls -lh ./edition/
+
+      - name: Upload edition
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: edition
+          path: edition/
+          retention-days: 1
+          if-no-files-found: error
+
+  # The only job with write access: it holds no PAT and runs no collected code.
+  archive:
+    needs: build
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout reports repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.12"
+
+      - name: Install runtime dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Download edition
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: edition
+          path: edition
+
+      - name: Check out the published branch
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          status=0
+          timeout 60 git ls-remote --exit-code --heads "$remote" published > /dev/null || status=$?
+          if [ "$status" -eq 0 ]; then
+            timeout 300 git clone --quiet --branch published --single-branch "$remote" site
+          elif [ "$status" -eq 2 ]; then
+            echo "No published branch yet; starting the archive."
+            git init --quiet --initial-branch published site
+            git -C site remote add origin "$remote"
+          else
+            echo "Could not read the published branch (exit $status)."
+            exit 1
+          fi
+
+      - name: Add edition and rebuild the index
+        run: |
+          python publish.py add site --manifest edition/manifest.json
+          python publish.py build site
+
+      - name: Commit and push the archive
+        shell: bash
+        run: |
+          edition=$(python -c "import json; print(json.load(open('edition/manifest.json'))['edition']['id'])")
+          git -C site add --all
+          git -C site config user.name "github-actions[bot]"
+          git -C site config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git -C site commit --quiet --message "Publish productivity edition ${edition}"
+          timeout 120 git -C site push --quiet origin HEAD:published
 
       - name: Archive Pages artifact
         shell: bash
-        run: tar --dereference --hard-dereference --directory public -cvf "$RUNNER_TEMP/artifact.tar" --exclude=.git --exclude=.github .
+        run: tar --dereference --hard-dereference --directory site -cf "$RUNNER_TEMP/artifact.tar" --exclude=.git .
 
       - name: Upload Pages artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -77,7 +147,7 @@ jobs:
           if-no-files-found: error
 
   deploy:
-    needs: build
+    needs: archive
     permissions:
       pages: write
       id-token: write

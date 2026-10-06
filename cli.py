@@ -43,6 +43,12 @@ def main():
     parser.add_argument(
         "--json-out", type=str, default=None, help="Optional path to write raw analytics JSON"
     )
+    parser.add_argument(
+        "--edition-dir",
+        type=str,
+        default=None,
+        help="Optional folder for a publishable edition (report.html, payload.json, manifest.json)",
+    )
 
     args = parser.parse_args()
 
@@ -60,6 +66,7 @@ def main():
             output_html=args.output,
             refresh=args.refresh,
             json_out=args.json_out,
+            edition_dir=args.edition_dir,
         )
     except CollectionError as exc:
         print(f"Collection failed: {exc}", file=sys.stderr)
