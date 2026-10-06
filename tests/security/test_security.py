@@ -13,6 +13,29 @@ from scripts import check_security
 
 
 class SecurityChecks(unittest.TestCase):
+    def test_embedded_inventory_rejects_modified_bytes_and_missing_bundle(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "assets").mkdir()
+            data = b"synthetic bundled graphics"
+            (root / "assets/report-graphics.js").write_bytes(data)
+            digest = base64.b64encode(hashlib.sha384(data).digest()).decode()
+            encoded = base64.b64encode(data).decode()
+            markup = (
+                f'<script src="data:application/javascript;base64,{encoded}#report-graphics.js" '
+                f'integrity="sha384-{digest}" crossorigin="anonymous"></script>'
+            )
+            with (
+                patch.object(check_security, "ROOT", root),
+                patch.object(check_security, "SCRIPT_FILES", {}),
+            ):
+                self.assertRegex(digest, check_security.verified_digest_pattern(markup))
+                modified = markup.replace(encoded, base64.b64encode(data + b"modified").decode())
+                with self.assertRaisesRegex(ValueError, "bytes differ"):
+                    check_security.verified_digest_pattern(modified)
+                with self.assertRaisesRegex(ValueError, "inventory differs"):
+                    check_security.verified_digest_pattern("")
+
     def test_browser_url_version_must_match_dependency_metadata(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

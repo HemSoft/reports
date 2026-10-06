@@ -13,7 +13,7 @@ async function assertTablesWork(page) {
   await expect(page.locator('#pane-prs tbody tr:visible')).toHaveCount(1);
 }
 
-for (const scenario of ['three-blocked', 'controls-blocked', 'webgl-unavailable']) {
+for (const scenario of ['graphics-blocked', 'controls-unavailable', 'webgl-unavailable']) {
   test(`${scenario} preserves charts and tables`, async ({ page }) => {
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -25,8 +25,11 @@ for (const scenario of ['three-blocked', 'controls-blocked', 'webgl-unavailable'
         };
       });
     }
-    await openReport(page, { block: url => scenario === 'three-blocked'
-      ? /three|OrbitControls/.test(url) : scenario === 'controls-blocked' && url.includes('OrbitControls') });
+    await openReport(page, {
+      block: url => scenario === 'graphics-blocked' && url.includes('report-graphics.js'),
+      appendScript: url => scenario === 'controls-unavailable' && url.includes('report-graphics.js')
+        ? 'delete THREE.OrbitControls;' : '',
+    });
     await expect(page.locator('.three-viewport [role="status"]')).toHaveCount(2);
     await expect(page.locator('.three-controls button:disabled')).toHaveCount(4);
     await expect.poll(() => page.evaluate(() => Object.keys(Chart.instances).length)).toBe(7);
@@ -38,7 +41,7 @@ for (const scenario of ['three-blocked', 'controls-blocked', 'webgl-unavailable'
 test('one failed scene leaves the other scene running', async ({ page }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await openReport(page, { appendScript: url => url.includes('three.min.js') ? `
+  await openReport(page, { appendScript: url => url.includes('report-graphics.js') ? `
     const OriginalRenderer = THREE.WebGLRenderer;
     let attempts = 0;
     THREE.WebGLRenderer = function (...args) {
@@ -78,8 +81,10 @@ test('a local report remains readable and filterable with networking disabled', 
   page.on('pageerror', error => errors.push(error.message));
   await context.setOffline(true);
   await page.goto(pathToFileURL(path.join(root, 'test-results/report.html')).href);
-  await expect(page.locator('.visualization-fallback')).toHaveCount(9);
-  await expect(page.locator('canvas')).toHaveCount(0);
+  await expect(page.locator('.visualization-fallback')).toHaveCount(7);
+  await expect(page.locator('canvas')).toHaveCount(2);
+  await expect.poll(() => page.evaluate(() => [velRenderer.info.render.frame, cadRenderer.info.render.frame]
+    .every(n => n > 0))).toBe(true);
   await assertTablesWork(page);
   expect(errors).toEqual([]);
 });

@@ -135,7 +135,9 @@ async function sample(browser, browserSession, scenario, index) {
 async function main() {
   const sourceHashes = {};
   for (const name of ['src/template.py', 'scripts/benchmark_browser.js', 'scripts/check_browser_budget.js',
-    'scripts/generate_benchmark.py', 'scripts/process_resources.py', 'quality/browser-budget.json', 'package-lock.json']) {
+    'scripts/generate_benchmark.py', 'scripts/process_resources.py', 'quality/browser-budget.json', 'package-lock.json',
+    'src/browser_assets.py', 'assets/report-graphics.js', 'assets/report-graphics.json',
+    'browser/report-graphics.js', 'scripts/build_browser_assets.js']) {
     sourceHashes[name] = createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
   }
   const browser = await chromium.launch({ headless: true, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });

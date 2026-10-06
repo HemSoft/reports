@@ -8,6 +8,8 @@ test('generated report initializes charts and supports table navigation offline'
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await openReport(page);
+  await expect.poll(() => page.evaluate(() => THREE.REVISION)).toBe('186');
+  expect(await page.evaluate(() => typeof THREE.OrbitControls)).toBe('function');
   await expect(page.locator('canvas')).toHaveCount(9);
   await expect.poll(() => page.evaluate(() => Object.keys(Chart.instances).length)).toBe(7);
   await expect.poll(() => page.evaluate(() => [velRenderer.info.render.calls, cadRenderer.info.render.calls].every(n => n > 0))).toBe(true);
