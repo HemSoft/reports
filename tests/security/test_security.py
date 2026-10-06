@@ -2,6 +2,7 @@
 
 import base64
 import hashlib
+import json
 import subprocess
 import tempfile
 import unittest
@@ -12,6 +13,39 @@ from scripts import check_security
 
 
 class SecurityChecks(unittest.TestCase):
+    def test_browser_url_version_must_match_dependency_metadata(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            versions = {"chart.js": "4.5.1", "three": "0.128.0"}
+            (root / "package.json").write_text(json.dumps({"devDependencies": versions}))
+            (root / "package-lock.json").write_text(
+                json.dumps(
+                    {
+                        "packages": {
+                            f"node_modules/{name}": {"version": value}
+                            for name, value in versions.items()
+                        }
+                    }
+                )
+            )
+            for name, value in versions.items():
+                folder = root / "node_modules" / name
+                folder.mkdir(parents=True)
+                (folder / "package.json").write_text(json.dumps({"version": value}))
+            old = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"
+            current = old.replace("4.4.1", "4.5.1")
+            with patch.object(check_security, "ROOT", root):
+                with patch.object(check_security, "SCRIPT_FILES", {old: "unused"}):
+                    with self.assertRaisesRegex(ValueError, "Browser URL version"):
+                        check_security.check_browser_versions()
+                with patch.object(check_security, "SCRIPT_FILES", {current: "unused"}):
+                    check_security.check_browser_versions()
+                    (root / "node_modules/chart.js/package.json").write_text(
+                        json.dumps({"version": "4.4.1"})
+                    )
+                    with self.assertRaisesRegex(ValueError, "metadata versions"):
+                        check_security.check_browser_versions()
+
     def test_local_composite_action_references_are_checked_recursively(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

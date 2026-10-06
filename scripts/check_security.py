@@ -13,10 +13,36 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_FILES = {
-    "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
+    "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
     "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js": "node_modules/three/build/three.min.js",
     "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js": "node_modules/three/examples/js/controls/OrbitControls.js",
 }
+
+
+def check_browser_versions():
+    """Require browser URLs and npm metadata to identify the same pinned release."""
+    package = json.loads((ROOT / "package.json").read_text(encoding="utf-8"))
+    lock = json.loads((ROOT / "package-lock.json").read_text(encoding="utf-8"))
+    versions = {}
+    for name in ("chart.js", "three"):
+        declared = package["devDependencies"][name]
+        installed = json.loads(
+            (ROOT / "node_modules" / name / "package.json").read_text(encoding="utf-8")
+        )["version"]
+        if declared != installed or declared != lock["packages"][f"node_modules/{name}"]["version"]:
+            raise ValueError(f"Browser dependency metadata versions differ: {name}")
+        versions[name] = declared
+    for url in SCRIPT_FILES:
+        npm = re.search(r"/npm/(chart\.js|three)@([^/]+)/", url)
+        classic = re.search(r"/three\.js/r(\d+)/", url)
+        if npm:
+            name, release = npm.groups()
+        elif classic:
+            name, release = "three", f"0.{classic[1]}.0"
+        else:
+            raise ValueError(f"Browser dependency URL does not pin a known release: {url}")
+        if release != versions[name]:
+            raise ValueError(f"Browser URL version differs from npm dependency: {url}")
 
 
 def verified_digest_pattern():
@@ -125,6 +151,7 @@ def scan_secrets(digest_pattern=None):
 
 def main():
     check_policy()
+    check_browser_versions()
     scan_secrets(verified_digest_pattern())
     subprocess.run(
         [sys.executable, "-m", "bandit", "-r", "src", "scripts", "cli.py", "-ll"],
