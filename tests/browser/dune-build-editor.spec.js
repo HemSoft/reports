@@ -54,6 +54,152 @@ test('every equipment choice fits a supported slot and every available grade is 
   }
 });
 
+test('source augmentation unlocks cover eligible items and respect purchased trait levels', () => {
+  for (const item of data.items) {
+    const traits = Build.augmentTraits(data, item);
+    expect(traits.length > 0).toBe(Build.compatibleAugments(data, item).length > 0);
+  }
+  const state = fullBuild();
+  const hands = Build.itemById(data, state.equipment.hands.id);
+  const traits = Build.augmentTraits(data, hands);
+  expect(traits.map(trait => trait.level)).toEqual([10, 42]);
+  state.levels.craftingtrack = 42;
+  expect(Build.augmentLimit(data, state, hands)).toBe(0);
+  state.traits = [traits[1].id];
+  expect(Build.augmentLimit(data, state, hands)).toBe(1);
+  state.levels.craftingtrack = 10;
+  expect(Build.augmentLimit(data, state, hands)).toBe(0);
+});
+
+for (const width of [1440, 390]) {
+  test(`equipment actions guide locked garment and ranged augments through purchase and removal at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(url);
+    await page.locator('#gear-hands').selectOption(id('Circuit Gauntlets'));
+    await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
+    const hands = page.getByRole('button', { name: 'Hands augments', exact: true });
+    await expect(hands).toBeVisible();
+    await expect(hands).toContainText('locked');
+    await hands.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: testInfo.outputPath(`augment-access-${width}.png`) });
+    await hands.focus();
+    await hands.press('Enter');
+    await expect(page.locator('#augment-target')).toHaveValue('hands');
+    await expect(page.locator('#inspect-slot')).toHaveValue('hands');
+    await expect(page.locator('#augment-target')).toBeFocused();
+    await expect(page.locator('#augment-0')).toBeDisabled();
+    await expect(page.locator('#augmentation')).toContainText('Requires Crafting level 10 and purchased Garment Augmentation Limit');
+    await expect(page.locator('#augmentation')).toContainText('Requires Crafting level 42');
+    await page.screenshot({ path: testInfo.outputPath(`augment-locked-${width}.png`) });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+    await page.getByRole('button', { name: 'Configure Garment Augmentation Limit · level 10', exact: true }).click();
+    await expect(page.locator('#level-craftingtrack')).toBeFocused();
+    await expect(page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10')).toBeDisabled();
+    await page.locator('#level-craftingtrack').fill('10');
+    await page.locator('#level-craftingtrack').press('Tab');
+    await expect(page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10')).not.toBeChecked();
+    await page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10').check();
+    await page.getByRole('button', { name: 'Return to Hands augments', exact: true }).click();
+    await expect(page.locator('#augment-0')).toBeEnabled();
+    await expect(page.locator('#augment-1')).toBeDisabled();
+    await page.locator('#augment-0').selectOption('t6_augment_armor6');
+    await page.locator('#roll-0').fill('100');
+    await page.locator('#roll-0').press('Tab');
+    await expect(page.locator('#armor-total')).toHaveText('273.52');
+    await expect(page.locator('#item-title')).toHaveText('Hands: Circuit Gauntlets');
+    await expect(page.locator('#augment-effect-rows')).toContainText('Garment Reinforcement');
+    await page.screenshot({ path: testInfo.outputPath(`augment-garment-${width}.png`), fullPage: width === 1440 });
+    await page.locator('#augment-0').selectOption('');
+    await expect(page.locator('#armor-total')).toHaveText('263');
+
+    await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+    await page.getByRole('button', { name: 'Configure Ranged Augmentation Limit · level 1', exact: true }).click();
+    await expect(page.locator('#trait-Crafting_CraftingKeystone_RangedWeaponAugmentSlots1')).toBeFocused();
+    await page.locator('#trait-Crafting_CraftingKeystone_RangedWeaponAugmentSlots1').press('Space');
+    await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+    await page.locator('#augment-0').selectOption('t6_augment_smg1');
+    await expect(page.locator('#augment-0')).not.toContainText('Karpov');
+    await page.locator('#augment-grade-0').selectOption('3');
+    await page.locator('#roll-0').fill('100');
+    await page.locator('#roll-0').press('Tab');
+    await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Damage Per Shot', exact: true }) }).locator('td').first()).toHaveText('40.66');
+    await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Clip Size', exact: true }) }).locator('td').first()).toHaveText('76.8');
+    await page.screenshot({ path: testInfo.outputPath(`augment-weapon-${width}.png`), fullPage: width === 1440 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+    await page.locator('#augment-0').selectOption('');
+    await expect(page.locator('#item-stat-rows')).toContainText('42.8');
+    await page.locator('#augment-0').selectOption('t6_augment_smg1');
+    await page.locator('#gear-hotbar1').selectOption(id('Maula Pistol'));
+    await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+    await expect(page.locator('#augmentation')).toContainText('Maula Pistol cannot be augmented in this snapshot');
+    await expect(page.locator('#augment-0')).toHaveCount(0);
+    await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
+    await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+    await expect(page.locator('#augment-0')).toHaveValue('');
+    await page.getByRole('button', { name: 'Reset build', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Hands augments', exact: true })).toHaveCount(0);
+    await expect(page.locator('#armor-total')).toHaveText('0');
+    expect(errors).toEqual([]);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+}
+
+test('melee augments can be edited and removed after losing a slot unlock', async ({ page }) => {
+  await page.goto(url);
+  await page.locator('#gear-hotbar1').selectOption(id('Leech’s Maw'));
+  await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+  await page.getByRole('button', { name: 'Configure Melee Augmentation Limit · level 3', exact: true }).click();
+  await page.locator('#level-craftingtrack').fill('3');
+  await page.locator('#level-craftingtrack').press('Tab');
+  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots3').check();
+  await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+  await page.locator('#augment-0').selectOption('t6_augment_melee1');
+  await page.locator('#roll-0').fill('100');
+  await page.locator('#roll-0').press('Tab');
+  await expect(page.locator('#augment-effect-rows')).toContainText('Blade Sharpener');
+  await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Damage Per Hit', exact: true }) }).locator('td').first()).toHaveText('148.12');
+  await page.locator('#augment-grade-0').selectOption('2');
+  await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Damage Per Hit', exact: true }) }).locator('td').first()).toHaveText('157.72');
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#level-craftingtrack').fill('0');
+  await page.locator('#level-craftingtrack').press('Tab');
+  await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+  await expect(page.locator('#build-status')).toHaveText('Invalid build');
+  await expect(page.locator('#augment-0')).toBeEnabled();
+  await expect(page.locator('#augment-grade-0')).toBeDisabled();
+  await page.locator('#augment-0').selectOption('');
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+  await expect(page.locator('#augment-0')).toBeDisabled();
+  await expect(page.locator('#item-stat-rows')).toContainText('137.15');
+  await page.locator('#gear-hotbar1').selectOption('');
+  await expect(page.locator('#augment-0')).toHaveCount(0);
+});
+
+test('a single augment in a later position stays editable within the reduced slot limit', async ({ page }) => {
+  await page.goto(url);
+  await page.locator('#gear-hotbar1').selectOption(id('Leech’s Maw'));
+  await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+  await page.getByRole('button', { name: 'Configure Melee Augmentation Limit · level 30', exact: true }).click();
+  await page.locator('#level-craftingtrack').fill('30');
+  await page.locator('#level-craftingtrack').press('Tab');
+  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots3').check();
+  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots32').check();
+  await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+  await page.locator('#augment-1').selectOption('t6_augment_melee1');
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#level-craftingtrack').fill('3');
+  await page.locator('#level-craftingtrack').press('Tab');
+  await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+  await expect(page.locator('#augment-grade-1')).toBeEnabled();
+  await page.locator('#augment-grade-1').selectOption('2');
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+});
+
 test('skill prerequisites, cumulative costs, purchased traits and reductions preserve valid builds', () => {
   let state = Build.initial(data);
   expect(Build.rank(data, state, 'skills-ability-assaultseeker', 1).error).toContain('prerequisite');

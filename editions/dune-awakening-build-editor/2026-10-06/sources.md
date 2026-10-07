@@ -173,3 +173,18 @@ New versions should use a new edition directory and manifest, preserving this
 snapshot's archive. The existing Pages workflow discovers the manifest through
 static-edition synchronization. Publication requires the workflow on `main`,
 then verification of the report-directory link and editor on the live site.
+
+## Using augmentation
+
+Choose **Augments** beside an equipped item. The editor opens that item's
+augment slots and stats. Locked slots name the required Crafting level and
+purchased trait. **Configure** opens the Crafting traits and focuses either the
+level field or the available trait. Set your level and purchase the trait, then
+choose **Return to [slot] augments**. Levels alone do not purchase traits.
+
+Select a compatible augment, its grade and roll position. Choose **None** to
+remove it. Locked slots still permit removing an existing augment after an
+unlock is lost; the invalid-build warning remains until the build is repaired.
+Replacing equipment clears that item's augments, and Reset clears the build.
+Items outside the snapshot's unique tier 6 garment/weapon coverage explain
+why augmentation is unavailable.
