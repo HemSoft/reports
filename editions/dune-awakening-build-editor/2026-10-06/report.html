@@ -6,10 +6,15 @@
 @media(max-width:1000px){.workspace{grid-template-columns:minmax(0,1fr);gap:30px}.results{position:static}.progress-controls{max-width:650px}}
 @media(max-width:600px){header{padding:18px 16px}.workspace{padding:20px 16px}.breadcrumbs{margin-bottom:20px}.page-title{align-items:flex-start}.page-title button{font-size:12px;white-space:nowrap}.gear-table thead{position:absolute;clip:rect(0,0,0,0)}.gear-table tbody tr{display:grid;grid-template-columns:minmax(0,1fr) 68px;padding:12px 0;gap:8px;border-bottom:1px solid var(--line)}.gear-table tbody th{grid-column:1/-1;width:auto;padding:0;font-size:13px}.gear-table tbody td{padding:0;border:0}.gear-table select{min-height:44px}.inspect-cell{width:auto;grid-column:1/-1;display:flex;gap:8px}.inspect-cell button{flex:1;min-height:44px}.inspect-cell button+button{margin-top:0}.grade-cell{width:auto}.progress-controls,.selector-grid{grid-template-columns:minmax(0,1fr)}.augment-row{grid-template-columns:minmax(0,1fr) 80px}.augment-row>label:first-child{grid-column:1/-1}.augment-row p{grid-column:1/-1}.result-table{font-size:12px}.result-table td:nth-child(3){font-size:10px}.result-table th{width:36%}.result-table td:nth-child(2){width:23%}.result-table td:nth-child(3){width:41%}.metadata{line-height:1.7}footer,#message{padding-left:16px;padding-right:16px}.skill-table tbody th{width:65%}.skill-table th,.skill-table td{padding:9px 4px}}
 @media(prefers-reduced-motion:no-preference){#armor-total,#volume-total{transition:color .15s ease-out}}
+.page-title{flex-wrap:wrap}.build-actions{display:flex;flex-wrap:wrap;gap:8px}.file-note{color:var(--muted);font-size:13px;margin-top:10px}
+@media(max-width:600px){.page-title{flex-direction:column;gap:14px}.build-actions{width:100%}.build-actions button{flex:1;min-height:44px}}
 .mobile-overview{display:none}@media(max-width:1000px){.mobile-overview{display:flex;position:sticky;top:0;z-index:2;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;background:var(--surface);border-bottom:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}}
 </style></head>
 <body><header><nav class="breadcrumbs" aria-label="Reports navigation"><a href="../../../">All reports</a><a href="../../dune-awakening/">Loot reference</a></nav>
-<div class="page-title"><h1>Dune: Awakening build editor</h1><button type="button" id="reset">Reset build</button></div>
+<div class="page-title"><h1>Dune: Awakening build editor</h1><div class="build-actions" role="group" aria-label="Build files">
+<button type="button" id="save-build">Save build</button><button type="button" id="load-build">Load build</button><button type="button" id="reset">Reset build</button>
+<input type="file" id="build-file" accept=".json,application/json" aria-label="Choose a saved build file" hidden></div></div>
+<p class="file-note">Save downloads a build file. Load replaces the current build with a saved file.</p>
 <p class="intro">Choose equipment and skills, then inspect their stats. Choose Augments beside equipped gear to add augments or view its unlock requirements. Item grades and augment rolls update immediately.</p>
 <p class="metadata">Game data 1.5.3.6 · Checked October 6, 2026 · <a href="payload.json">Data snapshot</a> · <a href="#sources">Sources and calculation notes</a></p>
 </header><p id="message" role="status" aria-live="polite">Start with equipment, or set your character level and learn skills.</p>
@@ -44,6 +49,7 @@
 <table class="result-table"><caption class="sr-only">Skill and progression modifiers</caption><thead><tr><th scope="col">Stat</th><th scope="col">Modifier</th><th scope="col">Source / condition</th></tr></thead><tbody id="modifier-rows"></tbody></table></details>
 <p class="limitations">Equipment values include verified grade overrides and mapped augment operations. Weapon damage includes the sourced Combat bonus after grades and augments. The Combat contribution to mitigation, health and stamina is shown separately; combined skill/weapon and final character formulas remain unavailable. Catalog DPS is unavailable when Combat or augments modify damage. Item-specific effects without a verified mapping remain listed as modifiers.</p></aside></main>
 <footer id="sources"><p id="coverage"></p><details><summary>Sources and calculation notes</summary>
+<p>Save build downloads a local JSON file with your equipment, augments, skills and progression. Load build restores that file and recalculates stats. Files must use the same game-data version and be 64 KB or smaller. Files stay on your device; loading needs no network request. Incomplete builds keep their selections and rule warnings.</p>
 <p>Snapshot of the <a href="https://dune.gaming.tools/items">gaming.tools equipment database</a>, <a href="https://dune.gaming.tools/skill-builder">skill builder</a>, and <a href="https://dune.gaming.tools/specializations">specialization tracks</a>, version 1.5.3.6, checked October 6, 2026. <a href="https://duneawakening.com/news/dune-awakening-chapter-3-patch-notes/">Funcom Chapter 3 notes</a> describe augmentation and specialization.</p>
 <p>Coverage includes every personal garment, weapon, utility item and consumable in the source snapshot. Vehicles, building pieces, materials, ammunition and schematics are outside this character editor. Stillsuit bodies and radiation suits occupy chest and legs. Normal and unique tiers are distinct from community usefulness rankings.</p>
 <p>Ranks use cumulative source costs and connected skill-tree prerequisites. All specialization traits up to your entered levels apply automatically. Combat traits add skill points, health and stamina; Crafting traits unlock augment slots. Only unique tier 6 garments and weapons can be augmented. Weapon-family augments are restricted to matching weapon tags. Roll position chooses a value within the source's min-to-max range; it is not a chance or a prediction.</p>
@@ -71,6 +77,74 @@ const DuneBuild = (() => {
       ranks: {}, abilities: ['', '', ''], techniques: ['', '', ''],
       levels: Object.fromEntries(data.tracks.map(track => [track.id, 0])),
       characterLevel: 1, abilitySlots: 3, gameMode: 'multiplayer' };
+  }
+
+  const fileLimit = 64 * 1024;
+  function serialize(data, state) {
+    return JSON.stringify({ format: 'hemsoft-dune-build', version: 1,
+      gameVersion: data.gameVersion, build: state }, null, 2);
+  }
+
+  // Validate the whole file before handing a new state to the editor. Rule
+  // warnings (for example a lowered Crafting level) remain editable drafts.
+  function deserialize(data, text) {
+    try {
+      const require = (condition, message) => { if (!condition) throw new Error(message); };
+      require(typeof text === 'string' && text.length <= fileLimit, 'Build files must be 64 KB or smaller. Choose a saved build file.');
+      let file;
+      try { file = JSON.parse(text); }
+      catch { return { error: 'This file is not valid JSON. Choose a file downloaded with Save build.' }; }
+      const record = (value, keys, label, partial = false) => {
+        require(value !== null && typeof value === 'object' && !Array.isArray(value)
+          && Object.keys(value).every(key => keys.includes(key))
+          && (partial || keys.every(key => Object.hasOwn(value, key))),
+        `${label} is incomplete or contains unsupported fields. Choose a saved build file.`);
+      };
+      record(file, ['format', 'version', 'gameVersion', 'build'], 'Build file');
+      require(file.format === 'hemsoft-dune-build' && file.version === 1,
+        'This build file format is unsupported. Choose a file downloaded with Save build.');
+      require(file.gameVersion === data.gameVersion,
+        'This build uses different game data. Open it with the matching editor.');
+      const next = file.build;
+      record(next, Object.keys(initial(data)), 'Build');
+      require(data.characterLevels.some(row => row.level === next.characterLevel), 'Character level is unsupported. Choose a saved build file.');
+      require([1, 2, 3].includes(next.abilitySlots), 'Ability slot count must be 1, 2 or 3.');
+      require(['multiplayer', 'singleplayer'].includes(next.gameMode), 'Game mode is unsupported. Choose a saved build file.');
+      record(next.levels, data.tracks.map(track => track.id), 'Specialization levels');
+      for (const track of data.tracks) require(Number.isInteger(next.levels[track.id])
+        && next.levels[track.id] >= 0 && next.levels[track.id] <= track.maxLevel, `${track.name} level is outside its supported range.`);
+      record(next.ranks, data.skills.map(skill => skill.id), 'Skill ranks', true);
+      for (const [id, rank] of Object.entries(next.ranks)) require(Number.isInteger(rank)
+        && rank >= 0 && rank <= skillById(data, id).maxLevel, 'A skill rank is outside its supported range.');
+      for (const [key, kind] of [['abilities', 'Ability'], ['techniques', 'Technique']]) {
+        require(Array.isArray(next[key]) && next[key].length === 3
+          && next[key].every(id => id === '' || (typeof id === 'string' && skillById(data, id)?.skillType === kind)),
+        `Equipped ${key} contain an unsupported selection. Choose a saved build file.`);
+      }
+      record(next.equipment, slots, 'Equipment slots');
+      for (const slot of slots) {
+        const selection = next.equipment[slot];
+        record(selection, ['id', 'grade', 'augments'], `Equipment in ${slot}`);
+        const item = compatibleItems(data, slot).find(item => item.id === selection.id);
+        require(selection.id === '' || !!item, `Equipment in ${slot} is unknown or incompatible.`);
+        require(Number.isInteger(selection.grade) && (selection.grade === 0
+          || item?.scaledStats.some(row => row.grade === selection.grade)), `Equipment grade in ${slot} is unsupported.`);
+        require(Array.isArray(selection.augments) && selection.augments.length <= 3,
+          `Augment slots in ${slot} are unsupported.`);
+        for (const chosen of selection.augments) {
+          if (chosen === null) continue;
+          record(chosen, ['id', 'grade', 'roll'], `Augment in ${slot}`);
+          const augment = compatibleAugments(data, item).find(augment => augment.id === chosen.id);
+          require(chosen.id === '' || !!augment, `Augment in ${slot} is unknown or incompatible.`);
+          require(Number.isInteger(chosen.grade) && (chosen.id === '' ? chosen.grade === 1
+            : augment.stats.every(stat => stat.values.some(row => row.quality === chosen.grade))),
+          `Augment grade in ${slot} is unsupported.`);
+          require(Number.isFinite(chosen.roll) && chosen.roll >= 0 && chosen.roll <= 100,
+            `Augment roll in ${slot} must be between 0 and 100.`);
+        }
+      }
+      return { state: clone(next) };
+    } catch (error) { return { error: error.message }; }
   }
 
   function compatibleItems(data, slot) {
@@ -336,7 +410,7 @@ const DuneBuild = (() => {
       combat, modifiers: modifiers(data, state), errors: validate(data, state) };
   }
 
-  return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
+  return { slots, bodySlots, initial, fileLimit, serialize, deserialize, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
     selectedTraits, budget, points, disconnected, augmentTraits, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
 })();
 if (typeof module !== 'undefined') module.exports = DuneBuild;
@@ -351,6 +425,7 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
   let tier = '';
   let tree = 'Trooper';
   let augmentReturn = '';
+  let loading = false;
   const names = { head: 'Head', chest: 'Chest / body', hands: 'Hands', legs: 'Legs', feet: 'Feet',
     shield: 'Shield', powerpack: 'Power pack', suspensor: 'Suspensor belt' };
   for (let index = 1; index <= 8; index++) names[`hotbar${index}`] = `Quickbar ${index}`;
@@ -606,11 +681,58 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
     }
     if (button.id === 'augment-return') openAugments(augmentReturn);
   });
+  function replaceBuild(next) {
+    state = next; search = ''; tier = ''; augmentReturn = '';
+    inspected = DuneBuild.slots.find(slot => state.equipment[slot].id) ?? 'head';
+    augmentSlot = inspected;
+    tree = data.skills.find(skill => state.ranks[skill.id])?.skillTree ?? 'Trooper';
+    $('#gear-search').value = ''; $('#gear-tier').value = ''; $('#skill-tree').value = tree;
+    $('#character-level').value = state.characterLevel;
+    $('#game-mode').value = state.gameMode; $('#ability-slots').value = String(state.abilitySlots);
+    showView('equipment'); render();
+  }
   $('#reset').addEventListener('click', () => {
-    state = DuneBuild.initial(data); search = ''; tier = ''; inspected = 'head'; augmentSlot = 'head'; augmentReturn = '';
-    $('#gear-search').value = ''; $('#gear-tier').value = ''; $('#character-level').value = 1;
-    $('#game-mode').value = 'multiplayer'; $('#ability-slots').value = '3';
-    render(); notify('Build reset. Equipment and skills are empty; character level is 1 and specializations are 0.');
+    replaceBuild(DuneBuild.initial(data));
+    notify('Build reset. Equipment and skills are empty; character level is 1 and specializations are 0.');
+  });
+  $('#save-build').addEventListener('click', () => {
+    let url;
+    try {
+      url = URL.createObjectURL(new Blob([DuneBuild.serialize(data, state)], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url; link.download = `dune-build-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+      document.body.append(link); link.click(); link.remove();
+      notify('Build file downloaded. Keep it to load this build later.');
+    } catch { notify('The build file could not be downloaded. Try Save build again.', true); }
+    finally { if (url) setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  });
+  $('#load-build').addEventListener('click', () => { $('#build-file').value = ''; $('#build-file').click(); });
+  $('#build-file').addEventListener('change', async event => {
+    const file = event.target.files[0];
+    if (!file || loading) return;
+    if (file.size > DuneBuild.fileLimit) { notify('Build files must be 64 KB or smaller. Choose a saved build file. Your current build is unchanged.', true); return; }
+    loading = true;
+    const buttons = [...document.querySelectorAll('.build-actions button')];
+    for (const button of buttons) button.disabled = true;
+    $('.workspace').inert = true;
+    notify('Loading build file…');
+    try {
+      const result = DuneBuild.deserialize(data, await file.text());
+      if (result.error) {
+        const recovery = result.error.includes('Choose') ? '' : ' Choose another saved build file.';
+        notify(`${result.error}${recovery} Your current build is unchanged.`, true);
+      }
+      else {
+        replaceBuild(result.state);
+        const warnings = DuneBuild.validate(data, state).length;
+        notify(warnings ? 'Build loaded. Review the build warnings before using it.' : 'Build loaded from file.');
+      }
+    } catch { notify('The file could not be read. Choose it again. Your current build is unchanged.', true); }
+    finally {
+      loading = false; $('.workspace').inert = false;
+      for (const button of buttons) button.disabled = false;
+      $('#load-build').focus({ preventScroll: true });
+    }
   });
   render();
 })();
