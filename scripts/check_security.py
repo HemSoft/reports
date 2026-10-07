@@ -12,6 +12,20 @@ from html.parser import HTMLParser
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+# SHA-1 scanner fingerprints of the public MaxDurabilityRepairReduction_WeaponsAndTools
+# attribute and four sourceExportSha256 values captured for this one static edition.
+# Exact value + file exemptions keep unrelated or newly introduced findings blocking.
+PUBLIC_DUNE_FINGERPRINTS = {
+    "835e26eb839fe1b28dc1083e909db279d6423b51",  # pragma: allowlist secret
+    "63e1ddb962fc50c32f56a25c86a4c3f6fb20be44",  # pragma: allowlist secret
+    "7caed9c40ab2303ebbaf837055fbf61867030cfb",  # pragma: allowlist secret
+    "30c5d795acbc6b2ba1285a962cec986026e42a15",  # pragma: allowlist secret
+    "ea77e49bb60998b315587460190b3383bf950d87",  # pragma: allowlist secret
+}
+PUBLIC_DUNE_FILES = {
+    "editions/dune-awakening-build-editor/2026-10-06/payload.json",
+    "editions/dune-awakening-build-editor/2026-10-06/report.html",
+}
 SCRIPT_FILES = {
     "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
 }
@@ -160,10 +174,18 @@ def scan_secrets(digest_pattern=None, verified_vendor=()):
         timeout=120,
     )
     findings = {
-        filename: items
+        filename: [
+            item
+            for item in items
+            if not (
+                filename.replace("\\", "/") in PUBLIC_DUNE_FILES
+                and item.get("hashed_secret") in PUBLIC_DUNE_FINGERPRINTS
+            )
+        ]
         for filename, items in json.loads(result.stdout)["results"].items()
         if filename.replace("\\", "/") not in verified_vendor
     }
+    findings = {filename: items for filename, items in findings.items() if items}
     for filename, items in findings.items():
         for item in items:
             print(f"Potential secret: {filename}:{item['line_number']} ({item['type']})")
