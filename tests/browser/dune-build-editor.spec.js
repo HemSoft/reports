@@ -173,6 +173,8 @@ test('editor works offline, updates totals, filters gear, rejects invalid skills
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(url);
   await expect(page.locator('#coverage')).toContainText('573 equipment choices');
+  await expect(page.locator('#skill-tree option')).toHaveCount(5);
+  await expect(page.locator('#skill-tree')).not.toContainText('Hidden');
   await page.getByLabel('Head equipment', { exact: true }).selectOption(id('Acheronian Helmet'));
   await page.getByLabel('Hands equipment', { exact: true }).selectOption(id('Circuit Gauntlets'));
   await expect(page.locator('#armor-total')).toHaveText('546');

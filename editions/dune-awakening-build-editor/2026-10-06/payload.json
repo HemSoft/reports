@@ -13,7 +13,8 @@
     "sourceItems": 1420,
     "equipment": 573,
     "augments": 104,
-    "skills": 114,
+    "sourceSkills": 114,
+    "skills": 109,
     "specializations": 5,
     "slots": {
       "head": 56,
@@ -59128,46 +59129,6 @@
       ]
     },
     {
-      "id": "skills-ability-healerseeker",
-      "name": "LOC_Ability: Healer Seeker",
-      "tag": "Skills.Ability.HealerSeeker",
-      "skillTree": "Hidden",
-      "skillType": "Ability",
-      "gameModes": [
-        "singleplayer",
-        "multiplayer"
-      ],
-      "gridX": 5,
-      "gridY": 12,
-      "prerequisites": [],
-      "maxLevel": 1,
-      "costPerLevel": [
-        2
-      ],
-      "stats": []
-    },
-    {
-      "id": "skills-ability-healingcapsule",
-      "name": "LOC_Ability: Healing Capsule",
-      "tag": "Skills.Ability.HealingCapsule",
-      "skillTree": "Hidden",
-      "skillType": "Ability",
-      "gameModes": [
-        "singleplayer",
-        "multiplayer"
-      ],
-      "gridX": 4,
-      "gridY": 0,
-      "prerequisites": [],
-      "maxLevel": 3,
-      "costPerLevel": [
-        1,
-        2,
-        3
-      ],
-      "stats": []
-    },
-    {
       "id": "skills-ability-hunterseeker",
       "name": "Hunter-Seeker",
       "tag": "Skills.Ability.HunterSeeker",
@@ -60326,25 +60287,6 @@
       ]
     },
     {
-      "id": "skills-ability-suspensorgrenade_stabilization",
-      "name": "Stabilization Bomb",
-      "tag": "Skills.Ability.SuspensorGrenade_Stabilization",
-      "skillTree": "Hidden",
-      "skillType": "Ability",
-      "gameModes": [
-        "singleplayer",
-        "multiplayer"
-      ],
-      "gridX": 5,
-      "gridY": 6,
-      "prerequisites": [],
-      "maxLevel": 1,
-      "costPerLevel": [
-        2
-      ],
-      "stats": []
-    },
-    {
       "id": "skills-ability-suspensormine_amplification",
       "name": "Gravity Mine",
       "tag": "Skills.Ability.SuspensorMine_Amplification",
@@ -60445,25 +60387,6 @@
           "format": "{v:0.#}"
         }
       ]
-    },
-    {
-      "id": "skills-ability-suspensormine_stabilization",
-      "name": "Remote Stabilization Mine",
-      "tag": "Skills.Ability.SuspensorMine_Stabilization",
-      "skillTree": "Hidden",
-      "skillType": "Ability",
-      "gameModes": [
-        "singleplayer",
-        "multiplayer"
-      ],
-      "gridX": 5,
-      "gridY": 5,
-      "prerequisites": [],
-      "maxLevel": 1,
-      "costPerLevel": [
-        2
-      ],
-      "stats": []
     },
     {
       "id": "skills-ability-suspensorpad",
@@ -64230,55 +64153,6 @@
           "name": "Ranged Damage",
           "type": "number",
           "value": 0.3,
-          "format": "{v:0.#}%"
-        }
-      ]
-    },
-    {
-      "id": "skills-perk-gunsmith",
-      "name": "Gunsmith",
-      "tag": "Skills.Perk.Gunsmith",
-      "skillTree": "Hidden",
-      "skillType": "Technique",
-      "gameModes": [
-        "singleplayer",
-        "multiplayer"
-      ],
-      "gridX": 5,
-      "gridY": 4,
-      "prerequisites": [],
-      "maxLevel": 3,
-      "costPerLevel": [
-        2,
-        3,
-        4
-      ],
-      "stats": [
-        {
-          "level": 1,
-          "operation": "Additive",
-          "key": "DurabilityLossReduction_WeaponsAndTools",
-          "name": "Reduce Durability Loss",
-          "type": "number",
-          "value": 0.3,
-          "format": "{v:0.#}%"
-        },
-        {
-          "level": 2,
-          "operation": "Additive",
-          "key": "DurabilityLossReduction_WeaponsAndTools",
-          "name": "Reduce Durability Loss",
-          "type": "number",
-          "value": 0.4,
-          "format": "{v:0.#}%"
-        },
-        {
-          "level": 3,
-          "operation": "Additive",
-          "key": "DurabilityLossReduction_WeaponsAndTools",
-          "name": "Reduce Durability Loss",
-          "type": "number",
-          "value": 0.5,
           "format": "{v:0.#}%"
         }
       ]

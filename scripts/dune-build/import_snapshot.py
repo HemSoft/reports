@@ -91,6 +91,7 @@ def normalize(items, skill_data, details, descriptions):
             if key not in ("iconPath", "mainCategoryId", "categories")
         }
         for skill in skill_data["skills"]
+        if skill["skillTree"] != "Hidden"
     ]
     tracks = [
         {
@@ -115,6 +116,7 @@ def normalize(items, skill_data, details, descriptions):
             "sourceItems": len(items),
             "equipment": len(gear),
             "augments": len(augments),
+            "sourceSkills": len(skill_data["skills"]),
             "skills": len(skills),
             "specializations": len(tracks),
             "slots": {

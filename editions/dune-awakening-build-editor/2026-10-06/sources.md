@@ -10,8 +10,10 @@ tiers, grades, or stats.
 The [gaming.tools item catalog](https://dune.gaming.tools/items) contains 1,420
 records. Filtering out schematics, vehicles, buildings, materials and ammunition
 leaves 573 personal equipment choices. These include garments, weapons, utility
-equipment, handheld tools and consumables. There are 104 augments, 114 skills
-across five skill trees, and five specialization tracks. One Cartographer skill
+equipment, handheld tools and consumables. There are 104 augments, 109 playable
+skill records across five skill trees, and five specialization tracks. The source
+export contains 114 skill records; five internal `Hidden` records are excluded
+from the editor. One Cartographer skill
 has separate multiplayer and single-player records, so the displayed choices
 depend on the selected game mode.
 

@@ -48,6 +48,10 @@ class BuildEditorPublicationTests(unittest.TestCase):
 
     def test_snapshot_has_unique_ids_and_complete_rank_and_augment_data(self):
         data = json.loads((EDITION / "payload.json").read_text())
+        self.assertEqual(
+            {skill["skillTree"] for skill in data["skills"]},
+            {"Trooper", "Swordmaster", "BeneGesserit", "Mentat", "Planetologist"},
+        )
         for collection in ("items", "augments", "skills", "tracks"):
             identifiers = [record["id"] for record in data[collection]]
             self.assertEqual(len(identifiers), len(set(identifiers)))
