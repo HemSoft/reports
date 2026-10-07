@@ -263,7 +263,7 @@ for (const width of [1440, 390]) {
     await expect(page.locator('#combat-mitigation')).toHaveText('25%');
     await expect(page.locator('#combat-health')).toHaveText('+20');
     await expect(page.locator('#combat-stamina')).toHaveText('+30');
-    await expect(page.locator('[data-trait]')).toHaveCount(0);
+    await expect(page.locator('#track-rows input[type="checkbox"]')).toHaveCount(0);
     const combat = page.locator('.track').filter({ has: page.getByRole('heading', { name: 'Combat', exact: true }) });
     await combat.locator('summary').click();
     await expect(combat.locator('summary')).toHaveText('Traits · 20 active');
