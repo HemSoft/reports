@@ -116,6 +116,10 @@ combat effects are labeled. Final health, damage mitigation and combined damage
 formulas across skills, progression and equipment remain unavailable, rather
 than estimated. Removing ranks or traits immediately removes their ledger rows.
 Invalid builds display their errors and suppress the aggregate totals.
+Percentage presentation uses explicit source attribute units: Poison/Bleed
+Tolerance and the `UI_Hand-heldCutterayYield`/`UI_AnalysisModeYield` skill
+attributes already contain percentage points. Fractional bonuses and
+multipliers scale once for presentation, without a magnitude-based heuristic.
 
 ## Independently checked builds
 

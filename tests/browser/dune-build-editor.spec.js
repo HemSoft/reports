@@ -228,6 +228,57 @@ test('augmentation and trait controls support keyboard focus and update source-b
   await expect(page.locator('#armor-total')).toHaveText('Unavailable');
 });
 
+test('skill percentages retain point units while fractional bonuses scale once', async ({ page }) => {
+  await page.goto(url);
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#character-level').fill('200');
+  await page.locator('#character-level').press('Tab');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await page.locator('#skill-tree').selectOption('BeneGesserit');
+  await page.locator('#rank-skills-attribute-selfcontrol1').selectOption('1');
+  await page.locator('#rank-skills-attribute-selfcontrol2').selectOption('1');
+  for (const [rank, value] of [['1', '20%'], ['2', '30%'], ['3', '45%']]) {
+    await page.locator('#rank-skills-attribute-selfcontrol5').selectOption(rank);
+    await expect(page.locator('#modifier-rows tr').filter({ hasText: 'Poison Tolerance' }).locator('td:first-of-type')).toHaveText([value, value]);
+  }
+  await page.locator('#skill-tree').selectOption('Planetologist');
+  await page.locator('#rank-skills-attribute-scientist1').selectOption('1');
+  await expect(page.locator('#modifier-rows tr').filter({ hasText: 'Hand-held Cutteray Yield' }).locator('td').first()).toHaveText('2.5%');
+  await page.locator('#skill-tree').selectOption('Trooper');
+  await page.locator('#rank-skills-attribute-weaponry1').selectOption('3');
+  await expect(page.locator('#modifier-rows tr').filter({ hasText: 'Ranged Damage' }).locator('td').first()).toHaveText('9%');
+});
+
+test('choosing later augment slots first remains safe through cloned build edits', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto(url);
+  await page.locator('#gear-hands').selectOption(id('Circuit Gauntlets'));
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#character-level').fill('200');
+  await page.locator('#character-level').press('Tab');
+  await page.getByLabel('Crafting level', { exact: true }).fill('100');
+  await page.getByLabel('Crafting level', { exact: true }).press('Tab');
+  await page.locator('#traits-craftingtrack summary').click();
+  for (const suffix of ['ArmoirAugmentSlots10', 'ArmoirAugmentSlots42', 'RangedWeaponAugmentSlots1', 'RangedWeaponAugmentSlots33', 'RangedWeaponAugmentSlots87']) {
+    await page.locator(`#trait-Crafting_CraftingKeystone_${suffix}`).check();
+  }
+  await page.getByRole('button', { name: 'Equipment', exact: true }).click();
+  await page.locator('#augmentation summary').click();
+  await page.locator('#augment-1').selectOption('t6_augment_armor6');
+  await page.locator('#gear-head').selectOption(id('Acheronian Helmet'));
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+  await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
+  await page.locator('#augment-target').selectOption('hotbar1');
+  await page.locator('#augment-2').selectOption('t6_augment_smg1');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await page.locator('#rank-skills-attribute-weaponry1').selectOption('1');
+  await page.locator('#rank-skills-ability-cablepull').selectOption('1');
+  await page.locator('#ability-0').selectOption('skills-ability-cablepull');
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+  expect(errors).toEqual([]);
+});
+
 test('switching modes removes incompatible and orphaned skills while keeping learned roots', async ({ page }) => {
   await page.goto(url);
   await page.getByRole('button', { name: 'Progression', exact: true }).click();

@@ -4,6 +4,10 @@ const DuneBuild = (() => {
   const slots = ['head', 'chest', 'hands', 'legs', 'feet', 'shield', 'powerpack', 'suspensor',
     ...Array.from({ length: 8 }, (_, index) => `hotbar${index + 1}`)];
   const bodySlots = slots.slice(0, 5);
+  // These source skill attributes already store percentage points. Other percent
+  // skill/progression attributes store fractions or multipliers, including > 1.
+  const percentPointKeys = new Set(['PoisonStatusTolerance', 'BleedStatusTolerance',
+    'UI_Hand-heldCutterayYield', 'UI_AnalysisModeYield']);
   const itemById = (data, id) => data.items.find(item => item.id === id);
   const skillById = (data, id) => data.skills.find(skill => skill.id === id);
   const clone = value => JSON.parse(JSON.stringify(value));
@@ -113,7 +117,7 @@ const DuneBuild = (() => {
         errors.push(`Invalid equipment in ${slot}.`); continue;
       }
       if (selection.grade && !item.scaledStats.some(row => row.grade === selection.grade)) errors.push(`${item.name} does not support that grade.`);
-      const augments = selection.augments.filter(augment => augment.id);
+      const augments = selection.augments.filter(augment => augment?.id);
       if (augments.length > augmentLimit(data, state, item)) errors.push(`${item.name} exceeds the unlocked augmentation limit.`);
       if (new Set(augments.map(augment => augment.id)).size !== augments.length) errors.push(`${item.name} has a duplicate augment.`);
       for (const selected of augments) {
@@ -183,7 +187,7 @@ const DuneBuild = (() => {
       if (stat) { stat.value = override.value; stat.grade = override.value; }
     }
     const modifiers = [];
-    for (const chosen of selection.augments.filter(augment => augment.id)) {
+    for (const chosen of selection.augments.filter(augment => augment?.id)) {
       const augment = data.augments.find(candidate => candidate.id === chosen.id);
       if (!augment) continue;
       for (const effect of augment.stats) {
@@ -223,7 +227,8 @@ const DuneBuild = (() => {
       const equipped = skill.skillType === 'Attribute' || state.abilities.includes(skill.id) || state.techniques.includes(skill.id);
       if (!rank || !equipped) continue;
       for (const stat of skill.stats.filter(row => row.level === rank)) rows.push({ ...stat,
-        source: skill.name, kind: skill.skillType, conditional: skill.skillType !== 'Attribute' });
+        source: skill.name, kind: skill.skillType, conditional: skill.skillType !== 'Attribute',
+        percentScale: percentPointKeys.has(stat.key) ? 1 : 100 });
     }
     for (const track of data.tracks) {
       for (const stat of track.passiveAttributes ?? []) rows.push({ key: stat.key, name: stat.name,

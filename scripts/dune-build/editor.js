@@ -21,7 +21,7 @@
     const suffix = stat.format?.includes('%') ? '%' : stat.format?.includes('/s') ? '/s'
       : stat.format?.includes(' RPM') ? ' RPM' : stat.format?.includes('}s') ? ' s'
       : stat.format?.includes('}m') ? ' m' : stat.format?.includes(' V') ? ' V' : '';
-    return `${number(stat.value * (modifier && suffix === '%' ? 100 : 1))}${suffix}`;
+    return `${number(stat.value * (modifier && suffix === '%' ? (stat.percentScale ?? 100) : 1))}${suffix}`;
   }
   function notify(message, error = false) {
     $('#message').textContent = message;
@@ -182,6 +182,7 @@
     } else if (input.dataset.augment !== undefined || input.dataset.augmentGrade !== undefined || input.dataset.roll !== undefined) {
       const index = Number(input.dataset.augment ?? input.dataset.augmentGrade ?? input.dataset.roll);
       const selection = state.equipment[augmentSlot];
+      while (selection.augments.length <= index) selection.augments.push({ id: '', grade: 1, roll: 0 });
       const chosen = selection.augments[index] ?? { id: '', grade: 1, roll: 0 };
       if (input.dataset.augment !== undefined) {
         chosen.id = input.value;
