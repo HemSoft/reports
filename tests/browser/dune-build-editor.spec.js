@@ -256,6 +256,9 @@ for (const width of [1440, 390]) {
     await page.goto(url);
     await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
     await page.getByRole('button', { name: 'Progression', exact: true }).click();
+    await expect(page.locator('#track-rows h3')).toHaveText(['Crafting', 'Gathering', 'Exploration', 'Combat', 'Sabotage']);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await page.screenshot({ path: testInfo.outputPath(`specialization-order-${width}.png`), fullPage: true });
     await page.locator('#level-combattrack').fill('50');
     await page.locator('#level-combattrack').press('Tab');
     await expect(page.locator('#point-count')).toHaveText('0 / 28 skill points');

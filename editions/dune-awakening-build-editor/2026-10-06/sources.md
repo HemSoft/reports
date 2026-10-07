@@ -216,6 +216,8 @@ why augmentation is unavailable.
 
 Enter a level for each specialization. The editor applies every trait at or below
 that level, including Combat skill-point rewards and Crafting augment slots.
+Specializations follow the in-game order: Crafting, Gathering, Exploration,
+Combat, Sabotage.
 The trait list is a read-only record of active and locked rewards. Lowering a
 level removes its higher rewards from calculations; retained skill ranks and
 augments can make the build invalid until edited or removed.
