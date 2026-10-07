@@ -291,17 +291,21 @@ JavaScript or external fonts.
 
 ### One-time setup
 
-1. Create a fine-grained PAT with read access to Contents, Issues, and
-   Pull requests on HemSoft repositories
-   and save it as the `REPORTS_PAT` repo secret. The workflow stops if this
-   secret is missing or a repository cannot be cloned.
+1. For collection across HemSoft and hemsoft-dev, use a classic PAT owned by
+   HemSoft with `repo` scope and organization access, saved as the `REPORTS_PAT`
+   repository secret. A fine-grained PAT has one resource owner and cannot cover
+   both accounts in this workflow. Classic `repo` scope includes write capability;
+   the collector and verifier use only read operations and cloning. Keep the token
+   confined to those steps. The workflow stops when it is missing or a repository
+   cannot be cloned. Run **Verify organization reporting credential** on main to
+   prove the configured access before migration.
 2. Enable Pages: repo Settings -> Pages -> Build and deployment ->
    Source: GitHub Actions.
 3. Run the workflow once via Actions -> Publish reports to GitHub Pages ->
    Run workflow, then open the Pages URL.
 
 Repository discovery follows every GitHub GraphQL cursor for repositories owned
-by HemSoft and accessible to the authenticated account. PR and issue histories
+by each configured owner and accessible to the authenticated account. PR and issue histories
 are paginated in full, then filtered by creation, closure, or merge events in the
 selected interval. Activity without commits still appears in metrics and profiles.
 Duplicate records, changing totals, GraphQL errors, missing pages, or stalled
@@ -309,7 +313,7 @@ cursors stop collection. A token cannot reveal repositories it cannot access;
 use credentials covering the intended repository set. Large histories require
 more API requests, and rate-limit failures remain explicit.
 
-The `build` job clones all discovered HemSoft repos into `checkouts/` and runs
+The `build` job clones all discovered repos from both configured owners into `checkouts/` and runs
 `python cli.py --weeks 12 --base-dir ./checkouts --edition-dir ./edition`. The
 `archive` job, the only job with `contents: write`, holds no PAT. It adds that
 edition to the `published` branch, rebuilds the index, pushes the branch, and
@@ -482,7 +486,8 @@ the revision belongs to the official `actions/*` repository. The local policy
 check rejects mutable references and unexpected job permissions. Pages build has
 only `contents: read`; only deployment can write Pages and request an OIDC token.
 Checkout does not persist credentials in the build or security job. Keep
-`REPORTS_PAT` limited to the collection steps and read access described above.
+`REPORTS_PAT` confined to the collection and read-only verification steps. Its
+classic `repo` scope is broader than the operations performed by these steps.
 Pages packaging follows the official upload-pages-artifact tar format, then
 uploads `artifact.tar` as `github-pages` with the pinned upload-artifact action.
 This avoids the mutable nested `upload-artifact@v4` reference in the v3 wrapper.
