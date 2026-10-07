@@ -508,8 +508,8 @@ downloaded bytes with the
 installed package, calculate `sha384-` plus the Base64 SHA-384 digest, then run
 every browser test. Do not remove SRI to make an update pass. Two regression
 cases alter the CDN response or embedded bundle and require browser rejection, no injected-code
-execution, and usable fallback content. Fonts and avatars remain external
-non-script resources and are outside these integrity checks.
+execution, and usable fallback content. Productivity reports use system fonts
+and the embedded HemSoft mark, with no external font or avatar requests.
 
 Three.js and its ESM OrbitControls addon are built from the pinned npm package
 with pinned esbuild into `assets/report-graphics.js`. The upstream MIT license
