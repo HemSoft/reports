@@ -215,3 +215,36 @@ test('a slow or unreadable build file locks editing briefly and recovers without
   expect(await page.locator('.workspace').evaluate(el => el.inert)).toBe(false);
   expect(JSON.parse(await downloadBuild(page))).toEqual(JSON.parse(before));
 });
+
+test('oversized file restores Load focus without reading or replacing the build', async ({ page }) => {
+  await page.goto(url);
+  const before = await downloadBuild(page);
+  await page.evaluate(() => { File.prototype.text = () => { throw new Error('Oversized file must not be read'); }; });
+  await page.locator('#gear-head').focus();
+  await page.locator('#build-file').setInputFiles(fileInput(' '.repeat(Build.fileLimit + 1)));
+  await expect(page.locator('#message')).toContainText('64 KB or smaller');
+  await expect(page.locator('#load-build')).toBeFocused();
+  expect(JSON.parse(await downloadBuild(page))).toEqual(JSON.parse(before));
+});
+
+test('unlearned draft abilities and techniques stay visible and can be cleared', async ({ page }, testInfo) => {
+  await page.goto(url);
+  const state = savedBuild();
+  delete state.ranks[state.abilities[0]];
+  delete state.ranks[state.techniques[0]];
+  await loadBuild(page, Build.serialize(data, state));
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  for (const [selector, id] of [['#ability-0', state.abilities[0]], ['#technique-0', state.techniques[0]]]) {
+    await expect(page.locator(selector)).toHaveValue(id);
+    await expect(page.locator(`${selector} option:checked`)).toContainText('not learned');
+  }
+  await expect(page.locator('#errors')).toContainText('must be learned');
+  await page.screenshot({ path: testInfo.outputPath('loaded-unlearned-draft.png') });
+  expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+  await page.locator('#ability-0').selectOption('');
+  await page.locator('#technique-0').selectOption('');
+  await expect(page.locator('#errors')).toBeHidden();
+  const saved = JSON.parse(await downloadBuild(page));
+  expect(saved.build.abilities[0]).toBe('');
+  expect(saved.build.techniques[0]).toBe('');
+});

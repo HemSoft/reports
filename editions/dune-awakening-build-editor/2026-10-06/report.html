@@ -518,8 +518,8 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
   }
 
   function learnedOptions(kind, selected) {
-    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && state.ranks[skill.id] > 0)
-      .map(skill => option(skill.id, `${skill.name} · rank ${state.ranks[skill.id]}`, selected)).join('');
+    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && (state.ranks[skill.id] > 0 || skill.id === selected))
+      .map(skill => option(skill.id, `${skill.name} · ${state.ranks[skill.id] > 0 ? `rank ${state.ranks[skill.id]}` : 'not learned'}`, selected)).join('');
   }
   function renderSkills() {
     $('#skill-rows').innerHTML = data.skills.filter(skill => skill.skillTree === tree && skill.gameModes.includes(state.gameMode))
@@ -710,7 +710,11 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
   $('#build-file').addEventListener('change', async event => {
     const file = event.target.files[0];
     if (!file || loading) return;
-    if (file.size > DuneBuild.fileLimit) { notify('Build files must be 64 KB or smaller. Choose a saved build file. Your current build is unchanged.', true); return; }
+    if (file.size > DuneBuild.fileLimit) {
+      notify('Build files must be 64 KB or smaller. Choose a saved build file. Your current build is unchanged.', true);
+      $('#load-build').focus({ preventScroll: true });
+      return;
+    }
     loading = true;
     const buttons = [...document.querySelectorAll('.build-actions button')];
     for (const button of buttons) button.disabled = true;

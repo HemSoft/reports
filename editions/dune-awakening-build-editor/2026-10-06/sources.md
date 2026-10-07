@@ -17,8 +17,8 @@ loading; filters and the inspected slot are view settings and are not saved.
 Load build reads a local file and replaces the current build only after validating
 the complete file. It rejects malformed JSON, unsupported file/game versions,
 missing or unknown fields, unknown equipment/skill IDs, incompatible equipment
-and augments, unsupported skill types or grades, out-of-range levels/ranks/rolls,
-and files above 64 KB.
+and augments, unsupported ability/technique types or equipment/augment grades,
+out-of-range levels/ranks/rolls, and files above 64 KB.
 Failed loads preserve the current build. Unfinished builds with valid selections
 remain loadable, including over-budget skills or augments locked by a lowered
 Crafting level. Other game-rule warnings, such as known skills unavailable in the
