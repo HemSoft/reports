@@ -13,6 +13,37 @@ from scripts import check_security
 
 
 class SecurityChecks(unittest.TestCase):
+    def test_dune_public_values_are_exempt_only_in_their_exact_snapshot_files(self):
+        payload_path = next(
+            path for path in check_security.PUBLIC_DUNE_FILES if path.endswith(".json")
+        )
+        snapshot = json.loads((check_security.ROOT / payload_path).read_text())
+        public = json.dumps(
+            {
+                "attribute": "MaxDurabilityRepairReduction_WeaponsAndTools",
+                "hashes": snapshot["sourceExportSha256"],
+            }
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", str(root)], check=True, capture_output=True)
+            target = root / payload_path
+            target.parent.mkdir(parents=True)
+            target.write_text(public, encoding="utf-8")
+            subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+            with patch.object(check_security, "ROOT", root):
+                check_security.scan_secrets()
+                other = root / "unrelated.json"
+                other.write_text(public, encoding="utf-8")
+                subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+                with self.assertRaisesRegex(ValueError, "Secret scan"):
+                    check_security.scan_secrets()
+                other.unlink()
+                value = "ghp_" + "".join(chr(65 + (index * 7) % 26) for index in range(36))
+                target.write_text(public + '\ncredential = "' + value + '"\n', encoding="utf-8")
+                with self.assertRaisesRegex(ValueError, "Secret scan"):
+                    check_security.scan_secrets()
+
     def test_embedded_inventory_rejects_modified_bytes_and_missing_bundle(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

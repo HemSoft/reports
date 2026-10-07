@@ -43,7 +43,7 @@ class TestStaticEditions(unittest.TestCase):
 
     def test_sync_creates_catalog_routes_and_keeps_original_publication_time(self):
         with tempfile.TemporaryDirectory() as folder:
-            self.assertEqual(publish.sync_editions(folder, ROOT / "editions"), 1)
+            self.assertEqual(publish.sync_editions(folder, ROOT / "editions"), 2)
             before = (Path(folder) / "catalog.json").read_bytes()
             first = load_catalog(folder)["reports"][0]["editions"][0]
             with patch.object(publish, "datetime") as clock:
@@ -76,7 +76,8 @@ class TestStaticEditions(unittest.TestCase):
             publish.sync_editions(folder, ROOT / "editions")
             self.assertEqual(page.read_bytes(), (DUNE / "report.html").read_bytes())
             self.assertEqual(
-                {r["id"] for r in load_catalog(folder)["reports"]}, {"dune-awakening", "other"}
+                {r["id"] for r in load_catalog(folder)["reports"]},
+                {"dune-awakening", "dune-awakening-build-editor", "other"},
             )
 
     def test_missing_source_fails_instead_of_silently_skipping_editions(self):
