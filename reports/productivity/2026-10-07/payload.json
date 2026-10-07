@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-07T00:02:52.864111-04:00",
+  "generated_at": "2026-10-07T00:39:11.849031-04:00",
   "range": {
     "weeks": 12,
     "start_iso": "2026-07-15T00:00:00-04:00",
@@ -10,40 +10,40 @@
     "end_formatted": "Oct 07, 2026"
   },
   "kpis": {
-    "total_commits": 1664,
-    "total_additions": 1040844,
-    "total_deletions": 3317523,
-    "net_lines": -2276679,
-    "total_unique_files": 7996,
-    "total_prs": 1053,
-    "merged_prs": 954,
-    "open_prs": 21,
-    "pr_merge_rate": 90.6,
-    "avg_pr_cycle_hours": 16.81,
+    "total_commits": 1669,
+    "total_additions": 1055673,
+    "total_deletions": 3317390,
+    "net_lines": -2261717,
+    "total_unique_files": 8003,
+    "total_prs": 1056,
+    "merged_prs": 959,
+    "open_prs": 19,
+    "pr_merge_rate": 90.8,
+    "avg_pr_cycle_hours": 16.73,
     "median_pr_cycle_hours": 0.54,
     "pr_cycle_distribution": {
-      "under_1h": 614,
-      "1h_to_4h": 184,
+      "under_1h": 618,
+      "1h_to_4h": 185,
       "4h_to_24h": 76,
       "1d_to_3d": 47,
       "over_3d": 33
     },
-    "total_issues": 927,
-    "closed_issues": 860,
-    "open_issues": 67,
-    "issue_close_rate": 92.8,
+    "total_issues": 928,
+    "closed_issues": 862,
+    "open_issues": 66,
+    "issue_close_rate": 92.9,
     "active_repos_count": 55,
     "total_calendar_days": 85,
-    "active_days_count": 80,
-    "active_days_pct": 94.1,
-    "longest_streak": 56,
-    "current_streak": 0,
-    "avg_commits_per_active_day": 20.8,
+    "active_days_count": 81,
+    "active_days_pct": 95.3,
+    "longest_streak": 57,
+    "current_streak": 57,
+    "avg_commits_per_active_day": 20.6,
     "avg_commits_per_day": 19.6,
     "peak_day": {
       "date": "2026-10-06",
-      "commits": 128,
-      "additions": 236354
+      "commits": 115,
+      "additions": 235227
     },
     "peak_hour_edt": 21,
     "peak_day_name": "Saturday",
@@ -51,25 +51,25 @@
       "morning": 253,
       "afternoon": 395,
       "evening": 394,
-      "night_owl": 622
+      "night_owl": 627
     },
-    "night_owl_ratio": 37.4,
+    "night_owl_ratio": 37.6,
     "weekend_commits": 474,
-    "weekday_commits": 1190,
-    "weekend_ratio": 28.5
+    "weekday_commits": 1195,
+    "weekend_ratio": 28.4
   },
   "author_distribution": {
-    "CI Bot": 49,
-    "Human (Franz Hemmer)": 1536,
+    "Human (Franz Hemmer)": 1540,
+    "CI Bot": 50,
     "Dependabot": 79
   },
   "category_distribution": {
-    "Documentation": 278,
-    "Testing": 93,
-    "Performance": 19,
-    "Feature": 557,
-    "CI / DevOps": 87,
-    "Bug Fix": 431,
+    "Feature": 560,
+    "Bug Fix": 437,
+    "Testing": 91,
+    "Documentation": 280,
+    "CI / DevOps": 90,
+    "Performance": 12,
     "Chore / Maintenance": 169,
     "Refactoring": 12,
     "Agent / Automation": 18
@@ -279,16 +279,16 @@
       "range_str": "Sep 30 - Oct 06",
       "start_date": "2026-09-30",
       "end_date": "2026-10-06",
-      "commits": 284,
-      "additions": 335284,
-      "deletions": 45842,
-      "net_lines": 289442,
+      "commits": 271,
+      "additions": 334157,
+      "deletions": 45461,
+      "net_lines": 288696,
       "prs_opened": 120,
       "prs_merged": 114,
       "issues_closed": 63,
       "active_days": 7,
-      "top_repo": "hs-tui-launcher",
-      "human_commits": 244,
+      "top_repo": "codexbar",
+      "human_commits": 232,
       "ai_commits": 0
     },
     {
@@ -297,16 +297,16 @@
       "range_str": "Oct 07 - Oct 07",
       "start_date": "2026-10-07",
       "end_date": "2026-10-07",
-      "commits": 0,
-      "additions": 0,
-      "deletions": 0,
-      "net_lines": 0,
-      "prs_opened": 0,
-      "prs_merged": 0,
-      "issues_closed": 0,
-      "active_days": 0,
-      "top_repo": "None",
-      "human_commits": 0,
+      "commits": 18,
+      "additions": 15956,
+      "deletions": 248,
+      "net_lines": 15708,
+      "prs_opened": 3,
+      "prs_merged": 5,
+      "issues_closed": 2,
+      "active_days": 1,
+      "top_repo": "hs-tui-launcher",
+      "human_commits": 16,
       "ai_commits": 0
     }
   ],
@@ -340,18 +340,18 @@
       "stars": 0,
       "forks": 0,
       "primary_language": "Swift",
-      "commits": 236,
-      "commits_share": 14.2,
-      "additions": 125393,
-      "deletions": 21849,
-      "net_lines": 103544,
+      "commits": 231,
+      "commits_share": 13.8,
+      "additions": 125201,
+      "deletions": 21754,
+      "net_lines": 103447,
       "prs_total": 185,
-      "prs_merged": 180,
+      "prs_merged": 181,
       "issues_total": 181,
       "issues_closed": 178,
-      "active_days": 59,
+      "active_days": 60,
       "first_commit": "2026-07-15T09:05:04-04:00",
-      "last_commit": "2026-10-06T23:58:40-04:00"
+      "last_commit": "2026-10-07T00:27:51-04:00"
     },
     {
       "name": "codexbar-mac",
@@ -362,7 +362,7 @@
       "forks": 0,
       "primary_language": "Swift",
       "commits": 159,
-      "commits_share": 9.6,
+      "commits_share": 9.5,
       "additions": 51892,
       "deletions": 15221,
       "net_lines": 36671,
@@ -388,12 +388,12 @@
       "deletions": 18502,
       "net_lines": 39943,
       "prs_total": 136,
-      "prs_merged": 125,
+      "prs_merged": 126,
       "issues_total": 61,
       "issues_closed": 61,
-      "active_days": 26,
+      "active_days": 27,
       "first_commit": "2026-08-01T07:58:56-04:00",
-      "last_commit": "2026-10-06T23:59:14-04:00"
+      "last_commit": "2026-10-07T00:15:24-04:00"
     },
     {
       "name": "set-it-free-loop",
@@ -403,18 +403,18 @@
       "stars": 1,
       "forks": 0,
       "primary_language": "JSON",
-      "commits": 138,
-      "commits_share": 8.3,
-      "additions": 118834,
-      "deletions": 70343,
-      "net_lines": 48491,
+      "commits": 141,
+      "commits_share": 8.4,
+      "additions": 119852,
+      "deletions": 70487,
+      "net_lines": 49365,
       "prs_total": 78,
       "prs_merged": 75,
       "issues_total": 63,
       "issues_closed": 60,
-      "active_days": 14,
+      "active_days": 15,
       "first_commit": "2026-07-25T19:23:37-04:00",
-      "last_commit": "2026-10-06T23:38:55-04:00"
+      "last_commit": "2026-10-07T00:34:51-04:00"
     },
     {
       "name": "skills",
@@ -466,18 +466,18 @@
       "stars": 0,
       "forks": 0,
       "primary_language": "JSON",
-      "commits": 84,
-      "commits_share": 5.0,
-      "additions": 24717,
-      "deletions": 3074,
-      "net_lines": 21643,
-      "prs_total": 38,
-      "prs_merged": 36,
+      "commits": 86,
+      "commits_share": 5.2,
+      "additions": 26906,
+      "deletions": 2873,
+      "net_lines": 24033,
+      "prs_total": 39,
+      "prs_merged": 37,
       "issues_total": 20,
-      "issues_closed": 16,
-      "active_days": 21,
+      "issues_closed": 17,
+      "active_days": 22,
       "first_commit": "2026-07-20T23:35:08-04:00",
-      "last_commit": "2026-10-06T23:58:10-04:00"
+      "last_commit": "2026-10-07T00:32:12-04:00"
     },
     {
       "name": "yahtzee",
@@ -508,18 +508,18 @@
       "stars": 0,
       "forks": 0,
       "primary_language": "JSON",
-      "commits": 46,
-      "commits_share": 2.8,
-      "additions": 201636,
-      "deletions": 21951,
-      "net_lines": 179685,
-      "prs_total": 41,
-      "prs_merged": 37,
-      "issues_total": 24,
-      "issues_closed": 24,
-      "active_days": 4,
+      "commits": 48,
+      "commits_share": 2.9,
+      "additions": 213106,
+      "deletions": 21966,
+      "net_lines": 191140,
+      "prs_total": 42,
+      "prs_merged": 38,
+      "issues_total": 25,
+      "issues_closed": 25,
+      "active_days": 5,
       "first_commit": "2026-09-05T13:22:22-04:00",
-      "last_commit": "2026-10-06T23:48:34-04:00"
+      "last_commit": "2026-10-07T00:28:45-04:00"
     },
     {
       "name": "notes",
@@ -634,18 +634,18 @@
       "stars": 0,
       "forks": 0,
       "primary_language": "C++",
-      "commits": 23,
-      "commits_share": 1.4,
-      "additions": 14062,
-      "deletions": 209,
-      "net_lines": 13853,
-      "prs_total": 6,
-      "prs_merged": 5,
+      "commits": 26,
+      "commits_share": 1.6,
+      "additions": 14406,
+      "deletions": 213,
+      "net_lines": 14193,
+      "prs_total": 7,
+      "prs_merged": 6,
       "issues_total": 7,
       "issues_closed": 5,
-      "active_days": 4,
+      "active_days": 5,
       "first_commit": "2026-10-01T01:48:08-04:00",
-      "last_commit": "2026-10-06T23:58:14-04:00"
+      "last_commit": "2026-10-07T00:38:01-04:00"
     },
     {
       "name": "buddy-ios",
@@ -1470,39 +1470,39 @@
   "language_breakdown": [
     {
       "language": "Other",
-      "additions": 34742,
-      "deletions": 1833413,
-      "net_lines": -1798671,
-      "total_churn": 1868155,
-      "files_count": 2026,
-      "commits_count": 301
+      "additions": 35699,
+      "deletions": 1833500,
+      "net_lines": -1797801,
+      "total_churn": 1869199,
+      "files_count": 2027,
+      "commits_count": 308
     },
     {
       "language": "JSON",
-      "additions": 384867,
-      "deletions": 941429,
-      "net_lines": -556562,
-      "total_churn": 1326296,
-      "files_count": 825,
-      "commits_count": 461
+      "additions": 393297,
+      "deletions": 941225,
+      "net_lines": -547928,
+      "total_churn": 1334522,
+      "files_count": 828,
+      "commits_count": 463
     },
     {
       "language": "Markdown",
-      "additions": 102057,
-      "deletions": 139189,
-      "net_lines": -37132,
-      "total_churn": 241246,
-      "files_count": 2502,
-      "commits_count": 1266
+      "additions": 102489,
+      "deletions": 139182,
+      "net_lines": -36693,
+      "total_churn": 241671,
+      "files_count": 2503,
+      "commits_count": 1274
     },
     {
       "language": "Swift",
-      "additions": 148011,
+      "additions": 147939,
       "deletions": 36315,
-      "net_lines": 111696,
-      "total_churn": 184326,
+      "net_lines": 111624,
+      "total_churn": 184254,
       "files_count": 265,
-      "commits_count": 324
+      "commits_count": 322
     },
     {
       "language": "TypeScript",
@@ -1515,29 +1515,29 @@
     },
     {
       "language": "YAML",
-      "additions": 57381,
-      "deletions": 47141,
-      "net_lines": 10240,
-      "total_churn": 104522,
+      "additions": 57418,
+      "deletions": 47136,
+      "net_lines": 10282,
+      "total_churn": 104554,
       "files_count": 156,
-      "commits_count": 374
+      "commits_count": 372
     },
     {
       "language": "HTML",
-      "additions": 16018,
-      "deletions": 72861,
-      "net_lines": -56843,
-      "total_churn": 88879,
-      "files_count": 121,
-      "commits_count": 78
+      "additions": 20045,
+      "deletions": 72875,
+      "net_lines": -52830,
+      "total_churn": 92920,
+      "files_count": 122,
+      "commits_count": 80
     },
     {
       "language": "PowerShell",
-      "additions": 25841,
-      "deletions": 53691,
-      "net_lines": -27850,
-      "total_churn": 79532,
-      "files_count": 427,
+      "additions": 26131,
+      "deletions": 53697,
+      "net_lines": -27566,
+      "total_churn": 79828,
+      "files_count": 428,
       "commits_count": 196
     },
     {
@@ -1547,16 +1547,16 @@
       "net_lines": 51729,
       "total_churn": 79479,
       "files_count": 234,
-      "commits_count": 138
+      "commits_count": 137
     },
     {
       "language": "Python",
-      "additions": 39992,
-      "deletions": 31970,
-      "net_lines": 8022,
-      "total_churn": 71962,
+      "additions": 40711,
+      "deletions": 31945,
+      "net_lines": 8766,
+      "total_churn": 72656,
       "files_count": 264,
-      "commits_count": 133
+      "commits_count": 132
     },
     {
       "language": "C++",
@@ -1569,12 +1569,12 @@
     },
     {
       "language": "JavaScript",
-      "additions": 20058,
-      "deletions": 2068,
-      "net_lines": 17990,
-      "total_churn": 22126,
+      "additions": 20064,
+      "deletions": 2069,
+      "net_lines": 17995,
+      "total_churn": 22133,
       "files_count": 58,
-      "commits_count": 32
+      "commits_count": 33
     },
     {
       "language": "TypeScript (React)",
@@ -1587,12 +1587,12 @@
     },
     {
       "language": "C#",
-      "additions": 9578,
+      "additions": 9580,
       "deletions": 1410,
-      "net_lines": 8168,
-      "total_churn": 10988,
+      "net_lines": 8170,
+      "total_churn": 10990,
       "files_count": 102,
-      "commits_count": 57
+      "commits_count": 58
     },
     {
       "language": "Lockfile",
@@ -1632,12 +1632,12 @@
     },
     {
       "language": "Config/Docs",
-      "additions": 663,
+      "additions": 664,
       "deletions": 116,
-      "net_lines": 547,
-      "total_churn": 779,
+      "net_lines": 548,
+      "total_churn": 780,
       "files_count": 67,
-      "commits_count": 99
+      "commits_count": 100
     },
     {
       "language": "TOML",
@@ -1652,15 +1652,15 @@
   "temporal": {
     "day_counts": {
       "Monday": 164,
-      "Tuesday": 327,
-      "Wednesday": 274,
+      "Tuesday": 314,
+      "Wednesday": 292,
       "Thursday": 233,
       "Friday": 192,
       "Saturday": 333,
       "Sunday": 141
     },
     "hour_counts": {
-      "0": 76,
+      "0": 94,
       "1": 94,
       "2": 67,
       "3": 71,
@@ -1682,8 +1682,8 @@
       "19": 105,
       "20": 94,
       "21": 114,
-      "22": 103,
-      "23": 109
+      "22": 96,
+      "23": 103
     },
     "matrix_7x24": [
       [
@@ -1735,11 +1735,11 @@
         23,
         31,
         46,
-        31,
-        40
+        24,
+        34
       ],
       [
-        11,
+        29,
         17,
         3,
         6,
@@ -1881,36 +1881,69 @@
   },
   "recent_prs": [
     {
-      "number": 414,
-      "title": "test: verify native release UI transitions",
+      "number": 67,
+      "title": "Match the in-game specialization order",
+      "state": "MERGED",
+      "createdAt": "2026-10-07T04:19:51Z",
+      "closedAt": "2026-10-07T04:28:45Z",
+      "mergedAt": "2026-10-07T04:28:45Z",
+      "url": "https://github.com/HemSoft/reports/pull/67",
+      "cycle_hours": 0.15,
+      "repo": "reports"
+    },
+    {
+      "number": 69,
+      "title": "ci: gate repeated Pi resource retention",
       "state": "OPEN",
-      "createdAt": "2026-10-07T03:59:30Z",
+      "createdAt": "2026-10-07T04:17:45Z",
       "closedAt": null,
       "mergedAt": null,
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/414",
+      "url": "https://github.com/HemSoft/hs-tui-launcher/pull/69",
       "cycle_hours": null,
+      "repo": "hs-tui-launcher"
+    },
+    {
+      "number": 14,
+      "title": "Treat all compiler warnings in the game module as errors",
+      "state": "OPEN",
+      "createdAt": "2026-10-07T04:17:01Z",
+      "closedAt": null,
+      "mergedAt": null,
+      "url": "https://github.com/HemSoft/survival-shelter-opus55/pull/14",
+      "cycle_hours": null,
+      "repo": "survival-shelter-opus55"
+    },
+    {
+      "number": 414,
+      "title": "test: verify native release UI transitions",
+      "state": "MERGED",
+      "createdAt": "2026-10-07T03:59:30Z",
+      "closedAt": "2026-10-07T04:27:52Z",
+      "mergedAt": "2026-10-07T04:27:52Z",
+      "url": "https://github.com/HemSoft/codexbar-ios/pull/414",
+      "cycle_hours": 0.47,
       "repo": "codexbar-ios"
     },
     {
       "number": 197,
       "title": "docs: record v0.17.0 release",
-      "state": "OPEN",
+      "state": "MERGED",
       "createdAt": "2026-10-07T03:59:17Z",
-      "closedAt": null,
-      "mergedAt": null,
+      "closedAt": "2026-10-07T04:15:25Z",
+      "mergedAt": "2026-10-07T04:15:25Z",
       "url": "https://github.com/HemSoft/gh-x/pull/197",
-      "cycle_hours": null,
+      "cycle_hours": 0.27,
       "repo": "gh-x"
     },
     {
       "number": 68,
       "title": "perf: gate launcher latency and allocations",
-      "state": "OPEN",
+      "state": "MERGED",
       "createdAt": "2026-10-07T03:50:25Z",
-      "closedAt": null,
-      "mergedAt": null,
+      "closedAt": "2026-10-07T04:15:59Z",
+      "mergedAt": "2026-10-07T04:15:59Z",
       "url": "https://github.com/HemSoft/hs-tui-launcher/pull/68",
-      "cycle_hours": null,
+      "cycle_hours": 0.43,
       "repo": "hs-tui-launcher"
     },
     {
@@ -2125,12 +2158,12 @@
     {
       "number": 12,
       "title": "Add Windows development and debugging setup with a toolchain preflight",
-      "state": "OPEN",
+      "state": "MERGED",
       "createdAt": "2026-10-07T01:39:02Z",
-      "closedAt": null,
-      "mergedAt": null,
+      "closedAt": "2026-10-07T04:38:01Z",
+      "mergedAt": "2026-10-07T04:38:01Z",
       "url": "https://github.com/HemSoft/survival-shelter-opus55/pull/12",
-      "cycle_hours": null,
+      "cycle_hours": 2.98,
       "repo": "survival-shelter-opus55"
     },
     {
@@ -2396,89 +2429,254 @@
       "url": "https://github.com/HemSoft/gh-x/pull/180",
       "cycle_hours": 0.62,
       "repo": "gh-x"
-    },
-    {
-      "number": 53,
-      "title": "Publish branded Dune Awakening loot report",
-      "state": "MERGED",
-      "createdAt": "2026-10-06T19:28:06Z",
-      "closedAt": "2026-10-06T19:47:00Z",
-      "mergedAt": "2026-10-06T19:47:00Z",
-      "url": "https://github.com/HemSoft/reports/pull/53",
-      "cycle_hours": 0.32,
-      "repo": "reports"
-    },
-    {
-      "number": 411,
-      "title": "test: make GitHub billing release fixtures independent of the host date",
-      "state": "MERGED",
-      "createdAt": "2026-10-06T12:10:43Z",
-      "closedAt": "2026-10-06T18:42:38Z",
-      "mergedAt": "2026-10-06T18:42:38Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/411",
-      "cycle_hours": 6.53,
-      "repo": "codexbar-ios"
-    },
-    {
-      "number": 410,
-      "title": "chore: finalize 1.4 release copy and security review",
-      "state": "MERGED",
-      "createdAt": "2026-10-06T10:37:06Z",
-      "closedAt": "2026-10-06T11:38:10Z",
-      "mergedAt": "2026-10-06T11:38:10Z",
-      "url": "https://github.com/HemSoft/codexbar-ios/pull/410",
-      "cycle_hours": 1.02,
-      "repo": "codexbar-ios"
     }
   ],
   "recent_commits": [
     {
-      "hash": "b3fe2b8083807aaee6feacdca035f226ca084c4e",
-      "repo": "gh-x",
-      "author_name": "github-actions[bot]",
-      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
-      "author_category": "CI Bot",
-      "author_date": "2026-10-06T23:59:14-04:00",
-      "timestamp": 1791345554.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "docs: record v0.17.0 release",
-      "additions": 7,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "CHANGELOG.md",
-          "adds": 7,
-          "dels": 1,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Documentation",
-      "net_lines": 6,
-      "github_repository": "HemSoft/gh-x"
-    },
-    {
-      "hash": "582f62916b78ec7637b2c994148a3260d80ddf53",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
+      "hash": "79090eeffaed673a0a5169ca7a47bed306aec390",
+      "repo": "survival-shelter-opus55",
+      "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
       "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:58:40-04:00",
-      "timestamp": 1791345520.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "test: verify native release UI transition postconditions",
-      "additions": 49,
-      "deletions": 13,
+      "author_date": "2026-10-07T00:38:01-04:00",
+      "timestamp": 1791347881.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "Add Windows development and debugging setup with a toolchain preflight (#12)",
+      "additions": 338,
+      "deletions": 2,
+      "files": [
+        {
+          "path": "Docs/DevelopmentSetup.md",
+          "adds": 181,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "README.md",
+          "adds": 7,
+          "dels": 2,
+          "language": "Markdown"
+        },
+        {
+          "path": "Tools/Scripts/check-toolchain.ps1",
+          "adds": 150,
+          "dels": 0,
+          "language": "PowerShell"
+        }
+      ],
+      "category": "Feature",
+      "net_lines": 336,
+      "github_repository": "HemSoft/survival-shelter-opus55"
+    },
+    {
+      "hash": "34b5cc48c1367e31e5941f2f89d5c760615ebb1b",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:34:51-04:00",
+      "timestamp": 1791347691.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: bind transfer completion to independent current captures",
+      "additions": 339,
+      "deletions": 11,
+      "files": [
+        {
+          "path": ".github/workflows/validate-org-migration.yml",
+          "adds": 4,
+          "dels": 0,
+          "language": "YAML"
+        },
+        {
+          "path": "deployment/scripts/validate-org-rollout.py",
+          "adds": 141,
+          "dels": 2,
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_rollout.py",
+          "adds": 148,
+          "dels": 8,
+          "language": "Python"
+        },
+        {
+          "path": "docs/organization-migration/ROLLOUT.md",
+          "adds": 44,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/rollout-matrix.json",
+          "adds": 2,
+          "dels": 1,
+          "language": "JSON"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 328,
+      "github_repository": "HemSoft/set-it-free-loop"
+    },
+    {
+      "hash": "5e12e645f5190d6890098e37fdf2a2b7f62e7eab",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:32:12-04:00",
+      "timestamp": 1791347532.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "test: reject stale TypeScript metric evidence after collector startup failure",
+      "additions": 28,
+      "deletions": 3,
+      "files": [
+        {
+          "path": "docs/typescript-metrics.md",
+          "adds": 2,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "scripts/Test-TypeScriptMetricFixtures.mjs",
+          "adds": 26,
+          "dels": 3,
+          "language": "Other"
+        }
+      ],
+      "category": "Testing",
+      "net_lines": 25,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "e4008a09419e6959a7b1bd9d2ea2652528437ecc",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:31:03-04:00",
+      "timestamp": 1791347463.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: reject stale resource evidence after sampler startup failure",
+      "additions": 67,
+      "deletions": 2,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "adds": 3,
+          "dels": 0,
+          "language": "YAML"
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "adds": 1,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/pi-resources.md",
+          "adds": 1,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "scripts/Test-PiResourceEvidence.ps1",
+          "adds": 50,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/Test-PiResources.ps1",
+          "adds": 12,
+          "dels": 2,
+          "language": "PowerShell"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 65,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "7ad1d1e61052a43ff67851cc4b35942796f621e4",
+      "repo": "reports",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:28:45-04:00",
+      "timestamp": 1791347325.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "Match the in-game specialization order (#67)",
+      "additions": 11,
+      "deletions": 2,
+      "files": [
+        {
+          "path": "editions/dune-awakening-build-editor/2026-10-06/report.html",
+          "adds": 3,
+          "dels": 1,
+          "language": "HTML"
+        },
+        {
+          "path": "editions/dune-awakening-build-editor/2026-10-06/sources.md",
+          "adds": 2,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "scripts/dune-build/editor.js",
+          "adds": 3,
+          "dels": 1,
+          "language": "JavaScript"
+        },
+        {
+          "path": "tests/browser/dune-build-editor.spec.js",
+          "adds": 3,
+          "dels": 0,
+          "language": "JavaScript"
+        }
+      ],
+      "category": "Feature",
+      "net_lines": 9,
+      "github_repository": "HemSoft/reports"
+    },
+    {
+      "hash": "0c8dd31c46e311ac18ab8de3da34fb6c2f64e247",
+      "repo": "codexbar-ios",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:27:51-04:00",
+      "timestamp": 1791347271.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "test: verify native release UI transitions (#414)",
+      "additions": 55,
+      "deletions": 16,
       "files": [
         {
           "path": "CHANGELOG.md",
           "adds": 6,
           "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "CI-POLICY.md",
+          "adds": 2,
+          "dels": 2,
           "language": "Markdown"
         },
         {
@@ -2489,14 +2687,14 @@
         },
         {
           "path": "CodexBarIOSUITests/SettingsEvidenceUITests.swift",
-          "adds": 27,
+          "adds": 30,
           "dels": 4,
           "language": "Swift"
         },
         {
           "path": "UI-TESTING.md",
-          "adds": 8,
-          "dels": 0,
+          "adds": 9,
+          "dels": 1,
           "language": "Markdown"
         },
         {
@@ -2513,11 +2711,539 @@
         }
       ],
       "category": "Testing",
-      "net_lines": 36,
+      "net_lines": 39,
       "github_repository": "HemSoft/codexbar-ios"
     },
     {
-      "hash": "14a2821f1d88960514dc7e3ffda3bf67046de5d4",
+      "hash": "01afdaacaf68a2923efc0d0bf6785e93acf139a7",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:25:54-04:00",
+      "timestamp": 1791347154.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: require valid metric budgets outside explicit baseline collection",
+      "additions": 12,
+      "deletions": 2,
+      "files": [
+        {
+          "path": "scripts/TypeScriptMetricPolicy.mjs",
+          "adds": 6,
+          "dels": 2,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/TypeScriptMetrics.test.mjs",
+          "adds": 6,
+          "dels": 0,
+          "language": "Other"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 10,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "7860cecc310e938338494c32b082920dbc9a7223",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:23:13-04:00",
+      "timestamp": 1791346993.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: reject absent and falsy resource budgets during qualification",
+      "additions": 15,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "scripts/PiResourcePolicy.mjs",
+          "adds": 4,
+          "dels": 1,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/PiResourcePolicy.test.mjs",
+          "adds": 11,
+          "dels": 0,
+          "language": "Other"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 14,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "e87e8170b2daebb53cc62c36cd24202d6b2d870c",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:18:09-04:00",
+      "timestamp": 1791346689.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: bind rollout proof to workflow artifacts and deployed ancestry",
+      "additions": 200,
+      "deletions": 26,
+      "files": [
+        {
+          "path": ".github/workflows/validate-org-migration.yml",
+          "adds": 2,
+          "dels": 2,
+          "language": "YAML"
+        },
+        {
+          "path": "deployment/scripts/validate-org-rollout.py",
+          "adds": 75,
+          "dels": 21,
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_rollout.py",
+          "adds": 112,
+          "dels": 3,
+          "language": "Python"
+        },
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 11,
+          "dels": 0,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 174,
+      "github_repository": "HemSoft/set-it-free-loop"
+    },
+    {
+      "hash": "568018621691beede17c9ea3e6129f788e7e378b",
+      "repo": "survival-shelter-opus55",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:18:06-04:00",
+      "timestamp": 1791346686.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "docs: update the setup guide for the 18-test suite and coverage.ps1",
+      "additions": 1,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "Docs/DevelopmentSetup.md",
+          "adds": 1,
+          "dels": 1,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 0,
+      "github_repository": "HemSoft/survival-shelter-opus55"
+    },
+    {
+      "hash": "9cb6585f12e828aea44e0b029feeba091eab850a",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:17:42-04:00",
+      "timestamp": 1791346662.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "ci: gate repeated Pi resource retention on native platforms",
+      "additions": 64,
+      "deletions": 45,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "adds": 47,
+          "dels": 2,
+          "language": "YAML"
+        },
+        {
+          "path": ".github/workflows/pi-resource-baseline.yml",
+          "adds": 0,
+          "dels": 43,
+          "language": "YAML"
+        },
+        {
+          "path": ".gitignore",
+          "adds": 1,
+          "dels": 0,
+          "language": "Config/Docs"
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "adds": 16,
+          "dels": 0,
+          "language": "Markdown"
+        }
+      ],
+      "category": "CI / DevOps",
+      "net_lines": 19,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "3f489d6b8fbf1c893b0ab6913e12ba9b16872500",
+      "repo": "survival-shelter-opus55",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:16:33-04:00",
+      "timestamp": 1791346593.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "build: treat all compiler warnings in the module as errors (#5)",
+      "additions": 5,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "AGENTS.md",
+          "adds": 3,
+          "dels": 1,
+          "language": "Markdown"
+        },
+        {
+          "path": "Source/SurvivalShelter/SurvivalShelter.Build.cs",
+          "adds": 2,
+          "dels": 0,
+          "language": "C#"
+        }
+      ],
+      "category": "CI / DevOps",
+      "net_lines": 4,
+      "github_repository": "HemSoft/survival-shelter-opus55"
+    },
+    {
+      "hash": "8070b14d7dce647257c76162b99774c3ebc9ac1b",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:15:59-04:00",
+      "timestamp": 1791346559.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "perf: gate launcher latency and allocations (#68)",
+      "additions": 1288,
+      "deletions": 2,
+      "files": [
+        {
+          "path": ".github/workflows/ci.yml",
+          "adds": 51,
+          "dels": 2,
+          "language": "YAML"
+        },
+        {
+          "path": ".gitignore",
+          "adds": 1,
+          "dels": 0,
+          "language": "Config/Docs"
+        },
+        {
+          "path": "CONTRIBUTING.md",
+          "adds": 21,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/performance.md",
+          "adds": 98,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "internal/tui/model_benchmark_test.go",
+          "adds": 54,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": "main_benchmark_test.go",
+          "adds": 50,
+          "dels": 0,
+          "language": "Go"
+        },
+        {
+          "path": "scripts/PerformancePolicy.psm1",
+          "adds": 84,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/Test-Performance.ps1",
+          "adds": 90,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/Test-PerformanceFixtures.ps1",
+          "adds": 51,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/Test-PerformancePolicy.Unit.ps1",
+          "adds": 47,
+          "dels": 0,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/performance-budgets.json",
+          "adds": 741,
+          "dels": 0,
+          "language": "JSON"
+        }
+      ],
+      "category": "Performance",
+      "net_lines": 1286,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "185336fdb805fdd6b61d6366655dc61590273dd0",
+      "repo": "gh-x",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-07T00:15:24-04:00",
+      "timestamp": 1791346524.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "docs: record v0.17.0 release (#197)",
+      "additions": 7,
+      "deletions": 1,
+      "files": [
+        {
+          "path": "CHANGELOG.md",
+          "adds": 7,
+          "dels": 1,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 6,
+      "github_repository": "HemSoft/gh-x"
+    },
+    {
+      "hash": "b512cc4cac5c88c8856d375131e834e9ce971d42",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:07:02-04:00",
+      "timestamp": 1791346022.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "docs: explain complete metric scope and measured coverage gaps",
+      "additions": 137,
+      "deletions": 0,
+      "files": [
+        {
+          "path": "docs/typescript-metrics.md",
+          "adds": 137,
+          "dels": 0,
+          "language": "Markdown"
+        }
+      ],
+      "category": "Documentation",
+      "net_lines": 137,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "0bdfd7f893c6f0fcc6332645c63c0aa1405d636e",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:05:35-04:00",
+      "timestamp": 1791345935.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "ci: freeze native metric limits and prove actual uncovered-source rejection",
+      "additions": 1451,
+      "deletions": 13,
+      "files": [
+        {
+          "path": ".github/workflows/typescript-metrics-baseline.yml",
+          "adds": 7,
+          "dels": 5,
+          "language": "YAML"
+        },
+        {
+          "path": "scripts/Test-TypeScriptMetricFixtures.mjs",
+          "adds": 146,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/Test-TypeScriptMetrics.ps1",
+          "adds": 3,
+          "dels": 3,
+          "language": "PowerShell"
+        },
+        {
+          "path": "scripts/TypeScriptMetricPolicy.mjs",
+          "adds": 25,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/TypeScriptMetrics.mjs",
+          "adds": 17,
+          "dels": 4,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/TypeScriptMetrics.test.mjs",
+          "adds": 72,
+          "dels": 1,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/typescript-metric-budgets.json",
+          "adds": 1181,
+          "dels": 0,
+          "language": "JSON"
+        }
+      ],
+      "category": "CI / DevOps",
+      "net_lines": 1438,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "0e76c9071618ff259eecf68b2fd1f091529c1dff",
+      "repo": "set-it-free-loop",
+      "author_name": "Franz Hemmer",
+      "author_email": "8227352+HemSoft@users.noreply.github.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-07T00:04:05-04:00",
+      "timestamp": 1791345845.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "fix: reconcile transfer evidence with captured outcomes",
+      "additions": 479,
+      "deletions": 107,
+      "files": [
+        {
+          "path": "deployment/scripts/validate-org-rollout.py",
+          "adds": 154,
+          "dels": 18,
+          "language": "Python"
+        },
+        {
+          "path": "deployment/tests/test_org_rollout.py",
+          "adds": 197,
+          "dels": 15,
+          "language": "Python"
+        },
+        {
+          "path": "docs/organization-migration/README.md",
+          "adds": 37,
+          "dels": 0,
+          "language": "Markdown"
+        },
+        {
+          "path": "docs/organization-migration/integration-ledger.csv",
+          "adds": 74,
+          "dels": 74,
+          "language": "Other"
+        },
+        {
+          "path": "docs/organization-migration/modern-web-stack-preservation-smoke.json",
+          "adds": 17,
+          "dels": 0,
+          "language": "JSON"
+        }
+      ],
+      "category": "Bug Fix",
+      "net_lines": 372,
+      "github_repository": "HemSoft/set-it-free-loop"
+    },
+    {
+      "hash": "920b93f66b9e77d8e037031cbb7885adb60c1e56",
+      "repo": "reports",
+      "author_name": "github-actions[bot]",
+      "author_email": "41898283+github-actions[bot]@users.noreply.github.com",
+      "author_category": "CI Bot",
+      "author_date": "2026-10-07T00:03:03-04:00",
+      "timestamp": 1791345783.0,
+      "day_of_week": "Wednesday",
+      "day_index": 2,
+      "hour": 0,
+      "date_str": "2026-10-07",
+      "subject": "Publish productivity edition 2026-10-07 and sync static reports",
+      "additions": 11459,
+      "deletions": 13,
+      "files": [
+        {
+          "path": "catalog.json",
+          "adds": 37,
+          "dels": 0,
+          "language": "JSON"
+        },
+        {
+          "path": "index.html",
+          "adds": 2,
+          "dels": 2,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/dune-awakening-build-editor/2026-10-06/index.html",
+          "adds": 137,
+          "dels": 10,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/productivity/2026-10-07/index.html",
+          "adds": 3884,
+          "dels": 0,
+          "language": "HTML"
+        },
+        {
+          "path": "reports/productivity/2026-10-07/payload.json",
+          "adds": 7398,
+          "dels": 0,
+          "language": "JSON"
+        },
+        {
+          "path": "reports/productivity/index.html",
+          "adds": 1,
+          "dels": 1,
+          "language": "HTML"
+        }
+      ],
+      "category": "Feature",
+      "net_lines": 11446,
+      "github_repository": "HemSoft/reports"
+    },
+    {
+      "hash": "338b3bbc116f5ea26ec4028543c4451379f1595f",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -2610,102 +3336,6 @@
       ],
       "category": "Testing",
       "net_lines": 1552,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "6583d3509e613127412f474e69bc99ff0e3efdc6",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:57:10-04:00",
-      "timestamp": 1791345430.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "perf: interleave repeated workload samples without raising budgets",
-      "additions": 33,
-      "deletions": 10,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 3,
-          "dels": 1,
-          "language": "YAML"
-        },
-        {
-          "path": "docs/performance.md",
-          "adds": 15,
-          "dels": 3,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/Test-Performance.ps1",
-          "adds": 13,
-          "dels": 6,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/performance-budgets.json",
-          "adds": 2,
-          "dels": 0,
-          "language": "JSON"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 23,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "e99055ef00e153de920bf4c81d2026980b31b3cf",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:49:48-04:00",
-      "timestamp": 1791344988.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "ci: require native performance qualification and measured regressions",
-      "additions": 73,
-      "deletions": 42,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 49,
-          "dels": 2,
-          "language": "YAML"
-        },
-        {
-          "path": ".github/workflows/performance-baseline.yml",
-          "adds": 0,
-          "dels": 40,
-          "language": "YAML"
-        },
-        {
-          "path": ".gitignore",
-          "adds": 1,
-          "dels": 0,
-          "language": "Config/Docs"
-        },
-        {
-          "path": "CONTRIBUTING.md",
-          "adds": 21,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "docs/performance.md",
-          "adds": 2,
-          "dels": 0,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 31,
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
@@ -2952,7 +3582,7 @@
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
-      "hash": "ba2004cb7fd97148dd584e0d573755da99700150",
+      "hash": "4752e6b81103564a882b676535cd25979cf9bb4f",
       "repo": "hs-tui-launcher",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -2979,7 +3609,7 @@
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
-      "hash": "3840b9cad0f6ed4b39dd617badf4e0d10337fb01",
+      "hash": "2ff9ac35cb30adedf36d00b01276af84b4e4e5f7",
       "repo": "hs-tui-launcher",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -3010,57 +3640,6 @@
       "category": "CI / DevOps",
       "net_lines": 103,
       "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "4b055ed5c59e648889f76f245740215cfc2b8c9d",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:39:59-04:00",
-      "timestamp": 1791344399.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "test: trace native input in bounded issue 373 diagnosis",
-      "additions": 94,
-      "deletions": 4,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 1,
-          "dels": 0,
-          "language": "YAML"
-        },
-        {
-          "path": "CodexBarIOS/CodexBarIOSApp.swift",
-          "adds": 54,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "CodexBarIOSUITests/AccountJourneysUITests.swift",
-          "adds": 1,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "CodexBarIOSUITests/SettingsEvidenceUITests.swift",
-          "adds": 1,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "scripts/compare-account-menu.py",
-          "adds": 37,
-          "dels": 4,
-          "language": "Python"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": 90,
-      "github_repository": "HemSoft/codexbar-ios"
     },
     {
       "hash": "0428fbddce95a890c0752ca69707bb06a6024c4e",
@@ -3108,7 +3687,7 @@
       "github_repository": "HemSoft/set-it-free-loop"
     },
     {
-      "hash": "e112963b27c6d3b3358c65b822920d35dccaf540",
+      "hash": "772a385645a5f5fd31bd8a7c2a3f14c1db07ed88",
       "repo": "hs-tui-launcher",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -3132,6 +3711,51 @@
       ],
       "category": "Testing",
       "net_lines": 34,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "67802575d57ca88ff1e7483bde36979ab1dbcce7",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T23:31:01-04:00",
+      "timestamp": 1791343861.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 23,
+      "date_str": "2026-10-06",
+      "subject": "test: verify native cleanup and preserve sampler failures",
+      "additions": 40,
+      "deletions": 13,
+      "files": [
+        {
+          "path": "scripts/Measure-PiResources.mjs",
+          "adds": 8,
+          "dels": 1,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/PiResourcePolicy.mjs",
+          "adds": 3,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/PiResourcePolicy.test.mjs",
+          "adds": 5,
+          "dels": 1,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/Test-PiResources.ps1",
+          "adds": 24,
+          "dels": 11,
+          "language": "PowerShell"
+        }
+      ],
+      "category": "Testing",
+      "net_lines": 27,
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
@@ -3177,6 +3801,57 @@
       ],
       "category": "Testing",
       "net_lines": 27,
+      "github_repository": "HemSoft/hs-tui-launcher"
+    },
+    {
+      "hash": "73a2cae805cf489bb5424981390db4cbd5a1c603",
+      "repo": "hs-tui-launcher",
+      "author_name": "Franz Hemmer",
+      "author_email": "franz_hemmer@hotmail.com",
+      "author_category": "Human (Franz Hemmer)",
+      "author_date": "2026-10-06T23:28:01-04:00",
+      "timestamp": 1791343681.0,
+      "day_of_week": "Tuesday",
+      "day_index": 1,
+      "hour": 23,
+      "date_str": "2026-10-06",
+      "subject": "test: measure repeated offline Pi resource lifecycles",
+      "additions": 655,
+      "deletions": 0,
+      "files": [
+        {
+          "path": ".github/workflows/pi-resource-baseline.yml",
+          "adds": 40,
+          "dels": 0,
+          "language": "YAML"
+        },
+        {
+          "path": "scripts/Measure-PiResources.mjs",
+          "adds": 372,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/PiResourcePolicy.mjs",
+          "adds": 75,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/PiResourcePolicy.test.mjs",
+          "adds": 107,
+          "dels": 0,
+          "language": "Other"
+        },
+        {
+          "path": "scripts/Test-PiResources.ps1",
+          "adds": 61,
+          "dels": 0,
+          "language": "PowerShell"
+        }
+      ],
+      "category": "Testing",
+      "net_lines": 655,
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
@@ -3501,58 +4176,7 @@
       "github_repository": "HemSoft/hs-buddy"
     },
     {
-      "hash": "af054261305f9219a4c66b7cd4708752003665f7",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:14:32-04:00",
-      "timestamp": 1791342872.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "perf: freeze reviewed native budgets and qualify real regressions",
-      "additions": 230,
-      "deletions": 221,
-      "files": [
-        {
-          "path": ".github/workflows/performance-baseline.yml",
-          "adds": 4,
-          "dels": 3,
-          "language": "YAML"
-        },
-        {
-          "path": "docs/performance.md",
-          "adds": 17,
-          "dels": 11,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/Test-Performance.ps1",
-          "adds": 5,
-          "dels": 1,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/Test-PerformanceFixtures.ps1",
-          "adds": 1,
-          "dels": 1,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/performance-budgets.json",
-          "adds": 203,
-          "dels": 205,
-          "language": "JSON"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 9,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "59d88b3e6b9b2a3d3326009ce821b47d96a09263",
+      "hash": "b505a117a0c9840a377590cc88512dec2881d0b2",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -3636,39 +4260,6 @@
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
-      "hash": "b130a881f4274a0ecc806925731ae83e842728cc",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:03:24-04:00",
-      "timestamp": 1791342204.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "perf: preserve primary failures and clear stale raw evidence",
-      "additions": 20,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "scripts/Test-Performance.ps1",
-          "adds": 1,
-          "dels": 1,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/Test-PerformanceFixtures.ps1",
-          "adds": 19,
-          "dels": 0,
-          "language": "PowerShell"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 19,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
       "hash": "09fcb17186f8c5f7612afced4c7c7128aa50e402",
       "repo": "hs-tui-launcher",
       "author_name": "Franz Hemmer",
@@ -3747,60 +4338,6 @@
       "github_repository": "HemSoft/set-it-free-loop"
     },
     {
-      "hash": "0958555dfe9c044900fc24c5e87e3b36da1b5af0",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T23:00:19-04:00",
-      "timestamp": 1791342019.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 23,
-      "date_str": "2026-10-06",
-      "subject": "test: report temporary diagnostic progress and exact selected counts (#373)",
-      "additions": 13,
-      "deletions": 2,
-      "files": [
-        {
-          "path": "scripts/compare-account-menu.py",
-          "adds": 13,
-          "dels": 2,
-          "language": "Python"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": 11,
-      "github_repository": "HemSoft/codexbar-ios"
-    },
-    {
-      "hash": "6c1a5aa50f4bf9433f5f29d21aad931c36d3cb21",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:58:29-04:00",
-      "timestamp": 1791341909.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "perf: extend sampling windows to reduce scheduler noise",
-      "additions": 1,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "scripts/Test-Performance.ps1",
-          "adds": 1,
-          "dels": 1,
-          "language": "PowerShell"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 0,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
       "hash": "67790e06c060653adbb3551c6a89d80c242611e3",
       "repo": "hs-tui-launcher",
       "author_name": "Franz Hemmer",
@@ -3825,72 +4362,6 @@
       ],
       "category": "Performance",
       "net_lines": 0,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "444fc602956a5064a6bc207f2118cc8bbdce38d7",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:56:29-04:00",
-      "timestamp": 1791341789.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "test: preserve original journey order in temporary diagnosis (#373)",
-      "additions": 34,
-      "deletions": 5,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 9,
-          "dels": 0,
-          "language": "YAML"
-        },
-        {
-          "path": "scripts/compare-account-menu.py",
-          "adds": 25,
-          "dels": 5,
-          "language": "Python"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": 29,
-      "github_repository": "HemSoft/codexbar-ios"
-    },
-    {
-      "hash": "82623d4cda30eae600466e9065f0431dffe529df",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:56:11-04:00",
-      "timestamp": 1791341771.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "perf: stabilize repository-root benchmark path length",
-      "additions": 13,
-      "deletions": 4,
-      "files": [
-        {
-          "path": ".github/workflows/performance-baseline.yml",
-          "adds": 3,
-          "dels": 4,
-          "language": "YAML"
-        },
-        {
-          "path": "main_benchmark_test.go",
-          "adds": 10,
-          "dels": 0,
-          "language": "Go"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 9,
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
@@ -3924,51 +4395,6 @@
       ],
       "category": "Performance",
       "net_lines": 9,
-      "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "45789d59c634681e3fc9f0d38a24837d020e7054",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:55:00-04:00",
-      "timestamp": 1791341700.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "perf: adopt measured native budgets and regression fixtures",
-      "additions": 855,
-      "deletions": 3,
-      "files": [
-        {
-          "path": ".github/workflows/performance-baseline.yml",
-          "adds": 4,
-          "dels": 3,
-          "language": "YAML"
-        },
-        {
-          "path": "docs/performance.md",
-          "adds": 78,
-          "dels": 0,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/Test-PerformanceFixtures.ps1",
-          "adds": 32,
-          "dels": 0,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/performance-budgets.json",
-          "adds": 741,
-          "dels": 0,
-          "language": "JSON"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 852,
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
@@ -4017,7 +4443,7 @@
       "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
-      "hash": "6b897bddecd354586428d5b10d4e65fe9c381f7d",
+      "hash": "6f20f046eb60dce512af41e046b16006652dfd68",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -4048,63 +4474,6 @@
       "category": "Documentation",
       "net_lines": 8,
       "github_repository": "HemSoft/survival-shelter-opus55"
-    },
-    {
-      "hash": "e4bef8f026368d8441799345c65e51ececce1a8f",
-      "repo": "hs-tui-launcher",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:51:27-04:00",
-      "timestamp": 1791341487.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "perf: measure launcher rendering and invocation workloads",
-      "additions": 343,
-      "deletions": 0,
-      "files": [
-        {
-          "path": ".github/workflows/performance-baseline.yml",
-          "adds": 39,
-          "dels": 0,
-          "language": "YAML"
-        },
-        {
-          "path": "internal/tui/model_benchmark_test.go",
-          "adds": 54,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "main_benchmark_test.go",
-          "adds": 40,
-          "dels": 0,
-          "language": "Go"
-        },
-        {
-          "path": "scripts/PerformancePolicy.psm1",
-          "adds": 84,
-          "dels": 0,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/Test-Performance.ps1",
-          "adds": 79,
-          "dels": 0,
-          "language": "PowerShell"
-        },
-        {
-          "path": "scripts/Test-PerformancePolicy.Unit.ps1",
-          "adds": 47,
-          "dels": 0,
-          "language": "PowerShell"
-        }
-      ],
-      "category": "Performance",
-      "net_lines": 343,
-      "github_repository": "HemSoft/hs-tui-launcher"
     },
     {
       "hash": "403b8be23439fe9a0f967e912376792a7bcedfc8",
@@ -4162,33 +4531,6 @@
       "category": "Performance",
       "net_lines": 343,
       "github_repository": "HemSoft/hs-tui-launcher"
-    },
-    {
-      "hash": "3c749c0c240d9facc25b59d43659822d1d5eb5e6",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:49:54-04:00",
-      "timestamp": 1791341394.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "test: run temporary native diagnostic without unrelated gates (#373)",
-      "additions": 5,
-      "deletions": 6,
-      "files": [
-        {
-          "path": ".github/workflows/ci.yml",
-          "adds": 5,
-          "dels": 6,
-          "language": "YAML"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": -1,
-      "github_repository": "HemSoft/codexbar-ios"
     },
     {
       "hash": "c0cc23202675aa3f5ef16dc9b55448118e4331d0",
@@ -4531,39 +4873,6 @@
       "category": "Chore / Maintenance",
       "net_lines": 0,
       "github_repository": "HemSoft/set-it-free-loop"
-    },
-    {
-      "hash": "817cc2a112cc866418660a273675a2d64a559314",
-      "repo": "codexbar-ios",
-      "author_name": "HemSoft",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T22:29:03-04:00",
-      "timestamp": 1791340143.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 22,
-      "date_str": "2026-10-06",
-      "subject": "test: isolate native iPad menu transitions for release diagnosis (#373)",
-      "additions": 52,
-      "deletions": 81,
-      "files": [
-        {
-          "path": "CodexBarIOSUITests/AccountJourneysUITests.swift",
-          "adds": 19,
-          "dels": 0,
-          "language": "Swift"
-        },
-        {
-          "path": "scripts/compare-account-menu.py",
-          "adds": 33,
-          "dels": 81,
-          "language": "Python"
-        }
-      ],
-      "category": "Testing",
-      "net_lines": -29,
-      "github_repository": "HemSoft/codexbar-ios"
     },
     {
       "hash": "4839784f0a52793a3d3a3afb8f1ee68e20d9f34b",
@@ -4953,7 +5262,7 @@
       "github_repository": "HemSoft/gh-x"
     },
     {
-      "hash": "a14a951b7f3e1fe41ee5cfcfa7523cab43c70e0e",
+      "hash": "6a8ec084e5a05e8719c309fcf36aa99de284a1c2",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -5046,7 +5355,7 @@
       "github_repository": "hemsoft-dev/sfl-migration-pilot-private"
     },
     {
-      "hash": "d1ba688b421235be2187af9857eb8d7334641470",
+      "hash": "fc0677aba3096f556c10708b591e7a2d2c914301",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -5175,7 +5484,7 @@
       "github_repository": "HemSoft/reports"
     },
     {
-      "hash": "a11a4000490bf96f358d8fcd3be9c0cb597b01f6",
+      "hash": "a3954938cc26ab826a984cc2dc86b339048434fc",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -5214,7 +5523,7 @@
       "github_repository": "HemSoft/survival-shelter-opus55"
     },
     {
-      "hash": "60d1f11b218d0eccefa15b8ac15d10a40a771237",
+      "hash": "6432dbe2ddba04326777e8e3728da1f0b6118ca7",
       "repo": "survival-shelter-opus55",
       "author_name": "Franz Hemmer",
       "author_email": "franz_hemmer@hotmail.com",
@@ -7198,201 +7507,6 @@
       "category": "Feature",
       "net_lines": 11751,
       "github_repository": "HemSoft/set-it-free-loop"
-    },
-    {
-      "hash": "136bf6fa6f5798d5f67a90b87df5df7d168879ac",
-      "repo": "reports",
-      "author_name": "github-actions[bot]",
-      "author_email": "41898283+github-actions[bot]@users.noreply.github.com",
-      "author_category": "CI Bot",
-      "author_date": "2026-10-06T17:53:39-04:00",
-      "timestamp": 1791323619.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 17,
-      "date_str": "2026-10-06",
-      "subject": "Publish productivity edition 2026-10-06 and sync static reports",
-      "additions": 1037,
-      "deletions": 1704,
-      "files": [
-        {
-          "path": "catalog.json",
-          "adds": 4,
-          "dels": 4,
-          "language": "JSON"
-        },
-        {
-          "path": "index.html",
-          "adds": 68,
-          "dels": 315,
-          "language": "HTML"
-        },
-        {
-          "path": "reports/productivity/2026-10-06/index.html",
-          "adds": 254,
-          "dels": 254,
-          "language": "HTML"
-        },
-        {
-          "path": "reports/productivity/2026-10-06/payload.json",
-          "adds": 711,
-          "dels": 1131,
-          "language": "JSON"
-        }
-      ],
-      "category": "Feature",
-      "net_lines": -667,
-      "github_repository": "HemSoft/reports"
-    },
-    {
-      "hash": "dcac3a5124a04e066472dd73413ca32810a76ec2",
-      "repo": "gh-x",
-      "author_name": "github-actions[bot]",
-      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
-      "author_category": "CI Bot",
-      "author_date": "2026-10-06T17:52:44-04:00",
-      "timestamp": 1791323564.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 17,
-      "date_str": "2026-10-06",
-      "subject": "docs: record v0.15.4 release (#185)",
-      "additions": 7,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "CHANGELOG.md",
-          "adds": 7,
-          "dels": 1,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Documentation",
-      "net_lines": 6,
-      "github_repository": "HemSoft/gh-x"
-    },
-    {
-      "hash": "f4b3be8903c36d1b47b4af25ab59e34d4103fa9a",
-      "repo": "reports",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T17:39:30-04:00",
-      "timestamp": 1791322770.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 17,
-      "date_str": "2026-10-06",
-      "subject": "feat: replace landing page with factual report table (#54) (#55)",
-      "additions": 364,
-      "deletions": 643,
-      "files": [
-        {
-          "path": "README.md",
-          "adds": 6,
-          "dels": 3,
-          "language": "Markdown"
-        },
-        {
-          "path": "scripts/generate_fixture.py",
-          "adds": 36,
-          "dels": 0,
-          "language": "Python"
-        },
-        {
-          "path": "src/landing.py",
-          "adds": 108,
-          "dels": 571,
-          "language": "Python"
-        },
-        {
-          "path": "tests/browser/landing.spec.js",
-          "adds": 108,
-          "dels": 0,
-          "language": "JavaScript"
-        },
-        {
-          "path": "tests/test_landing.py",
-          "adds": 106,
-          "dels": 69,
-          "language": "Python"
-        }
-      ],
-      "category": "Feature",
-      "net_lines": -279,
-      "github_repository": "HemSoft/reports"
-    },
-    {
-      "hash": "d79e450c9dbaa1c174d0a17f4c60b3c953809131",
-      "repo": "gh-x",
-      "author_name": "Franz Hemmer",
-      "author_email": "franz_hemmer@hotmail.com",
-      "author_category": "Human (Franz Hemmer)",
-      "author_date": "2026-10-06T17:37:35-04:00",
-      "timestamp": 1791322655.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 17,
-      "date_str": "2026-10-06",
-      "subject": "fix: preserve dashboard session keyboard focus across refreshes (#184)",
-      "additions": 138,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "src/codex-dashboard/dashboard-ui.mjs",
-          "adds": 13,
-          "dels": 1,
-          "language": "Other"
-        },
-        {
-          "path": "src/codex-dashboard/dashboard-ui.test.mjs",
-          "adds": 47,
-          "dels": 0,
-          "language": "Other"
-        },
-        {
-          "path": "tests/browser/session-focus.html",
-          "adds": 18,
-          "dels": 0,
-          "language": "HTML"
-        },
-        {
-          "path": "tests/browser/session-focus.mjs",
-          "adds": 60,
-          "dels": 0,
-          "language": "Other"
-        }
-      ],
-      "category": "Bug Fix",
-      "net_lines": 137,
-      "github_repository": "HemSoft/gh-x"
-    },
-    {
-      "hash": "fbac8e49f1df53e42949b4c1fd0305a1f23be06e",
-      "repo": "gh-x",
-      "author_name": "github-actions[bot]",
-      "author_email": "41898282+github-actions[bot]@users.noreply.github.com",
-      "author_category": "CI Bot",
-      "author_date": "2026-10-06T17:17:08-04:00",
-      "timestamp": 1791321428.0,
-      "day_of_week": "Tuesday",
-      "day_index": 1,
-      "hour": 17,
-      "date_str": "2026-10-06",
-      "subject": "docs: record v0.15.3 release (#183)",
-      "additions": 7,
-      "deletions": 1,
-      "files": [
-        {
-          "path": "CHANGELOG.md",
-          "adds": 7,
-          "dels": 1,
-          "language": "Markdown"
-        }
-      ],
-      "category": "Documentation",
-      "net_lines": 6,
-      "github_repository": "HemSoft/gh-x"
     }
   ]
 }
