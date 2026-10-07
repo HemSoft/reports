@@ -86,8 +86,10 @@ The model's explicit mapping translates game attribute names to catalog display
 keys. Accuracy-offset and recoil-scalar effects do not have a verified mapping
 to the catalog's normalized accuracy/stability values; those final values become
 unavailable when changed. Other unmapped effects stay in the source-effect
-ledger. Modified DPS is unavailable because the catalog's effective-DPS
-calculation includes weapon behavior this snapshot does not establish.
+ledger. Source-provided grade DPS and effective DPS remain visible. Augment-modified
+DPS is unavailable because the catalog's effective-DPS calculation includes
+weapon behavior this snapshot does not establish. If a grade lacks a DPS
+override, the editor does not reuse base DPS as that grade's final value.
 
 Equipped armor value is the sum of body-item values after grades and mapped
 armor augments. Selected equipment volume is the sum of item volume after

@@ -189,7 +189,8 @@ const DuneBuild = (() => {
     const item = itemById(data, selection.id);
     if (!item) return { item: null, stats: [], modifiers: [] };
     const rows = clone([...item.stats, { key: 'volume', name: 'Equipment volume', type: 'number', value: item.volume, format: '{v:0.#} V' }]).map(stat => ({ ...stat, base: stat.value, grade: stat.value, modifiers: [] }));
-    for (const override of item.scaledStats.find(row => row.grade === selection.grade)?.stats ?? []) {
+    const gradeStats = item.scaledStats.find(row => row.grade === selection.grade)?.stats ?? [];
+    for (const override of gradeStats) {
       const stat = rows.find(row => row.key === override.key);
       if (stat) { stat.value = override.value; stat.grade = override.value; }
     }
@@ -221,8 +222,8 @@ const DuneBuild = (() => {
       }
     }
     // Catalog DPS includes weapon-specific behavior. Do not invent a new combat formula.
-    if (selection.grade || modifiers.length) {
-      for (const row of rows.filter(stat => ['dps', 'effectiveDps'].includes(stat.key))) row.value = null;
+    for (const row of rows.filter(stat => ['dps', 'effectiveDps'].includes(stat.key))) {
+      if (modifiers.length || (selection.grade && !gradeStats.some(stat => stat.key === row.key))) row.value = null;
     }
     return { item, stats: rows, modifiers };
   }

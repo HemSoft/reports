@@ -88,6 +88,11 @@ test('weapon-family augments, minimum grades, penalties and unknown formulas are
   expect(compatible).toContain('t6_augment_smg1');
   expect(compatible).not.toContain('t6_augment_br1');
   expect(compatible).not.toContain('t6_augment_armor6');
+  state.equipment.hotbar1.grade = 1;
+  const graded = Build.calculate(data, state).equipment.hotbar1.stats;
+  close(graded.find(stat => stat.key === 'dps').value, 457.96);
+  close(graded.find(stat => stat.key === 'effectiveDps').value, 348.93);
+  state.equipment.hotbar1.grade = 0;
   state.levels.craftingtrack = 1;
   state.traits = ['Crafting_CraftingKeystone_RangedWeaponAugmentSlots1'];
   state.equipment.hotbar1.augments = [{ id: 't6_augment_smg1', grade: 3, roll: 100 }];
@@ -243,6 +248,16 @@ test('welding torch P0 repair-quality formats display fractional percentages', a
     await page.locator('#gear-hotbar1').selectOption(item);
     await expect(page.locator('#item-stat-rows tr').filter({ hasText: 'Repair Quality' }).locator('td').first()).toHaveText(value);
   }
+});
+
+test('source-provided weapon grade DPS remains visible without augments', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(url);
+  await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
+  await page.locator('#grade-hotbar1').selectOption('1');
+  await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'DPS', exact: true }) }).locator('td').first()).toHaveText('457.96');
+  await expect(page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Effective DPS', exact: true }) }).locator('td').first()).toHaveText('348.93');
+  await page.screenshot({ path: testInfo.outputPath('build-grade-dps-1440.png'), fullPage: true });
 });
 
 test('skill percentages retain point units while fractional bonuses scale once', async ({ page }) => {
