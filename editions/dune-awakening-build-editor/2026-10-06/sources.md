@@ -21,8 +21,8 @@ and augments, unsupported ability/technique types or equipment/augment grades,
 out-of-range levels/ranks/rolls, and files above 64 KB.
 Failed loads preserve the current build. Unfinished builds with valid selections
 remain loadable, including over-budget skills or augments locked by a lowered
-Crafting level. Other game-rule warnings, such as known skills unavailable in the
-selected game mode, also remain editable drafts. The existing warnings and repair
+Crafting level. Other game-rule warnings, such as equipped abilities in locked
+slots or known skills unavailable in the selected game mode, remain editable drafts. The existing warnings and repair
 controls remain available.
 The same file can be loaded again after further editing. Build files are not
 uploaded, and saving/loading works offline without an account. Keep the download

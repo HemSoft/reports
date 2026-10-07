@@ -74,9 +74,12 @@ test('load preserves unfinished builds and their existing rule warnings', () => 
   state.levels.craftingtrack = 0;
   state.characterLevel = 1;
   state.levels.combattrack = 0;
+  state.abilitySlots = 1;
+  state.abilities = ['', state.abilities[0], ''];
   const warnings = Build.validate(data, state);
   expect(warnings.join(' ')).toContain('augmentation limit');
   expect(warnings.join(' ')).toContain('budget');
+  expect(warnings.join(' ')).toContain('locked slot');
   const result = Build.deserialize(data, Build.serialize(data, state));
   expect(result.state).toEqual(state);
   expect(Build.validate(data, result.state)).toEqual(warnings);
@@ -248,4 +251,30 @@ test('unlearned draft abilities and techniques stay visible and can be cleared',
   const saved = JSON.parse(await downloadBuild(page));
   expect(saved.build.abilities[0]).toBe('');
   expect(saved.build.techniques[0]).toBe('');
+});
+
+test('a loaded ability in a locked slot warns and can be cleared or unlocked', async ({ page }, testInfo) => {
+  await page.goto(url);
+  const state = savedBuild();
+  state.abilitySlots = 1;
+  state.abilities = ['', state.abilities[0], ''];
+  const text = Build.serialize(data, state);
+  await loadBuild(page, text);
+  await expect(page.locator('#build-status')).toHaveText('Invalid build');
+  await expect(page.locator('#errors')).toContainText('Unlock that slot or clear the ability');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await expect(page.locator('#ability-1')).toHaveValue(state.abilities[1]);
+  await expect(page.locator('#ability-1')).toBeEnabled();
+  expect(await page.locator('#ability-1 option').count()).toBe(2);
+  await page.locator('#ability-selectors').scrollIntoViewIfNeeded();
+  await page.screenshot({ path: testInfo.outputPath('loaded-locked-ability.png') });
+  await page.locator('#ability-1').selectOption('');
+  await expect(page.locator('#errors')).toBeHidden();
+  await expect(page.locator('#ability-1')).toBeDisabled();
+  expect(JSON.parse(await downloadBuild(page)).build.abilities[1]).toBe('');
+  await loadBuild(page, text);
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#ability-slots').selectOption('2');
+  await expect(page.locator('#errors')).toBeHidden();
+  expect(JSON.parse(await downloadBuild(page)).build.abilities[1]).toBe(state.abilities[1]);
 });

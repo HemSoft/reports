@@ -100,8 +100,8 @@
     }).join('');
   }
 
-  function learnedOptions(kind, selected) {
-    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && (state.ranks[skill.id] > 0 || skill.id === selected))
+  function learnedOptions(kind, selected, locked = false) {
+    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && ((!locked && state.ranks[skill.id] > 0) || skill.id === selected))
       .map(skill => option(skill.id, `${skill.name} · ${state.ranks[skill.id] > 0 ? `rank ${state.ranks[skill.id]}` : 'not learned'}`, selected)).join('');
   }
   function renderSkills() {
@@ -115,7 +115,7 @@
           ${Array.from({ length: skill.maxLevel + 1 }, (_, value) => option(String(value), `${value} / ${skill.maxLevel}`, String(rank))).join('')}</select></td>
           <td>${(skill.costPerLevel ?? []).slice(0, rank).reduce((a, b) => a + b, 0)}</td></tr>`;
       }).join('');
-    $('#ability-selectors').innerHTML = state.abilities.map((id, index) => `<label>Ability ${index + 1}<select id="ability-${index}" data-ability="${index}"${index >= state.abilitySlots ? ' disabled' : ''}>${learnedOptions('Ability', id)}</select></label>`).join('');
+    $('#ability-selectors').innerHTML = state.abilities.map((id, index) => `<label>Ability ${index + 1}<select id="ability-${index}" data-ability="${index}"${index >= state.abilitySlots && !id ? ' disabled' : ''}>${learnedOptions('Ability', id, index >= state.abilitySlots)}</select></label>`).join('');
     $('#technique-selectors').innerHTML = state.techniques.map((id, index) => `<label>Technique ${index + 1}<select id="technique-${index}" data-technique="${index}">${learnedOptions('Technique', id)}</select></label>`).join('');
   }
 

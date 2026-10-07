@@ -177,6 +177,7 @@ const DuneBuild = (() => {
       const used = list.filter(Boolean);
       if (new Set(used).size !== used.length) errors.push(`Each ${kind.toLowerCase()} can only be equipped once.`);
       if (kind === 'Ability' && used.length > state.abilitySlots) errors.push('Too many abilities for the unlocked ability slots.');
+      if (kind === 'Ability' && list.some((id, index) => id && index >= state.abilitySlots)) errors.push('An equipped ability occupies a locked slot. Unlock that slot or clear the ability.');
       if (kind === 'Technique' && used.length > 3) errors.push('At most three techniques can be equipped.');
       for (const id of used) {
         const skill = skillById(data, id);
