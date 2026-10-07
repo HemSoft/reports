@@ -9,6 +9,8 @@ from datetime import datetime, timezone, timedelta
 from zoneinfo import ZoneInfo
 from collections import defaultdict
 
+from src.github_identity import github_owners, repository_identity
+
 EDT = ZoneInfo("America/New_York")
 
 COMMAND_TIMEOUT_SECONDS = 120
@@ -161,20 +163,28 @@ query($owner: String!, $cursor: String) {
 
 
 def list_github_repositories():
-    records = _read_connection(
-        REPOSITORIES_QUERY,
-        {"owner": "HemSoft"},
-        "GitHub repository enumeration for HemSoft",
-        REPO_FIELDS,
-        "nameWithOwner",
-    )
-    for item in records:
-        canonical = item["nameWithOwner"]
-        if canonical.lower() != f"HemSoft/{item['name']}".lower():
-            raise CollectionError(
-                f"GitHub repository enumeration: invalid canonical identity {canonical}"
-            )
-    return {item["name"]: item for item in records}
+    repositories = {}
+    seen_names = set()
+    for owner in github_owners():
+        records = _read_connection(
+            REPOSITORIES_QUERY,
+            {"owner": owner},
+            f"GitHub repository enumeration for {owner}",
+            REPO_FIELDS,
+            "nameWithOwner",
+        )
+        for item in records:
+            try:
+                canonical = repository_identity(item["name"], item["nameWithOwner"])
+                if canonical.lower() != f"{owner}/{item['name']}".lower():
+                    raise ValueError("repository belongs to a different owner")
+                if item["name"].lower() in seen_names:
+                    raise ValueError("duplicate repository basename across selected owners")
+            except ValueError as exc:
+                raise CollectionError(f"GitHub repository enumeration: {exc}") from exc
+            seen_names.add(item["name"].lower())
+            repositories[item["name"]] = item
+    return repositories
 
 
 def _repository_activity(canonical, connection, fields, source):
@@ -498,7 +508,7 @@ def _cache_inputs(base_dir, weeks, start_dt, end_dt):
         "start_iso": start_dt.isoformat(),
         "end_iso": end_dt.isoformat(),
         "timezone": "America/New_York",
-        "github_owner": "HemSoft",
+        "github_owners": github_owners(),
         "collection_scope": COLLECTION_SCOPE,
     }
 

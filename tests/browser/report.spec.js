@@ -26,3 +26,14 @@ test('generated report initializes charts and supports table navigation offline'
   await expect(page.locator('#pane-commits tbody tr')).toHaveCount(metrics.recent_commits.length);
   expect(errors).toEqual([]);
 });
+
+test('organization repository and commit links retain canonical owner alongside personal sources', async ({ page }) => {
+  await openReport(page, { reportPath: path.join(root, 'test-results/report-organization.html') });
+  await expect(page.locator('#pane-repos a', { hasText: 'hs-buddy' })).toHaveAttribute('href', 'https://github.com/hemsoft-dev/hs-buddy');
+  await expect(page.locator('#pane-repos a', { hasText: 'retained' })).toHaveAttribute('href', 'https://github.com/HemSoft/retained');
+  await page.getByRole('tab', { name: /Recent Commits/ }).click();
+  await expect(page.locator('#pane-commits')).toBeVisible();
+  await expect(page.locator('#pane-commits a[href^="https://github.com/hemsoft-dev/hs-buddy/commit/"]')).toHaveCount(2);
+  await expect(page.locator('#pane-commits a[href^="https://github.com/HemSoft/retained/commit/"]')).toHaveCount(1);
+  await expect(page.locator('#pane-commits a[href^="https://github.com/HemSoft/hs-buddy/commit/"]')).toHaveCount(0);
+});

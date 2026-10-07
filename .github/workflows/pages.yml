@@ -21,6 +21,8 @@ jobs:
 
   build:
     needs: validation
+    env:
+      REPORT_GITHUB_OWNERS: HemSoft,hemsoft-dev
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -40,10 +42,10 @@ jobs:
       - name: Install runtime dependencies
         run: python -m pip install -r requirements.txt
 
-      - name: Clone HemSoft repos for commit scanning
+      - name: Clone selected owner repositories for commit scanning
         shell: bash
         env:
-          # Read access to Contents, Issues, and Pull requests on HemSoft repositories.
+          # Read access to Contents, Issues, and Pull requests for both owners.
           GH_TOKEN: ${{ secrets.REPORTS_PAT }}
         run: |
           test -n "$GH_TOKEN" || { echo "REPORTS_PAT is required to include private repositories."; exit 1; }

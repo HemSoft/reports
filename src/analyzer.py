@@ -5,6 +5,8 @@ from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from collections import defaultdict, Counter
 
+from src.github_identity import repository_identity
+
 EDT = ZoneInfo("America/New_York")
 
 
@@ -19,11 +21,23 @@ def _in_interval(timestamp, start, end):
     )
 
 
+def _canonical_commits(commits, repo_meta):
+    return [
+        dict(
+            commit,
+            github_repository=repository_identity(
+                commit["repo"], repo_meta.get(commit["repo"], {}).get("nameWithOwner")
+            ),
+        )
+        for commit in commits
+    ]
+
+
 def analyze_data(data):
-    commits = data.get("commits", [])
+    repo_meta = data.get("repo_meta", {})
+    commits = _canonical_commits(data.get("commits", []), repo_meta)
     prs_by_repo = data.get("prs", {})
     issues_by_repo = data.get("issues", {})
-    repo_meta = data.get("repo_meta", {})
     range_info = data.get("range", {})
 
     start_dt = datetime.fromisoformat(range_info["start_iso"]).astimezone(EDT)
@@ -244,6 +258,7 @@ def analyze_data(data):
         repo_profiles.append(
             {
                 "name": r_name,
+                "github_repository": repository_identity(r_name, meta.get("nameWithOwner")),
                 "description": meta.get("description") or "Repository",
                 "is_private": meta.get("isPrivate", True),
                 "stars": meta.get("stargazerCount", 0),
