@@ -66,8 +66,8 @@ stat table; carried weapons do not contribute damage to each other.
 establish augmentation of unique tier 6 garments and weapons. The snapshot's
 Crafting traits supply the available slot limits. Ranged slots unlock at track
 levels 1, 31 and 87; melee slots at 3, 30 and 88; garment slots at 10 and 42.
-The traits must be purchased in the editor, rather than assumed from level alone.
-The user's own crafting progression constrains this planning mode.
+All traits at or below the entered specialization levels are assumed purchased.
+Crafting level alone determines these augmentation limits.
 
 Specialized augments require matching game weapon-family tags. For example,
 [Disruptor M11 Precision Tuning](https://dune.gaming.tools/items/t6_augment_smg1)
@@ -98,9 +98,9 @@ volume augments. Source units remain visible where supplied.
 ## Skills and progression
 
 Character levels 1 through 200 use the source's total skill-point curve.
-Additional points count only from selected, unlocked Combat traits. Do not also
+Additional points count from every Combat trait unlocked by the entered level. Do not also
 add the source's combat-level point table; it represents the same progression
-and would double count. At maximum progression, purchased Combat point traits
+and would double count. At maximum progression, automatic Combat point traits
 add 54 points.
 
 The source skill builder treats prerequisite edges as a connected graph.
@@ -113,10 +113,11 @@ Switching game modes removes incompatible skills and any descendants left
 disconnected, while preserving learned roots and other valid allocations.
 
 The effect ledger shows selected-rank values for learned passives, equipped
-abilities/techniques, track-level passive curves and purchased traits. Conditional
+abilities/techniques, track-level passive curves and automatically active traits. Conditional
 combat effects are labeled. Final health, damage mitigation and combined damage
 formulas across skills, progression and equipment remain unavailable, rather
-than estimated. Removing ranks or traits immediately removes their ledger rows.
+than estimated. Removing ranks or lowering specialization levels immediately removes the
+affected ledger rows.
 Invalid builds display their errors and suppress the aggregate totals.
 Percentage presentation uses explicit source attribute units: Poison/Bleed
 Tolerance and the `UI_Hand-heldCutterayYield`/`UI_AnalysisModeYield` skill
@@ -177,10 +178,9 @@ then verification of the report-directory link and editor on the live site.
 ## Using augmentation
 
 Choose **Augments** beside an equipped item. The editor opens that item's
-augment slots and stats. Locked slots name the required Crafting level and
-purchased trait. **Configure** opens the Crafting traits and focuses either the
-level field or the available trait. Set your level and purchase the trait, then
-choose **Return to [slot] augments**. Levels alone do not purchase traits.
+augment slots and stats. Locked slots name the required Crafting level and trait. **Configure** opens Progression and focuses Crafting level. Enter
+your level, then choose **Return to [slot] augments**. All eligible traits apply
+automatically; there are no manual trait-purchase controls.
 
 Select a compatible augment, its grade and roll position. Choose **None** to
 remove it. Locked slots still permit removing an existing augment after an
@@ -188,3 +188,30 @@ unlock is lost; the invalid-build warning remains until the build is repaired.
 Replacing equipment clears that item's augments, and Reset clears the build.
 Items outside the snapshot's unique tier 6 garment/weapon coverage explain
 why augmentation is unavailable.
+
+## Automatic specialization traits and Combat
+
+Enter a level for each specialization. The editor applies every trait at or below
+that level, including Combat skill-point rewards and Crafting augment slots.
+The trait list is a read-only record of active and locked rewards. Lowering a
+level removes its higher rewards from calculations; retained skill ranks and
+augments can make the build invalid until edited or removed.
+
+The [Combat source](https://dune.gaming.tools/specializations/combattrack)
+and stored passive curves give 1% damage and 0.5% damage mitigation per level.
+At level 50, automatic traits grant 27 extra skill points, 20 additional health
+and 30 additional stamina. At level 100, those totals are 54, 55 and 55.
+
+Direct ranged/melee weapon health damage is a projection of equipment damage
+after grade and augment operations multiplied by `1 + DamageBonus_SpecTrack`.
+A Dart for Every Man has 42.8 base damage, 64.2 at Combat 50 and 85.6 at Combat
+100. At augment grade 3/roll 100, its equipment damage is 40.66, which projects
+to 60.99 at Combat 50. The breakdown names each applied contribution.
+
+Combat mitigation stays separate from item armor and individual resistances.
+Health and stamina rows show additional Combat trait values, not invented
+character baselines. Shield damage, abilities, target armor, conditional effects
+and stacking with other skills are outside this direct damage projection.
+Catalog DPS is unavailable while Combat or augments modify damage; its
+weapon-specific behavior has not been reconstructed. No overall power score is
+invented. The dated game snapshot remains unchanged.

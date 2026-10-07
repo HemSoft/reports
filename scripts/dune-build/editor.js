@@ -89,7 +89,7 @@
       const grades = augment ? augment.stats[0].values.map(row => row.quality) : [1, 2, 3, 4, 5];
       const isLocked = index >= limit && (!selected.id || used > limit);
       const requirement = locked[index - limit];
-      const unlock = requirement ? `<p class="augment-lock">Slot ${index + 1} locked. Requires Crafting level ${requirement.level} and purchased ${esc(requirement.name)}.
+      const unlock = requirement ? `<p class="augment-lock">Slot ${index + 1} locked. Requires Crafting level ${requirement.level} for ${esc(requirement.name)}.
         <button type="button" data-unlock-trait="${esc(requirement.id)}">Configure ${esc(requirement.name)} · level ${requirement.level}</button></p>` : '';
       return `<div class="augment-row">${isLocked ? unlock : ''}<label>Augment ${index + 1}<select id="augment-${index}" data-augment="${index}"${isLocked && !selected.id ? ' disabled' : ''}>${option('', 'None', selected.id)}
         ${choices.filter(candidate => !isLocked || candidate.id === selected.id).map(candidate => option(candidate.id, candidate.name, selected.id)).join('')}</select></label>
@@ -122,10 +122,10 @@
     $('#track-rows').innerHTML = data.tracks.map(track => `<section class="track"><h3>${esc(track.name)}</h3>
       ${track.id === 'craftingtrack' && augmentReturn && state.equipment[augmentReturn].id ? `<button type="button" id="augment-return">Return to ${names[augmentReturn]} augments</button>` : ''}
       <label>${esc(track.name)} level<input type="number" min="0" max="${track.maxLevel}" value="${state.levels[track.id]}" id="level-${track.id}" data-track="${track.id}"></label>
-      <details id="traits-${track.id}"><summary>Traits · ${state.traits.filter(id => track.keystones.some(trait => trait.id === id)).length} purchased</summary>
-      <div class="trait-list">${track.keystones.map(trait => `<label class="trait"><input type="checkbox" id="trait-${esc(trait.id)}" data-trait="${esc(trait.id)}"${state.traits.includes(trait.id) ? ' checked' : ''}${trait.level > state.levels[track.id] ? ' disabled' : ''}>
-      <span>${esc(trait.name)} <small>Level ${trait.level}${trait.skillPointsGranted ? ` · +${trait.skillPointsGranted.value} skill points` : ''}</small>
-      <small>${esc(trait.description ?? '')}</small></span></label>`).join('')}</div></details></section>`).join('');
+      <details id="traits-${track.id}"><summary>Traits · ${track.keystones.filter(trait => trait.level <= state.levels[track.id]).length} active</summary>
+      <ul class="trait-list">${track.keystones.map(trait => `<li class="trait">
+      <span>${esc(trait.name)} <small>${trait.level <= state.levels[track.id] ? 'Active' : 'Locked'} · Level ${trait.level}${trait.skillPointsGranted ? ` · +${trait.skillPointsGranted.value} skill points` : ''}</small>
+      <small>${esc(trait.description ?? '')}</small></span></li>`).join('')}</ul></details></section>`).join('');
   }
 
   function renderStats() {
@@ -140,6 +140,10 @@
     $('#mobile-armor').textContent = result.errors.length ? 'Invalid build' : `Armor ${number(result.armor)}`;
     $('#mobile-points').textContent = `${result.points}/${result.budget} SP`;
     $('#volume-total').textContent = result.errors.length ? 'Unavailable' : `${number(result.volume)} V`;
+    $('#combat-damage').textContent = `${number(result.combat.damageBonus * 100)}%`;
+    $('#combat-mitigation').textContent = `${number(result.combat.mitigationBonus * 100)}%`;
+    $('#combat-health').textContent = `+${number(result.combat.healthBonus)}`;
+    $('#combat-stamina').textContent = `+${number(result.combat.staminaBonus)}`;
     const entry = result.equipment[inspected];
     $('#item-title').textContent = entry.item ? `${names[inspected]}: ${entry.item.name}` : 'Equipment details';
     $('#item-source').hidden = !entry.item;
@@ -154,7 +158,7 @@
     $('#augment-effects').hidden = !entry.modifiers.length;
     const modifiers = result.modifiers.filter(stat => stat.value !== 0);
     $('#modifier-rows').innerHTML = modifiers.length ? modifiers.map(stat => `<tr><th scope="row">${esc(stat.name.replace(/:$/, ''))}</th><td>${format(stat, true)}</td>
-      <td>${esc(stat.source)}<small>${stat.conditional ? 'Equipped effect; conditional on use or combat state' : 'Modifier; final character formula unverified'}</small></td></tr>`).join('') : '<tr><td colspan="3">Learn skills or select progression traits to see their effects.</td></tr>';
+      <td>${esc(stat.source)}<small>${stat.conditional ? 'Equipped effect; conditional on use or combat state' : stat.key === 'DamageBonus_SpecTrack' ? 'Included in direct weapon damage above' : 'Source contribution; combined character formula unverified'}</small></td></tr>`).join('') : '<tr><td colspan="3">Learn skills or enter specialization levels to see their effects.</td></tr>';
     $('#coverage').textContent = `${data.items.length} equipment choices · ${data.augments.length} augments · ${data.skills.length} skills · ${data.tracks.length} specializations`;
   }
 
@@ -189,13 +193,7 @@
       const track = data.tracks.find(candidate => candidate.id === input.dataset.track);
       if (!Number.isInteger(Number(input.value)) || Number(input.value) < 0 || Number(input.value) > track.maxLevel) { notify(`Enter a level between 0 and ${track.maxLevel}.`, true); render(); return; }
       state.levels[track.id] = Number(input.value);
-      const unavailable = track.keystones.filter(trait => trait.level > state.levels[track.id]).map(trait => trait.id);
-      state.traits = state.traits.filter(id => !unavailable.includes(id));
       render(); notify('Progression updated. Check skill and augment limits after lowering a level.');
-    } else if (input.dataset.trait) {
-      state.traits = state.traits.filter(id => id !== input.dataset.trait);
-      if (input.checked) state.traits.push(input.dataset.trait);
-      render(); notify('Purchased traits updated.');
     } else if (input.dataset.augment !== undefined || input.dataset.augmentGrade !== undefined || input.dataset.roll !== undefined) {
       const index = Number(input.dataset.augment ?? input.dataset.augmentGrade ?? input.dataset.roll);
       const selection = state.equipment[augmentSlot];
@@ -260,10 +258,8 @@
       const trait = data.tracks.find(track => track.id === 'craftingtrack').keystones.find(trait => trait.id === button.dataset.unlockTrait);
       augmentReturn = augmentSlot;
       showView('progression'); renderProgression();
-      $('#traits-craftingtrack').open = true;
-      const target = state.levels.craftingtrack < trait.level ? $('#level-craftingtrack') : document.getElementById(`trait-${trait.id}`);
-      target.focus();
-      notify(`Requires Crafting level ${trait.level} and purchased ${trait.name}. Use Return to ${names[augmentReturn]} augments after configuring your traits.`);
+      $('#level-craftingtrack').focus();
+      notify(`Requires Crafting level ${trait.level}. All eligible traits apply automatically. Use Return to ${names[augmentReturn]} augments after entering your level.`);
     }
     if (button.id === 'augment-return') openAugments(augmentReturn);
   });
