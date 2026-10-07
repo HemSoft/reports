@@ -23,6 +23,16 @@ def main():
     (output / "report.html").write_text(build_html_report(analysis), encoding="utf-8")
     (output / "metrics.json").write_text(json.dumps(analysis, indent=2), encoding="utf-8")
 
+    organization = load_report_fixture()
+    organization["repo_meta"]["hs-buddy"]["nameWithOwner"] = "hemsoft-dev/hs-buddy"
+    organization["repo_meta"]["retained"] = dict(
+        organization["repo_meta"]["hs-buddy"], nameWithOwner="HemSoft/retained"
+    )
+    organization["commits"].append(dict(organization["commits"][0], repo="retained", hash="f" * 40))
+    (output / "report-organization.html").write_text(
+        build_html_report(analyze_data(organization)), encoding="utf-8"
+    )
+
     # Exercise the directory with repeated editions, long names and actual local targets.
     site = output / "landing"
     site.mkdir(exist_ok=True)

@@ -4,6 +4,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from src.browser_assets import graphics_script
+from src.github_identity import repository_identity
 
 VISUALIZATIONS = {
     "velocity": "Weekly velocity in three dimensions",
@@ -1315,7 +1316,7 @@ def build_html_report(analytics_data, home_href=None):
             {
         "".join(
             f'''<tr>
-              <td><a class="repo-name" href="https://github.com/HemSoft/{r['name']}" target="_blank">{r['name']}</a><br><small style="color: var(--text-muted);">{html.escape(r['description'][:60])}</small></td>
+              <td><a class="repo-name" href="https://github.com/{repository_identity(r['name'], r.get('github_repository'))}" target="_blank">{html.escape(r['name'])}</a><br><small style="color: var(--text-muted);">{html.escape(r['description'][:60])}</small></td>
               <td><span class="badge {'badge-purple' if r['is_private'] else 'badge-cyan'}">{'Private' if r['is_private'] else 'Public'}</span></td>
               <td><strong>{r['primary_language']}</strong></td>
               <td><strong>{r['commits']:,}</strong></td>
@@ -1392,7 +1393,7 @@ def build_html_report(analytics_data, home_href=None):
             {
         "".join(
             f'''<tr>
-              <td><a href="https://github.com/HemSoft/{c['repo']}/commit/{c['hash']}" target="_blank" class="commit-hash">{c['hash'][:8]}</a></td>
+              <td><a href="https://github.com/{repository_identity(c['repo'], c.get('github_repository'))}/commit/{html.escape(c['hash'], quote=True)}" target="_blank" class="commit-hash">{html.escape(c['hash'][:8])}</a></td>
               <td><span class="repo-name">{c['repo']}</span></td>
               <td style="font-family: var(--font-mono); font-size: 0.75rem;">{c['author_date'][:16].replace('T', ' ')}</td>
               <td>{html.escape(c['subject'])}</td>

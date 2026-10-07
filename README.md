@@ -2,6 +2,21 @@
 
 Automated audit reporting engine for engineering throughput, pull request velocity, code churn, and temporal cadence across `github.com/HemSoft` repositories.
 
+Local collection defaults to the personal HemSoft account. Set
+`REPORT_GITHUB_OWNERS` to a comma-separated owner list to include organization
+repositories. The Pages build uses `HemSoft,hemsoft-dev`, preserving coverage
+of retained personal repositories through the organization transfer. Every owner
+is enumerated completely; duplicate repository basenames across selected owners
+stop collection before cloning rather than mixing their activity. Cache reuse
+requires the same owner list. Repository and commit links use the collected
+canonical identity; archived editions retain their original links.
+
+The main-only **Verify organization reporting credential** workflow verifies
+the existing `REPORTS_PAT` belongs to HemSoft, has classic `repo` scope and can
+read the designated private organization pilot. It performs GET requests only
+and never prints credential values. An unsuccessful verification remains a
+mandatory gate in [SFL migration #138](https://github.com/HemSoft/set-it-free-loop/issues/138).
+
 The tool generates standalone interactive HTML dashboards with Three.js 3D bar models and Chart.js analytics.
 
 ## Output
