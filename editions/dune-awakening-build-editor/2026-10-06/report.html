@@ -419,6 +419,8 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
 'use strict';
 (() => {
   const data = JSON.parse(document.getElementById('build-data').textContent);
+  const trackOrder = new Map(['craftingtrack', 'gatheringtrack', 'explorationtrack', 'combattrack', 'sabotagetrack'].map((id, index) => [id, index]));
+  const tracks = [...data.tracks].sort((a, b) => (trackOrder.get(a.id) ?? trackOrder.size) - (trackOrder.get(b.id) ?? trackOrder.size));
   let state = DuneBuild.initial(data);
   let inspected = 'head';
   let augmentSlot = 'head';
@@ -538,7 +540,7 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
   }
 
   function renderProgression() {
-    $('#track-rows').innerHTML = data.tracks.map(track => `<section class="track"><h3>${esc(track.name)}</h3>
+    $('#track-rows').innerHTML = tracks.map(track => `<section class="track"><h3>${esc(track.name)}</h3>
       ${track.id === 'craftingtrack' && augmentReturn && state.equipment[augmentReturn].id ? `<button type="button" id="augment-return">Return to ${names[augmentReturn]} augments</button>` : ''}
       <label>${esc(track.name)} level<input type="number" min="0" max="${track.maxLevel}" value="${state.levels[track.id]}" id="level-${track.id}" data-track="${track.id}"></label>
       <details id="traits-${track.id}"><summary>Traits · ${track.keystones.filter(trait => trait.level <= state.levels[track.id]).length} active</summary>
