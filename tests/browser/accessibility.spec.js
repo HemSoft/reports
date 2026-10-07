@@ -59,7 +59,7 @@ test('nine named visualizations expose complete equivalent data and accessible s
   expect(snapshot).toContain('columnheader "23:00"');
   expect((snapshot.match(/- cell /g) || []).length).toBe(168);
   await fs.writeFile(path.join(root, 'test-results/cadence-accessibility.yml'), snapshot);
-  const scan = await new AxeBuilder({ page }).include('[data-visualization]').include('.table-toolbar').analyze();
+  const scan = await new AxeBuilder({ page }).include('main').analyze();
   await fs.writeFile(path.join(root, 'test-results/accessibility.json'), JSON.stringify(scan.violations, null, 2));
   expect(scan.violations).toEqual([]);
 });

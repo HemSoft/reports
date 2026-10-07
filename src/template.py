@@ -3,6 +3,7 @@ import html
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from src.branding import BRAND_MARK
 from src.browser_assets import graphics_script
 from src.github_identity import repository_identity
 
@@ -187,12 +188,7 @@ def build_html_report(analytics_data, home_href=None):
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Franz Hemmer | HemSoft Engineering Productivity Audit</title>
-  
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Engineering productivity audit | HemSoft Reports</title>
   
   <!-- Chart.js and Three.js CDNs -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js" integrity="sha384-hfkuqrKeWFmnTMWN31VWyoe8xgdTADD11kgxmdpx2uyE6j5Az5uZq6u6AKYYmAOw" crossorigin="anonymous"></script>
@@ -200,26 +196,25 @@ def build_html_report(analytics_data, home_href=None):
 
   <style>
     :root {{
-      --bg-primary: #0a0d14;
-      --bg-secondary: #101622;
-      --bg-tertiary: #162032;
-      --bg-card: rgba(18, 26, 43, 0.75);
-      --bg-card-hover: rgba(26, 38, 64, 0.9);
+      color-scheme: dark;
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #141414;
+      --bg-tertiary: #242424;
+      --bg-card: #141414;
       --border-color: rgba(255, 255, 255, 0.08);
-      --border-accent: rgba(56, 189, 248, 0.3);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --text-muted: #64748b;
-      --accent-cyan: #38bdf8;
-      --accent-blue: #3b82f6;
-      --accent-indigo: #6366f1;
-      --accent-purple: #a855f7;
-      --accent-emerald: #10b981;
-      --accent-amber: #f59e0b;
-      --accent-rose: #f43f5e;
-      --glow-cyan: rgba(56, 189, 248, 0.25);
-      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --border-accent: rgba(212, 175, 55, 0.3);
+      --text-primary: #f5f5f5;
+      --text-secondary: #ababab;
+      --text-muted: #ababab;
+      --accent-gold: #d4af37;
+      --accent-steel: #7ca7be;
+      --accent-ochre: #b8a074;
+      --accent-slate: #abb7c4;
+      --accent-emerald: #68b894;
+      --accent-amber: #e0bd58;
+      --accent-rose: #e7898a;
+      --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --font-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
     }}
 
     * {{
@@ -234,12 +229,17 @@ def build_html_report(analytics_data, home_href=None):
       font-family: var(--font-sans);
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
-      background-image: 
-        radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
-        radial-gradient(circle at 50% 80%, rgba(16, 185, 129, 0.04) 0%, transparent 50%);
-      background-attachment: fixed;
     }}
+
+    ::selection {{ background: var(--accent-gold); color: var(--bg-primary); }}
+    a {{ text-underline-offset: .2em; }}
+    input {{ caret-color: var(--accent-gold); }}
+    input::placeholder {{ color: var(--text-secondary); opacity: 1; }}
+    * {{ scrollbar-width: thin; scrollbar-color: #565656 var(--bg-secondary); }}
+    table, .kpi-value, .time-badge {{ font-variant-numeric: tabular-nums; }}
+    .report-bar {{ padding-bottom: 1.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); }}
+    .report-brand {{ display: inline-flex; align-items: center; gap: .65rem; color: var(--text-primary); font-weight: 650; text-decoration: none; }}
+    .report-brand .mark {{ width: 32px; height: 20px; color: var(--accent-gold); flex-shrink: 0; }}
 
     /* Container */
     .dashboard-container {{
@@ -269,33 +269,12 @@ def build_html_report(analytics_data, home_href=None):
       gap: 1.25rem;
     }}
 
-    .avatar-wrapper {{
-      flex-shrink: 0;
-      width: 72px;
-      height: 72px;
-      border-radius: 20px;
-      padding: 3px;
-      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-      box-shadow: 0 0 25px var(--glow-cyan);
-    }}
-
-    .avatar-wrapper img {{
-      width: 100%;
-      height: 100%;
-      border-radius: 17px;
-      object-fit: cover;
-      background: var(--bg-secondary);
-    }}
-
     .title-group {{ min-width: 0; }}
 
     .title-group h1 {{
       font-size: 2.2rem;
-      font-weight: 800;
+      font-weight: 650;
       letter-spacing: -0.03em;
-      background: linear-gradient(to right, #ffffff, #94a3b8);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       margin-bottom: 0.25rem;
     }}
 
@@ -322,22 +301,22 @@ def build_html_report(analytics_data, home_href=None):
       letter-spacing: 0.05em;
     }}
 
-    .badge-cyan {{
-      background: rgba(56, 189, 248, 0.15);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+    .badge-gold {{
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--accent-gold);
+      border: 1px solid rgba(212, 175, 55, 0.3);
     }}
 
-    .badge-purple {{
-      background: rgba(168, 85, 247, 0.15);
-      color: var(--accent-purple);
-      border: 1px solid rgba(168, 85, 247, 0.3);
+    .badge-slate {{
+      background: rgba(171, 183, 196, 0.15);
+      color: var(--accent-slate);
+      border: 1px solid rgba(171, 183, 196, 0.3);
     }}
 
     .badge-emerald {{
-      background: rgba(16, 185, 129, 0.15);
+      background: rgba(104, 184, 148, 0.15);
       color: var(--accent-emerald);
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      border: 1px solid rgba(104, 184, 148, 0.3);
     }}
 
     .header-actions {{
@@ -362,7 +341,7 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     .time-badge strong {{
-      color: var(--accent-cyan);
+      color: var(--accent-gold);
     }}
 
     .btn-group {{
@@ -389,8 +368,7 @@ def build_html_report(analytics_data, home_href=None):
 
     .btn:hover {{
       background: var(--bg-tertiary);
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 12px var(--glow-cyan);
+      border-color: var(--accent-gold);
     }}
 
     /* Executive Persona Badges */
@@ -407,7 +385,6 @@ def build_html_report(analytics_data, home_href=None):
       gap: 0.6rem;
       padding: 0.6rem 1rem;
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
       border-radius: 12px;
       font-size: 0.85rem;
@@ -439,35 +416,12 @@ def build_html_report(analytics_data, home_href=None):
 
     .kpi-card {{
       background: var(--bg-card);
-      backdrop-filter: blur(16px);
       border: 1px solid var(--border-color);
       border-radius: 16px;
       padding: 1.5rem;
       position: relative;
       overflow: hidden;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }}
-
-    .kpi-card::before {{
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--card-accent, var(--accent-cyan)), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }}
-
-    .kpi-card:hover {{
-      transform: translateY(-4px);
-      border-color: var(--border-accent);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-    }}
-
-    .kpi-card:hover::before {{
-      opacity: 1;
     }}
 
     .kpi-header {{
@@ -492,7 +446,7 @@ def build_html_report(analytics_data, home_href=None):
 
     .kpi-value {{
       font-size: 2.2rem;
-      font-weight: 800;
+      font-weight: 650;
       letter-spacing: -0.03em;
       color: var(--text-primary);
       font-family: var(--font-sans);
@@ -508,8 +462,8 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     .text-emerald {{ color: var(--accent-emerald) !important; }}
-    .text-cyan {{ color: var(--accent-cyan) !important; }}
-    .text-purple {{ color: var(--accent-purple) !important; }}
+    .text-gold {{ color: var(--accent-gold) !important; }}
+    .text-slate {{ color: var(--accent-slate) !important; }}
     .text-amber {{ color: var(--accent-amber) !important; }}
     .text-rose {{ color: var(--accent-rose) !important; }}
 
@@ -530,16 +484,6 @@ def build_html_report(analytics_data, home_href=None):
       display: flex;
       align-items: center;
       gap: 0.75rem;
-    }}
-
-    .section-title::before {{
-      content: '';
-      display: inline-block;
-      width: 4px;
-      height: 1.2rem;
-      background: var(--accent-cyan);
-      border-radius: 2px;
-      box-shadow: 0 0 10px var(--accent-cyan);
     }}
 
     .section-desc {{
@@ -569,7 +513,6 @@ def build_html_report(analytics_data, home_href=None):
       padding: 1.5rem;
       position: relative;
       overflow: hidden;
-      backdrop-filter: blur(16px);
     }}
 
     .three-header {{
@@ -613,16 +556,16 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     .three-btn:hover, .three-btn.active {{
-      background: var(--accent-cyan);
-      color: #000;
-      border-color: var(--accent-cyan);
+      background: var(--accent-gold);
+      color: var(--bg-primary);
+      border-color: var(--accent-gold);
     }}
 
     .three-viewport {{
       width: 100%;
       height: 480px;
       border-radius: 12px;
-      background: #060910;
+      background: #0a0a0a;
       position: relative;
       cursor: grab;
       overflow: hidden;
@@ -669,11 +612,11 @@ def build_html_report(analytics_data, home_href=None):
       position: sticky;
       left: 0;
       z-index: 1;
-      background: #101622;
+      background: var(--bg-secondary);
       border-right: 1px solid rgba(255, 255, 255, 0.08);
     }}
     .chart-data caption {{ text-align: left; padding: 0.5rem; }}
-    :focus-visible {{ outline: 2px solid var(--accent-cyan); outline-offset: 3px; }}
+    :focus-visible {{ outline: 2px solid var(--accent-gold); outline-offset: 3px; }}
 
     .three-hint {{
       position: absolute;
@@ -685,13 +628,12 @@ def build_html_report(analytics_data, home_href=None):
       padding: 0.2rem 0.6rem;
       border-radius: 6px;
       pointer-events: none;
-      backdrop-filter: blur(4px);
     }}
 
     .three-tooltip {{
       position: absolute;
-      background: rgba(16, 22, 34, 0.95);
-      border: 1px solid var(--accent-cyan);
+      background: #141414;
+      border: 1px solid var(--accent-gold);
       border-radius: 8px;
       padding: 0.5rem 0.75rem;
       font-size: 0.8rem;
@@ -724,7 +666,6 @@ def build_html_report(analytics_data, home_href=None):
       border: 1px solid var(--border-color);
       border-radius: 18px;
       padding: 1.5rem;
-      backdrop-filter: blur(16px);
       display: flex;
       flex-direction: column;
     }}
@@ -764,7 +705,6 @@ def build_html_report(analytics_data, home_href=None):
       border-radius: 18px;
       padding: 1.5rem;
       margin-bottom: 3rem;
-      backdrop-filter: blur(16px);
     }}
 
     .table-toolbar {{
@@ -790,8 +730,9 @@ def build_html_report(analytics_data, home_href=None):
 
     .search-input:focus {{
       outline: none;
-      border-color: var(--accent-cyan);
-      box-shadow: 0 0 10px var(--glow-cyan);
+      border-color: var(--accent-gold);
+      outline: 2px solid var(--accent-gold);
+      outline-offset: 3px;
     }}
 
     .table-wrap {{
@@ -832,7 +773,7 @@ def build_html_report(analytics_data, home_href=None):
     .repo-name {{
       font-family: var(--font-mono);
       font-weight: 600;
-      color: var(--accent-cyan);
+      color: var(--accent-gold);
       text-decoration: none;
     }}
 
@@ -842,8 +783,8 @@ def build_html_report(analytics_data, home_href=None):
 
     .commit-hash {{
       font-family: var(--font-mono);
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.1);
       padding: 0.2rem 0.4rem;
       border-radius: 4px;
       font-size: 0.75rem;
@@ -862,7 +803,7 @@ def build_html_report(analytics_data, home_href=None):
     .progress-bar-fill {{
       height: 100%;
       border-radius: 3px;
-      background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+      background: var(--accent-gold);
     }}
 
     /* Tabs */
@@ -893,9 +834,9 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     .tab-btn.active {{
-      color: var(--accent-cyan);
-      background: rgba(56, 189, 248, 0.1);
-      border-color: rgba(56, 189, 248, 0.3);
+      color: var(--accent-gold);
+      background: rgba(212, 175, 55, 0.1);
+      border-color: rgba(212, 175, 55, 0.3);
     }}
 
     .tab-pane {{
@@ -922,8 +863,8 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     footer a {{
-      color: var(--accent-cyan);
-      text-decoration: none;
+      color: var(--accent-gold);
+      text-decoration: underline;
     }}
 
     @media (max-width: 600px) {{
@@ -945,31 +886,40 @@ def build_html_report(analytics_data, home_href=None):
     }}
 
     @media print {{
-      body {{
-        background: #fff !important;
-        color: #000 !important;
+      :root {{
+        color-scheme: light;
+        --bg-primary: #fff; --bg-secondary: #fff; --bg-card: #fff;
+        --border-color: #ccc; --text-primary: #111;
+        --text-secondary: #444; --text-muted: #444;
+        --accent-gold: #755b00; --accent-slate: #444;
+        --accent-emerald: #30513a; --accent-amber: #755b00; --accent-rose: #803b3b;
       }}
-      .three-card, .btn-group, .search-input {{
-        display: none !important;
-      }}
+      .three-card, .btn-group, .search-input, .tabs-nav {{ display: none !important; }}
+      .tab-pane, .tab-pane[hidden] {{ display: block !important; }}
+      .table-wrap {{ overflow: visible; }}
+      .table-card, .kpi-card, .chart-card {{ break-inside: avoid; }}
+      .table-card {{ break-inside: auto; }}
     }}
   </style>
 </head>
 <body>
 
-<div class="dashboard-container">
+<main class="dashboard-container">
+  <div class="report-bar">
+    <a class="report-brand" href="{
+        html.escape(home_href or "https://hemsoft.github.io/reports/", quote=True)
+    }" aria-label="HemSoft Reports, home">
+      {BRAND_MARK}<span>HemSoft Reports</span>
+    </a>
+  </div>
   
   <!-- Header -->
   <header>
     <div class="header-brand">
-      <div class="avatar-wrapper">
-        <img src="https://avatars.githubusercontent.com/u/8227352?v=4" alt="Franz Hemmer">
-      </div>
       <div class="title-group">
-        <h1>Franz Hemmer</h1>
+        <h1>Engineering productivity audit</h1>
         <div class="meta-bar">
-          <span class="badge badge-cyan">github.com/HemSoft</span>
-          <span class="badge badge-purple">Executive Engineering Audit</span>
+          <span>Franz Hemmer</span>
           <span>Period: <strong>{range_info["start_formatted"]} – {
         range_info["end_formatted"]
     }</strong></span>
@@ -1026,21 +976,21 @@ def build_html_report(analytics_data, home_href=None):
 
   <!-- Hero KPI Grid -->
   <div class="kpi-grid">
-    <div class="kpi-card" style="--card-accent: var(--accent-cyan);">
+    <div class="kpi-card" style="--card-accent: var(--accent-gold);">
       <div class="kpi-header">
         <span class="kpi-label">Total Commits</span>
         <span class="kpi-icon">📦</span>
       </div>
-      <div class="kpi-value text-cyan">{kpis["total_commits"]:,}</div>
+      <div class="kpi-value text-gold">{kpis["total_commits"]:,}</div>
       <div class="kpi-subtext">Across {kpis["active_repos_count"]} active repositories</div>
     </div>
 
-    <div class="kpi-card" style="--card-accent: var(--accent-purple);">
+    <div class="kpi-card" style="--card-accent: var(--accent-slate);">
       <div class="kpi-header">
         <span class="kpi-label">Pull Requests Merged</span>
         <span class="kpi-icon">🔀</span>
       </div>
-      <div class="kpi-value text-purple">{kpis["merged_prs"]:,}</div>
+      <div class="kpi-value text-slate">{kpis["merged_prs"]:,}</div>
       <div class="kpi-subtext"><span class="text-emerald"><strong>{
         kpis["pr_merge_rate"]
     }%</strong></span> merge rate ({kpis["total_prs"]:,} total)</div>
@@ -1066,7 +1016,7 @@ def build_html_report(analytics_data, home_href=None):
       <div class="kpi-subtext">Average: {kpis["avg_pr_cycle_hours"]}h to merge</div>
     </div>
 
-    <div class="kpi-card" style="--card-accent: var(--accent-cyan);">
+    <div class="kpi-card" style="--card-accent: var(--accent-gold);">
       <div class="kpi-header">
         <span class="kpi-label">Lines Shipped (+)</span>
         <span class="kpi-icon">📈</span>
@@ -1084,7 +1034,7 @@ def build_html_report(analytics_data, home_href=None):
       <div class="kpi-subtext">Net delta: {kpis["net_lines"]:,} lines</div>
     </div>
 
-    <div class="kpi-card" style="--card-accent: var(--accent-blue);">
+    <div class="kpi-card" style="--card-accent: var(--accent-steel);">
       <div class="kpi-header">
         <span class="kpi-label">Active Coding Cadence</span>
         <span class="kpi-icon">📅</span>
@@ -1099,12 +1049,12 @@ def build_html_report(analytics_data, home_href=None):
     } commits/active day</div>
     </div>
 
-    <div class="kpi-card" style="--card-accent: var(--accent-purple);">
+    <div class="kpi-card" style="--card-accent: var(--accent-slate);">
       <div class="kpi-header">
         <span class="kpi-label">Peak Productivity Day</span>
         <span class="kpi-icon">🚀</span>
       </div>
-      <div class="kpi-value text-cyan" style="font-size: 1.7rem; padding-top: 0.3rem;">{
+      <div class="kpi-value text-gold" style="font-size: 1.7rem; padding-top: 0.3rem;">{
         kpis["peak_day"]["date"]
     }</div>
       <div class="kpi-subtext"><strong>{kpis["peak_day"]["commits"]} commits</strong> (+{
@@ -1317,7 +1267,7 @@ def build_html_report(analytics_data, home_href=None):
         "".join(
             f'''<tr>
               <td><a class="repo-name" href="https://github.com/{repository_identity(r['name'], r.get('github_repository'))}" target="_blank">{html.escape(r['name'])}</a><br><small style="color: var(--text-muted);">{html.escape(r['description'][:60])}</small></td>
-              <td><span class="badge {'badge-purple' if r['is_private'] else 'badge-cyan'}">{'Private' if r['is_private'] else 'Public'}</span></td>
+              <td><span class="badge {'badge-slate' if r['is_private'] else 'badge-gold'}">{'Private' if r['is_private'] else 'Public'}</span></td>
               <td><strong>{r['primary_language']}</strong></td>
               <td><strong>{r['commits']:,}</strong></td>
               <td>
@@ -1361,7 +1311,7 @@ def build_html_report(analytics_data, home_href=None):
               <td><span class="commit-hash">#{p.get('number')}</span></td>
               <td><span class="repo-name">{p.get('repo')}</span></td>
               <td>{html.escape(p.get('title', ''))}</td>
-              <td><span class="badge {'badge-emerald' if p.get('state') == 'MERGED' else 'badge-cyan' if p.get('state') == 'OPEN' else 'badge-purple'}">{p.get('state')}</span></td>
+              <td><span class="badge {'badge-emerald' if p.get('state') == 'MERGED' else 'badge-gold' if p.get('state') == 'OPEN' else 'badge-slate'}">{p.get('state')}</span></td>
               <td><strong>{str(p.get('cycle_hours')) + 'h' if p.get('cycle_hours') is not None else '–'}</strong></td>
               <td style="font-family: var(--font-mono); font-size: 0.75rem;">{p.get('createdAt', '')[:10]}</td>
               <td><a href="{p.get('url')}" target="_blank" class="commit-hash">View PR ↗</a></td>
@@ -1397,7 +1347,7 @@ def build_html_report(analytics_data, home_href=None):
               <td><span class="repo-name">{c['repo']}</span></td>
               <td style="font-family: var(--font-mono); font-size: 0.75rem;">{c['author_date'][:16].replace('T', ' ')}</td>
               <td>{html.escape(c['subject'])}</td>
-              <td><span class="badge badge-cyan">{c['category']}</span></td>
+              <td><span class="badge badge-gold">{c['category']}</span></td>
               <td><small>{html.escape(c['author_name'])}</small></td>
               <td><span class="text-emerald">+{c['additions']}</span> / <span class="text-rose">-{c['deletions']}</span></td>
             </tr>'''
@@ -1413,14 +1363,14 @@ def build_html_report(analytics_data, home_href=None):
   <!-- FOOTER -->
   <footer>
     <div>
-      Generated by <strong>Antigravity Productivity Engine</strong> | Tool Repo: <a href="file:///D:/github/hemsoft/reports">D:\\github\\hemsoft\\reports</a>
+      <strong>HemSoft Developments</strong> · <a href="https://github.com/HemSoft/reports">Report source</a>
     </div>
     <div>
       Audited Period: {range_info["start_formatted"]} – {range_info["end_formatted"]}
     </div>
   </footer>
 
-</div>
+</main>
 
 <!-- DATA & INTERACTIVE SCRIPTS -->
 <script>
@@ -1445,8 +1395,8 @@ def build_html_report(analytics_data, home_href=None):
     const height = container.clientHeight;
 
     velScene = new THREE.Scene();
-    velScene.background = new THREE.Color(0x060910);
-    velScene.fog = new THREE.FogExp2(0x060910, 0.015);
+    velScene.background = new THREE.Color(0x0a0a0a);
+    velScene.fog = new THREE.FogExp2(0x0a0a0a, 0.015);
 
     velCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     velCamera.position.set(28, 26, 36);
@@ -1464,7 +1414,7 @@ def build_html_report(analytics_data, home_href=None):
     velControls.target.set(0, 4, 0);
 
     // Grid floor
-    const grid = new THREE.GridHelper(50, 25, 0x38bdf8, 0x1e293b);
+    const grid = new THREE.GridHelper(50, 25, 0xd4af37, 0x303030);
     grid.position.y = 0;
     velScene.add(grid);
 
@@ -1477,7 +1427,7 @@ def build_html_report(analytics_data, home_href=None):
     dirLight.castShadow = true;
     velScene.add(dirLight);
 
-    const pointLight = new THREE.PointLight(0x38bdf8, 1.2, 50);
+    const pointLight = new THREE.PointLight(0xd4af37, 1.2, 50);
     pointLight.position.set(0, 15, 0);
     velScene.add(pointLight);
 
@@ -1487,26 +1437,26 @@ def build_html_report(analytics_data, home_href=None):
     const startX = -((numWeeks - 1) * spacingX) / 2;
 
     const commitMaterial = new THREE.MeshStandardMaterial({{
-      color: 0x38bdf8,
+      color: 0xd4af37,
       metalness: 0.3,
       roughness: 0.2,
-      emissive: 0x075985,
+      emissive: 0x4b3d13,
       emissiveIntensity: 0.2
     }});
 
     const prMaterial = new THREE.MeshStandardMaterial({{
-      color: 0xa855f7,
+      color: 0xabb7c4,
       metalness: 0.3,
       roughness: 0.2,
-      emissive: 0x581c87,
+      emissive: 0x30343a,
       emissiveIntensity: 0.2
     }});
 
     const linesMaterial = new THREE.MeshStandardMaterial({{
-      color: 0x10b981,
+      color: 0x68b894,
       metalness: 0.3,
       roughness: 0.2,
-      emissive: 0x064e3b,
+      emissive: 0x203c30,
       emissiveIntensity: 0.2
     }});
 
@@ -1560,7 +1510,7 @@ def build_html_report(analytics_data, home_href=None):
       if (intersects.length > 0) {{
         const hit = intersects[0].object;
         const d = hit.userData;
-        tooltip.innerHTML = `<strong>${{d.week}} (${{d.range}})</strong><br><span style="color:var(--accent-cyan);">${{d.metric}}: <strong>${{d.value}}</strong></span><br><small style="color:var(--text-muted);">${{d.details}}</small>`;
+        tooltip.innerHTML = `<strong>${{d.week}} (${{d.range}})</strong><br><span style="color:var(--accent-gold);">${{d.metric}}: <strong>${{d.value}}</strong></span><br><small style="color:var(--text-muted);">${{d.details}}</small>`;
         tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
         tooltip.style.top = (e.clientY - rect.top - 20) + 'px';
         tooltip.style.opacity = 1;
@@ -1607,8 +1557,8 @@ def build_html_report(analytics_data, home_href=None):
     const height = container.clientHeight;
 
     cadScene = new THREE.Scene();
-    cadScene.background = new THREE.Color(0x060910);
-    cadScene.fog = new THREE.FogExp2(0x060910, 0.015);
+    cadScene.background = new THREE.Color(0x0a0a0a);
+    cadScene.fog = new THREE.FogExp2(0x0a0a0a, 0.015);
 
     cadCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     cadCamera.position.set(32, 28, 32);
@@ -1625,7 +1575,7 @@ def build_html_report(analytics_data, home_href=None):
     cadControls.dampingFactor = 0.05;
     cadControls.target.set(0, 2, 0);
 
-    const grid = new THREE.GridHelper(40, 24, 0x6366f1, 0x1e293b);
+    const grid = new THREE.GridHelper(40, 24, 0x8c784c, 0x303030);
     cadScene.add(grid);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
@@ -1638,13 +1588,13 @@ def build_html_report(analytics_data, home_href=None):
     const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const maxVal = Math.max(...matrix7x24.flat(), 1);
 
-    // Color gradient calculation
+    // Cadence intensity: dark ochre through pale gold
     function getBarColor(val) {{
       const ratio = val / maxVal;
-      if (ratio < 0.25) return new THREE.Color(0x1e3a8a); // deep blue
-      if (ratio < 0.55) return new THREE.Color(0x38bdf8); // cyan
-      if (ratio < 0.8)  return new THREE.Color(0xa855f7); // purple
-      return new THREE.Color(0xf59e0b); // glowing gold
+      if (ratio < 0.25) return new THREE.Color(0x514326); // low activity
+      if (ratio < 0.55) return new THREE.Color(0x8c784c); // moderate activity
+      if (ratio < 0.8)  return new THREE.Color(0xd4af37); // high activity
+      return new THREE.Color(0xf1d78a); // peak activity
     }}
 
     const spacingX = 2.4;
@@ -1830,8 +1780,8 @@ def build_html_report(analytics_data, home_href=None):
       showChartLibraryFallbacks();
       return;
     }}
-    Chart.defaults.color = '#94a3b8';
-    Chart.defaults.font.family = "'Inter', sans-serif";
+    Chart.defaults.color = '#ababab';
+    Chart.defaults.font.family = getComputedStyle(document.body).fontFamily;
 
     // 1. Weekly Combo Chart
     const weeklyLabels = weeklyData.map(w => w.label);
@@ -1853,8 +1803,8 @@ def build_html_report(analytics_data, home_href=None):
           {{
             label: 'Commits',
             data: weeklyCommits,
-            backgroundColor: 'rgba(56, 189, 248, 0.75)',
-            borderColor: '#38bdf8',
+            backgroundColor: 'rgba(212, 175, 55, 0.75)',
+            borderColor: '#d4af37',
             borderWidth: 1,
             borderRadius: 6,
             yAxisID: 'y'
@@ -1862,8 +1812,8 @@ def build_html_report(analytics_data, home_href=None):
           {{
             label: 'Merged PRs',
             data: weeklyPrs,
-            backgroundColor: 'rgba(168, 85, 247, 0.75)',
-            borderColor: '#a855f7',
+            backgroundColor: 'rgba(171, 183, 196, 0.75)',
+            borderColor: '#abb7c4',
             borderWidth: 1,
             borderRadius: 6,
             yAxisID: 'y'
@@ -1872,8 +1822,8 @@ def build_html_report(analytics_data, home_href=None):
             label: 'Cumulative Lines Added',
             data: cumLines,
             type: 'line',
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderColor: '#68b894',
+            backgroundColor: 'rgba(104, 184, 148, 0.1)',
             borderWidth: 3,
             tension: 0.3,
             fill: true,
@@ -1912,13 +1862,13 @@ def build_html_report(analytics_data, home_href=None):
           label: 'Commits',
           data: Object.values(temporalData.day_counts),
           backgroundColor: [
-            'rgba(56, 189, 248, 0.7)',
-            'rgba(56, 189, 248, 0.7)',
-            'rgba(56, 189, 248, 0.7)',
-            'rgba(56, 189, 248, 0.7)',
-            'rgba(56, 189, 248, 0.7)',
-            'rgba(245, 158, 11, 0.8)',
-            'rgba(245, 158, 11, 0.8)'
+            'rgba(212, 175, 55, 0.7)',
+            'rgba(212, 175, 55, 0.7)',
+            'rgba(212, 175, 55, 0.7)',
+            'rgba(212, 175, 55, 0.7)',
+            'rgba(212, 175, 55, 0.7)',
+            'rgba(224, 189, 88, 0.8)',
+            'rgba(224, 189, 88, 0.8)'
           ],
           borderRadius: 6
         }}]
@@ -1944,8 +1894,8 @@ def build_html_report(analytics_data, home_href=None):
         datasets: [{{
           label: 'Commits by Hour (ET)',
           data: hourValues,
-          borderColor: '#a855f7',
-          backgroundColor: 'rgba(168, 85, 247, 0.15)',
+          borderColor: '#abb7c4',
+          backgroundColor: 'rgba(171, 183, 196, 0.15)',
           fill: true,
           tension: 0.35,
           borderWidth: 2.5,
@@ -1973,11 +1923,11 @@ def build_html_report(analytics_data, home_href=None):
         datasets: [{{
           data: topRepos.map(r => r.commits),
           backgroundColor: [
-            '#38bdf8', '#818cf8', '#c084fc', '#f472b6',
-            '#fb7185', '#fb923c', '#facc15', '#4ade80'
+            '#d4af37', '#abb7c4', '#68b894', '#7ca7be',
+            '#e7898a', '#c99b76', '#b8a074', '#b09eaf'
           ],
           borderWidth: 2,
-          borderColor: '#101622'
+          borderColor: '#141414'
         }}]
       }},
       options: {{
@@ -1998,11 +1948,11 @@ def build_html_report(analytics_data, home_href=None):
         datasets: [{{
           data: [cycleData.under_1h, cycleData['1h_to_4h'], cycleData['4h_to_24h'], cycleData['1d_to_3d'], cycleData.over_3d],
           backgroundColor: [
-            'rgba(16, 185, 129, 0.8)',
-            'rgba(56, 189, 248, 0.8)',
-            'rgba(99, 102, 241, 0.8)',
-            'rgba(245, 158, 11, 0.8)',
-            'rgba(244, 63, 94, 0.8)'
+            'rgba(104, 184, 148, 0.8)',
+            'rgba(212, 175, 55, 0.8)',
+            'rgba(184, 160, 116, 0.8)',
+            'rgba(224, 189, 88, 0.8)',
+            'rgba(231, 137, 138, 0.8)'
           ]
         }}]
       }},
@@ -2021,9 +1971,9 @@ def build_html_report(analytics_data, home_href=None):
         datasets: [{{
           label: 'Commits',
           data: Object.values(catData),
-          backgroundColor: 'rgba(56, 189, 248, 0.25)',
-          borderColor: '#38bdf8',
-          pointBackgroundColor: '#38bdf8',
+          backgroundColor: 'rgba(212, 175, 55, 0.25)',
+          borderColor: '#d4af37',
+          pointBackgroundColor: '#d4af37',
           borderWidth: 2
         }}]
       }},
@@ -2034,7 +1984,7 @@ def build_html_report(analytics_data, home_href=None):
           r: {{
             grid: {{ color: 'rgba(255,255,255,0.08)' }},
             angleLines: {{ color: 'rgba(255,255,255,0.08)' }},
-            pointLabels: {{ color: '#94a3b8', font: {{ size: 11 }} }}
+            pointLabels: {{ color: '#ababab', font: {{ size: 11 }} }}
           }}
         }}
       }}
@@ -2050,13 +2000,13 @@ def build_html_report(analytics_data, home_href=None):
           {{
             label: 'Lines Added',
             data: topLangs.map(l => l.additions),
-            backgroundColor: 'rgba(16, 185, 129, 0.75)',
+            backgroundColor: 'rgba(104, 184, 148, 0.75)',
             borderRadius: 4
           }},
           {{
             label: 'Lines Deleted',
             data: topLangs.map(l => l.deletions),
-            backgroundColor: 'rgba(244, 63, 94, 0.75)',
+            backgroundColor: 'rgba(231, 137, 138, 0.75)',
             borderRadius: 4
           }}
         ]
@@ -2071,6 +2021,30 @@ def build_html_report(analytics_data, home_href=None):
       }}
     }});
   }}
+
+  function updateChartTheme() {{
+    if (typeof Chart === 'undefined') return;
+    const style = getComputedStyle(document.body);
+    const text = style.getPropertyValue('--text-secondary').trim();
+    const printing = window.matchMedia('print').matches;
+    document.querySelectorAll('.chart-canvas-wrap canvas').forEach(canvas => {{
+      const chart = Chart.getChart(canvas);
+      if (!chart) return;
+      chart.options.color = text;
+      chart.options.plugins.legend.labels.color = text;
+      Object.values(chart.options.scales || {{}}).forEach(scale => {{
+        scale.ticks.color = text;
+        scale.grid.color = printing ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.05)';
+        if (scale.type === 'radialLinear') {{
+          scale.pointLabels.color = text;
+          scale.angleLines.color = scale.grid.color;
+        }}
+      }});
+      chart.update('none');
+    }});
+  }}
+
+  window.matchMedia('print').addEventListener('change', updateChartTheme);
 
   // Table Tabs & Filtering
   function switchTab(tabId) {{

@@ -8,10 +8,16 @@ test('generated report initializes charts and supports table navigation offline'
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await openReport(page);
+  await expect(page.getByRole('link', { name: 'HemSoft Reports, home' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Engineering productivity audit', exact: true })).toBeVisible();
+  await expect(page.locator('.meta-bar')).toContainText('Franz Hemmer');
   await expect.poll(() => page.evaluate(() => THREE.REVISION)).toBe('186');
   expect(await page.evaluate(() => typeof THREE.OrbitControls)).toBe('function');
   await expect(page.locator('canvas')).toHaveCount(9);
   await expect.poll(() => page.evaluate(() => Object.keys(Chart.instances).length)).toBe(7);
+  expect(await page.evaluate(() => Chart.defaults.font.family)).toBe(await page.evaluate(() => getComputedStyle(document.body).fontFamily));
+  const colors = await page.evaluate(() => Object.values(Chart.instances).find(chart => chart.canvas.id === 'chart-weekly-combo').data.datasets.map(dataset => dataset.borderColor));
+  expect(new Set(colors).size).toBe(3);
   await expect.poll(() => page.evaluate(() => [velRenderer.info.render.calls, cadRenderer.info.render.calls].every(n => n > 0))).toBe(true);
   const metrics = JSON.parse(await fs.readFile(path.join(root, 'test-results/metrics.json'), 'utf8'));
   await expect(page.locator('#pane-repos tbody tr')).toHaveCount(metrics.repo_profiles.length);

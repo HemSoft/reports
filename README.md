@@ -25,9 +25,14 @@ The tool generates standalone interactive HTML dashboards with Three.js 3D bar m
 - Single HTML file with embedded report data, CSS and the Three.js graphics bundle; Chart.js loads from a CDN.
 - No local server required. Open directly in any modern browser.
 
+Productivity editions use the HemSoft Reports mark, charcoal surfaces, gold
+controls and system fonts. Data series retain distinct colors and addition/deletion
+values retain their semantic colors. The generator applies this identity to each
+new edition; archived editions keep the presentation they were published with.
+
 The seven Chart.js charts require access to `cdn.jsdelivr.net`. Three.js and
-OrbitControls are bundled in the HTML and work offline. Google Fonts and GitHub avatars are optional
-network resources; browser fonts and report text remain usable without them.
+OrbitControls are bundled in the HTML and work offline. Typography and branding
+require no external font or avatar requests.
 3D views require WebGL 2. The generated file is not a fully bundled offline app.
 
 If a visualization library is blocked or graphics initialization fails, each affected
