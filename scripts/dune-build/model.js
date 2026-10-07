@@ -62,11 +62,18 @@ const DuneBuild = (() => {
     return learned.filter(skill => !reached.has(skill.tag));
   }
 
-  function augmentLimit(data, state, item) {
-    if (!item || item.tier !== 6 || item.rarity !== 'Unique' || itemGroup(item) === 'utility') return 0;
+  function augmentTraits(data, item) {
+    if (!item || item.tier !== 6 || item.rarity !== 'Unique' || itemGroup(item) === 'utility') return [];
     const key = { armor: 'ArmorAugmentLimit', melee: 'MeleeWeaponAugmentLimit', ranged: 'RangedWeaponAugmentLimit' }[itemGroup(item)];
-    return selectedTraits(data, state).flatMap(trait => trait.stats ?? [])
-      .filter(stat => stat.key === key).reduce((sum, stat) => sum + stat.value, 0);
+    return data.tracks.find(track => track.id === 'craftingtrack').keystones
+      .filter(trait => (trait.stats ?? []).some(stat => stat.key === key)).sort((a, b) => a.level - b.level);
+  }
+
+  function augmentLimit(data, state, item) {
+    const purchased = new Set(selectedTraits(data, state).map(trait => trait.id));
+    return augmentTraits(data, item).filter(trait => purchased.has(trait.id))
+      .flatMap(trait => trait.stats).filter(stat => stat.key.endsWith('AugmentLimit'))
+      .reduce((sum, stat) => sum + stat.value, 0);
   }
 
   const weaponFamilies = {
@@ -257,6 +264,6 @@ const DuneBuild = (() => {
   }
 
   return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
-    selectedTraits, budget, points, disconnected, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
+    selectedTraits, budget, points, disconnected, augmentTraits, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
 })();
 if (typeof module !== 'undefined') module.exports = DuneBuild;
