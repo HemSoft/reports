@@ -22,6 +22,74 @@ const DuneBuild = (() => {
       characterLevel: 1, abilitySlots: 3, gameMode: 'multiplayer' };
   }
 
+  const fileLimit = 64 * 1024;
+  function serialize(data, state) {
+    return JSON.stringify({ format: 'hemsoft-dune-build', version: 1,
+      gameVersion: data.gameVersion, build: state }, null, 2);
+  }
+
+  // Validate the whole file before handing a new state to the editor. Rule
+  // warnings (for example a lowered Crafting level) remain editable drafts.
+  function deserialize(data, text) {
+    try {
+      const require = (condition, message) => { if (!condition) throw new Error(message); };
+      require(typeof text === 'string' && text.length <= fileLimit, 'Build files must be 64 KB or smaller. Choose a saved build file.');
+      let file;
+      try { file = JSON.parse(text); }
+      catch { return { error: 'This file is not valid JSON. Choose a file downloaded with Save build.' }; }
+      const record = (value, keys, label, partial = false) => {
+        require(value !== null && typeof value === 'object' && !Array.isArray(value)
+          && Object.keys(value).every(key => keys.includes(key))
+          && (partial || keys.every(key => Object.hasOwn(value, key))),
+        `${label} is incomplete or contains unsupported fields. Choose a saved build file.`);
+      };
+      record(file, ['format', 'version', 'gameVersion', 'build'], 'Build file');
+      require(file.format === 'hemsoft-dune-build' && file.version === 1,
+        'This build file format is unsupported. Choose a file downloaded with Save build.');
+      require(file.gameVersion === data.gameVersion,
+        'This build uses different game data. Open it with the matching editor.');
+      const next = file.build;
+      record(next, Object.keys(initial(data)), 'Build');
+      require(data.characterLevels.some(row => row.level === next.characterLevel), 'Character level is unsupported. Choose a saved build file.');
+      require([1, 2, 3].includes(next.abilitySlots), 'Ability slot count must be 1, 2 or 3.');
+      require(['multiplayer', 'singleplayer'].includes(next.gameMode), 'Game mode is unsupported. Choose a saved build file.');
+      record(next.levels, data.tracks.map(track => track.id), 'Specialization levels');
+      for (const track of data.tracks) require(Number.isInteger(next.levels[track.id])
+        && next.levels[track.id] >= 0 && next.levels[track.id] <= track.maxLevel, `${track.name} level is outside its supported range.`);
+      record(next.ranks, data.skills.map(skill => skill.id), 'Skill ranks', true);
+      for (const [id, rank] of Object.entries(next.ranks)) require(Number.isInteger(rank)
+        && rank >= 0 && rank <= skillById(data, id).maxLevel, 'A skill rank is outside its supported range.');
+      for (const [key, kind] of [['abilities', 'Ability'], ['techniques', 'Technique']]) {
+        require(Array.isArray(next[key]) && next[key].length === 3
+          && next[key].every(id => id === '' || (typeof id === 'string' && skillById(data, id)?.skillType === kind)),
+        `Equipped ${key} contain an unsupported selection. Choose a saved build file.`);
+      }
+      record(next.equipment, slots, 'Equipment slots');
+      for (const slot of slots) {
+        const selection = next.equipment[slot];
+        record(selection, ['id', 'grade', 'augments'], `Equipment in ${slot}`);
+        const item = compatibleItems(data, slot).find(item => item.id === selection.id);
+        require(selection.id === '' || !!item, `Equipment in ${slot} is unknown or incompatible.`);
+        require(Number.isInteger(selection.grade) && (selection.grade === 0
+          || item?.scaledStats.some(row => row.grade === selection.grade)), `Equipment grade in ${slot} is unsupported.`);
+        require(Array.isArray(selection.augments) && selection.augments.length <= 3,
+          `Augment slots in ${slot} are unsupported.`);
+        for (const chosen of selection.augments) {
+          if (chosen === null) continue;
+          record(chosen, ['id', 'grade', 'roll'], `Augment in ${slot}`);
+          const augment = compatibleAugments(data, item).find(augment => augment.id === chosen.id);
+          require(chosen.id === '' || !!augment, `Augment in ${slot} is unknown or incompatible.`);
+          require(Number.isInteger(chosen.grade) && (chosen.id === '' ? chosen.grade === 1
+            : augment.stats.every(stat => stat.values.some(row => row.quality === chosen.grade))),
+          `Augment grade in ${slot} is unsupported.`);
+          require(Number.isFinite(chosen.roll) && chosen.roll >= 0 && chosen.roll <= 100,
+            `Augment roll in ${slot} must be between 0 and 100.`);
+        }
+      }
+      return { state: clone(next) };
+    } catch (error) { return { error: error.message }; }
+  }
+
   function compatibleItems(data, slot) {
     return data.items.filter(item => item.slot === (slot.startsWith('hotbar') ? 'hotbar' : slot));
   }
@@ -109,6 +177,7 @@ const DuneBuild = (() => {
       const used = list.filter(Boolean);
       if (new Set(used).size !== used.length) errors.push(`Each ${kind.toLowerCase()} can only be equipped once.`);
       if (kind === 'Ability' && used.length > state.abilitySlots) errors.push('Too many abilities for the unlocked ability slots.');
+      if (kind === 'Ability' && list.some((id, index) => id && index >= state.abilitySlots)) errors.push('An equipped ability occupies a locked slot. Unlock that slot or clear the ability.');
       if (kind === 'Technique' && used.length > 3) errors.push('At most three techniques can be equipped.');
       for (const id of used) {
         const skill = skillById(data, id);
@@ -285,7 +354,7 @@ const DuneBuild = (() => {
       combat, modifiers: modifiers(data, state), errors: validate(data, state) };
   }
 
-  return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
+  return { slots, bodySlots, initial, fileLimit, serialize, deserialize, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
     selectedTraits, budget, points, disconnected, augmentTraits, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
 })();
 if (typeof module !== 'undefined') module.exports = DuneBuild;

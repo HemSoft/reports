@@ -8,6 +8,7 @@
   let tier = '';
   let tree = 'Trooper';
   let augmentReturn = '';
+  let loading = false;
   const names = { head: 'Head', chest: 'Chest / body', hands: 'Hands', legs: 'Legs', feet: 'Feet',
     shield: 'Shield', powerpack: 'Power pack', suspensor: 'Suspensor belt' };
   for (let index = 1; index <= 8; index++) names[`hotbar${index}`] = `Quickbar ${index}`;
@@ -99,9 +100,9 @@
     }).join('');
   }
 
-  function learnedOptions(kind, selected) {
-    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && state.ranks[skill.id] > 0)
-      .map(skill => option(skill.id, `${skill.name} · rank ${state.ranks[skill.id]}`, selected)).join('');
+  function learnedOptions(kind, selected, locked = false) {
+    return option('', 'Empty', selected) + data.skills.filter(skill => skill.skillType === kind && ((!locked && state.ranks[skill.id] > 0) || skill.id === selected))
+      .map(skill => option(skill.id, `${skill.name} · ${state.ranks[skill.id] > 0 ? `rank ${state.ranks[skill.id]}` : 'not learned'}`, selected)).join('');
   }
   function renderSkills() {
     $('#skill-rows').innerHTML = data.skills.filter(skill => skill.skillTree === tree && skill.gameModes.includes(state.gameMode))
@@ -114,7 +115,7 @@
           ${Array.from({ length: skill.maxLevel + 1 }, (_, value) => option(String(value), `${value} / ${skill.maxLevel}`, String(rank))).join('')}</select></td>
           <td>${(skill.costPerLevel ?? []).slice(0, rank).reduce((a, b) => a + b, 0)}</td></tr>`;
       }).join('');
-    $('#ability-selectors').innerHTML = state.abilities.map((id, index) => `<label>Ability ${index + 1}<select id="ability-${index}" data-ability="${index}"${index >= state.abilitySlots ? ' disabled' : ''}>${learnedOptions('Ability', id)}</select></label>`).join('');
+    $('#ability-selectors').innerHTML = state.abilities.map((id, index) => `<label>Ability ${index + 1}<select id="ability-${index}" data-ability="${index}"${index >= state.abilitySlots && !id ? ' disabled' : ''}>${learnedOptions('Ability', id, index >= state.abilitySlots)}</select></label>`).join('');
     $('#technique-selectors').innerHTML = state.techniques.map((id, index) => `<label>Technique ${index + 1}<select id="technique-${index}" data-technique="${index}">${learnedOptions('Technique', id)}</select></label>`).join('');
   }
 
@@ -263,11 +264,62 @@
     }
     if (button.id === 'augment-return') openAugments(augmentReturn);
   });
+  function replaceBuild(next) {
+    state = next; search = ''; tier = ''; augmentReturn = '';
+    inspected = DuneBuild.slots.find(slot => state.equipment[slot].id) ?? 'head';
+    augmentSlot = inspected;
+    tree = data.skills.find(skill => state.ranks[skill.id])?.skillTree ?? 'Trooper';
+    $('#gear-search').value = ''; $('#gear-tier').value = ''; $('#skill-tree').value = tree;
+    $('#character-level').value = state.characterLevel;
+    $('#game-mode').value = state.gameMode; $('#ability-slots').value = String(state.abilitySlots);
+    showView('equipment'); render();
+  }
   $('#reset').addEventListener('click', () => {
-    state = DuneBuild.initial(data); search = ''; tier = ''; inspected = 'head'; augmentSlot = 'head'; augmentReturn = '';
-    $('#gear-search').value = ''; $('#gear-tier').value = ''; $('#character-level').value = 1;
-    $('#game-mode').value = 'multiplayer'; $('#ability-slots').value = '3';
-    render(); notify('Build reset. Equipment and skills are empty; character level is 1 and specializations are 0.');
+    replaceBuild(DuneBuild.initial(data));
+    notify('Build reset. Equipment and skills are empty; character level is 1 and specializations are 0.');
+  });
+  $('#save-build').addEventListener('click', () => {
+    let url;
+    try {
+      url = URL.createObjectURL(new Blob([DuneBuild.serialize(data, state)], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url; link.download = `dune-build-${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+      document.body.append(link); link.click(); link.remove();
+      notify('Build file downloaded. Keep it to load this build later.');
+    } catch { notify('The build file could not be downloaded. Try Save build again.', true); }
+    finally { if (url) setTimeout(() => URL.revokeObjectURL(url), 1000); }
+  });
+  $('#load-build').addEventListener('click', () => { $('#build-file').value = ''; $('#build-file').click(); });
+  $('#build-file').addEventListener('change', async event => {
+    const file = event.target.files[0];
+    if (!file || loading) return;
+    if (file.size > DuneBuild.fileLimit) {
+      notify('Build files must be 64 KB or smaller. Choose a saved build file. Your current build is unchanged.', true);
+      $('#load-build').focus({ preventScroll: true });
+      return;
+    }
+    loading = true;
+    const buttons = [...document.querySelectorAll('.build-actions button')];
+    for (const button of buttons) button.disabled = true;
+    $('.workspace').inert = true;
+    notify('Loading build file…');
+    try {
+      const result = DuneBuild.deserialize(data, await file.text());
+      if (result.error) {
+        const recovery = result.error.includes('Choose') ? '' : ' Choose another saved build file.';
+        notify(`${result.error}${recovery} Your current build is unchanged.`, true);
+      }
+      else {
+        replaceBuild(result.state);
+        const warnings = DuneBuild.validate(data, state).length;
+        notify(warnings ? 'Build loaded. Review the build warnings before using it.' : 'Build loaded from file.');
+      }
+    } catch { notify('The file could not be read. Choose it again. Your current build is unchanged.', true); }
+    finally {
+      loading = false; $('.workspace').inert = false;
+      for (const button of buttons) button.disabled = false;
+      $('#load-build').focus({ preventScroll: true });
+    }
   });
   render();
 })();
