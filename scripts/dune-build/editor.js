@@ -18,10 +18,13 @@
   function format(stat, modifier = false) {
     if (stat.value == null) return 'Unavailable';
     if (stat.type === 'string') return esc(stat.value);
-    const suffix = stat.format?.includes('%') ? '%' : stat.format?.includes('/s') ? '/s'
+    const percentageFormat = stat.format?.match(/\{v:P(\d+)\}/);
+    const suffix = percentageFormat || stat.format?.includes('%') ? '%' : stat.format?.includes('/s') ? '/s'
       : stat.format?.includes(' RPM') ? ' RPM' : stat.format?.includes('}s') ? ' s'
       : stat.format?.includes('}m') ? ' m' : stat.format?.includes(' V') ? ' V' : '';
-    return `${number(stat.value * (modifier && suffix === '%' ? (stat.percentScale ?? 100) : 1))}${suffix}`;
+    const value = stat.value * (percentageFormat ? 100 : modifier && suffix === '%' ? (stat.percentScale ?? 100) : 1);
+    const formatted = percentageFormat ? new Intl.NumberFormat('en-US', { maximumFractionDigits: Number(percentageFormat[1]) }).format(value) : number(value);
+    return `${formatted}${suffix}`;
   }
   function notify(message, error = false) {
     $('#message').textContent = message;

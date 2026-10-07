@@ -226,6 +226,23 @@ test('augmentation and trait controls support keyboard focus and update source-b
   await page.getByLabel('Crafting level', { exact: true }).press('Tab');
   await expect(page.locator('#build-status')).toHaveText('Invalid build');
   await expect(page.locator('#armor-total')).toHaveText('Unavailable');
+  await page.locator('#character-level').fill('20');
+  await page.locator('#character-level').press('Tab');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await page.locator('#rank-skills-attribute-weaponry1').selectOption('2');
+  await expect(page.locator('#rank-skills-attribute-weaponry1')).toHaveValue('2');
+  await expect(page.locator('#point-count')).toHaveText('4 / 20 skill points');
+  await expect(page.locator('#build-status')).toHaveText('Invalid build');
+  await page.locator('#rank-skills-attribute-weaponry1').selectOption('0');
+  await expect(page.locator('#rank-skills-attribute-weaponry1')).toHaveValue('0');
+});
+
+test('welding torch P0 repair-quality formats display fractional percentages', async ({ page }) => {
+  await page.goto(url);
+  for (const [item, value] of [['repairtool', '70%'], ['repairtool3', '80%'], ['repairtool5', '90%']]) {
+    await page.locator('#gear-hotbar1').selectOption(item);
+    await expect(page.locator('#item-stat-rows tr').filter({ hasText: 'Repair Quality' }).locator('td').first()).toHaveText(value);
+  }
 });
 
 test('skill percentages retain point units while fractional bonuses scale once', async ({ page }) => {

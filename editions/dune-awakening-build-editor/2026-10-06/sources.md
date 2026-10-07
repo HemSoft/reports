@@ -120,6 +120,10 @@ Percentage presentation uses explicit source attribute units: Poison/Bleed
 Tolerance and the `UI_Hand-heldCutterayYield`/`UI_AnalysisModeYield` skill
 attributes already contain percentage points. Fractional bonuses and
 multipliers scale once for presentation, without a magnitude-based heuristic.
+The catalog's `P0` repair-quality format is also a fractional percentage:
+Welding Torch Mk1/Mk3/Mk5 show 70%/80%/90%. Equipment validity and skill validity
+are checked separately when editing ranks, so a lost augmentation unlock keeps
+its error visible without blocking unrelated legal skill edits.
 
 ## Independently checked builds
 

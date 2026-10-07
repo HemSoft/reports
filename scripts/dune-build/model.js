@@ -89,10 +89,8 @@ const DuneBuild = (() => {
     });
   }
 
-  function validate(data, state) {
+  function validateSkills(data, state) {
     const errors = [];
-    const chest = itemById(data, state.equipment.chest.id);
-    if (chest?.blocksLegs && state.equipment.legs.id) errors.push('The selected body garment occupies chest and legs. Remove the separate leg piece.');
     if (points(data, state) > budget(data, state)) errors.push(`Skill points exceed the budget by ${points(data, state) - budget(data, state)}.`);
     for (const skill of disconnected(data, state)) errors.push(`${skill.name} needs a connected learned prerequisite.`);
     for (const skill of data.skills) {
@@ -110,6 +108,13 @@ const DuneBuild = (() => {
         if (!skill || skill.skillType !== kind || !state.ranks[id]) errors.push(`Equipped ${kind.toLowerCase()} must be learned.`);
       }
     }
+    return errors;
+  }
+
+  function validate(data, state) {
+    const errors = validateSkills(data, state);
+    const chest = itemById(data, state.equipment.chest.id);
+    if (chest?.blocksLegs && state.equipment.legs.id) errors.push('The selected body garment occupies chest and legs. Remove the separate leg piece.');
     for (const [slot, selection] of Object.entries(state.equipment)) {
       if (!selection.id) continue;
       const item = itemById(data, selection.id);
@@ -151,7 +156,9 @@ const DuneBuild = (() => {
       next.abilities = next.abilities.map(selected => selected === id ? '' : selected);
       next.techniques = next.techniques.map(selected => selected === id ? '' : selected);
     }
-    const errors = validate(data, next).filter(error => !(value < (state.ranks[id] ?? 0) && error.startsWith('Skill points exceed')));
+    // Skill edits do not change equipment compatibility or Crafting unlocks.
+    // Keep those errors visible in validate(), without freezing unrelated ranks.
+    const errors = validateSkills(data, next).filter(error => !(value < (state.ranks[id] ?? 0) && error.startsWith('Skill points exceed')));
     return errors.length ? { error: errors[0] } : { state: next };
   }
 
