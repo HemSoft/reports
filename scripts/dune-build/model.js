@@ -17,7 +17,7 @@ const DuneBuild = (() => {
 
   function initial(data) {
     return { equipment: Object.fromEntries(slots.map(slot => [slot, { id: '', grade: 0, augments: [] }])),
-      ranks: {}, abilities: ['', '', ''], techniques: ['', '', ''], traits: [],
+      ranks: {}, abilities: ['', '', ''], techniques: ['', '', ''],
       levels: Object.fromEntries(data.tracks.map(track => [track.id, 0])),
       characterLevel: 1, abilitySlots: 3, gameMode: 'multiplayer' };
   }
@@ -28,7 +28,7 @@ const DuneBuild = (() => {
 
   function selectedTraits(data, state) {
     return data.tracks.flatMap(track => track.keystones
-      .filter(trait => state.traits.includes(trait.id) && trait.level <= state.levels[track.id])
+      .filter(trait => trait.level <= state.levels[track.id])
       .map(trait => ({ ...trait, track: track.name })));
   }
 
@@ -256,11 +256,33 @@ const DuneBuild = (() => {
   }
 
   function calculate(data, state) {
+    const track = data.tracks.find(track => track.id === 'combattrack');
+    const level = state.levels.combattrack;
+    const passive = key => track.passiveAttributes.find(stat => stat.key === key).values[level];
+    const traits = selectedTraits(data, state).filter(trait => trait.track === track.name);
+    const bonus = key => traits.flatMap(trait => trait.stats ?? [])
+      .filter(stat => stat.key === key).reduce((sum, stat) => sum + stat.value, 0);
+    const combat = { level, damageBonus: passive('DamageBonus_SpecTrack'),
+      mitigationBonus: passive('TotalDamageMitigation_SpecTrack'),
+      healthBonus: bonus('MaxHealth'), staminaBonus: bonus('MaxStamina') };
     const equipment = Object.fromEntries(slots.map(slot => [slot, itemStats(data, state.equipment[slot])]));
+    for (const entry of Object.values(equipment)) {
+      if (!entry.item || !['ranged', 'melee'].includes(itemGroup(entry.item)) || !combat.damageBonus) continue;
+      for (const stat of entry.stats) {
+        if (['damagePerShot', 'damagePerHit', 'heavyAttackDamage', 'heavyAttackDamageUnshielded'].includes(stat.key) && Number.isFinite(stat.value)) {
+          const before = stat.value;
+          stat.value *= 1 + combat.damageBonus;
+          stat.modifiers.push({ source: `Combat level ${level} (+${Number((combat.damageBonus * 100).toFixed(2))}% damage)`, change: stat.value - before });
+        }
+        // Catalog DPS and shield damage have separate source formulas. Only
+        // project the sourced Combat bonus onto direct weapon health damage.
+        if (['dps', 'effectiveDps'].includes(stat.key)) stat.value = null;
+      }
+    }
     const armor = bodySlots.reduce((sum, slot) => sum + (equipment[slot].stats.find(stat => stat.key === 'armorValue')?.value ?? 0), 0);
     const volume = Object.values(equipment).reduce((sum, entry) => sum + (entry.stats.find(stat => stat.key === 'volume')?.value ?? 0), 0);
     return { equipment, armor, volume, points: points(data, state), budget: budget(data, state),
-      modifiers: modifiers(data, state), errors: validate(data, state) };
+      combat, modifiers: modifiers(data, state), errors: validate(data, state) };
   }
 
   return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,

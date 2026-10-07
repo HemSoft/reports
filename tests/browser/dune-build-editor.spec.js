@@ -26,7 +26,6 @@ test('source-backed full builds, grade scaling and augment arithmetic stay indep
   close(Build.calculate(data, state).volume, 9.5);
   state.equipment.hands.grade = 5;
   state.levels.craftingtrack = 10;
-  state.traits = ['Crafting_CraftingKeystone_ArmoirAugmentSlots10'];
   state.equipment.hands.augments = [{ id: 't6_augment_armor6', grade: 1, roll: 100 }];
   close(Build.calculate(data, state).armor, 1765.0736); // 1304 + 443.34 × 1.04.
   expect(Build.validate(data, state)).toEqual([]);
@@ -54,7 +53,7 @@ test('every equipment choice fits a supported slot and every available grade is 
   }
 });
 
-test('source augmentation unlocks cover eligible items and respect purchased trait levels', () => {
+test('source augmentation unlocks cover eligible items and follow specialization levels automatically', () => {
   for (const item of data.items) {
     const traits = Build.augmentTraits(data, item);
     expect(traits.length > 0).toBe(Build.compatibleAugments(data, item).length > 0);
@@ -64,15 +63,15 @@ test('source augmentation unlocks cover eligible items and respect purchased tra
   const traits = Build.augmentTraits(data, hands);
   expect(traits.map(trait => trait.level)).toEqual([10, 42]);
   state.levels.craftingtrack = 42;
-  expect(Build.augmentLimit(data, state, hands)).toBe(0);
-  state.traits = [traits[1].id];
-  expect(Build.augmentLimit(data, state, hands)).toBe(1);
+  expect(Build.augmentLimit(data, state, hands)).toBe(2);
   state.levels.craftingtrack = 10;
+  expect(Build.augmentLimit(data, state, hands)).toBe(1);
+  state.levels.craftingtrack = 9;
   expect(Build.augmentLimit(data, state, hands)).toBe(0);
 });
 
 for (const width of [1440, 390]) {
-  test(`equipment actions guide locked garment and ranged augments through purchase and removal at ${width}px`, async ({ page }, testInfo) => {
+  test(`equipment actions guide locked garment and ranged augments through level entry and removal at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
     const errors = [];
     page.on('pageerror', error => errors.push(error.message));
@@ -90,18 +89,15 @@ for (const width of [1440, 390]) {
     await expect(page.locator('#inspect-slot')).toHaveValue('hands');
     await expect(page.locator('#augment-target')).toBeFocused();
     await expect(page.locator('#augment-0')).toBeDisabled();
-    await expect(page.locator('#augmentation')).toContainText('Requires Crafting level 10 and purchased Garment Augmentation Limit');
+    await expect(page.locator('#augmentation')).toContainText('Requires Crafting level 10 for Garment Augmentation Limit');
     await expect(page.locator('#augmentation')).toContainText('Requires Crafting level 42');
     await page.screenshot({ path: testInfo.outputPath(`augment-locked-${width}.png`) });
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
     await page.getByRole('button', { name: 'Configure Garment Augmentation Limit · level 10', exact: true }).click();
     await expect(page.locator('#level-craftingtrack')).toBeFocused();
-    await expect(page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10')).toBeDisabled();
     await page.locator('#level-craftingtrack').fill('10');
     await page.locator('#level-craftingtrack').press('Tab');
-    await expect(page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10')).not.toBeChecked();
-    await page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10').check();
     await page.getByRole('button', { name: 'Return to Hands augments', exact: true }).click();
     await expect(page.locator('#augment-0')).toBeEnabled();
     await expect(page.locator('#augment-1')).toBeDisabled();
@@ -115,10 +111,15 @@ for (const width of [1440, 390]) {
     await page.locator('#augment-0').selectOption('');
     await expect(page.locator('#armor-total')).toHaveText('263');
 
+    await page.getByRole('button', { name: 'Progression', exact: true }).click();
+    await page.locator('#level-craftingtrack').fill('0');
+    await page.locator('#level-craftingtrack').press('Tab');
+    await page.getByRole('button', { name: 'Equipment', exact: true }).click();
     await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
     await page.getByRole('button', { name: 'Configure Ranged Augmentation Limit · level 1', exact: true }).click();
-    await expect(page.locator('#trait-Crafting_CraftingKeystone_RangedWeaponAugmentSlots1')).toBeFocused();
-    await page.locator('#trait-Crafting_CraftingKeystone_RangedWeaponAugmentSlots1').press('Space');
+    await expect(page.locator('#level-craftingtrack')).toBeFocused();
+    await page.locator('#level-craftingtrack').fill('1');
+    await page.locator('#level-craftingtrack').press('Tab');
     await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
     await page.locator('#augment-0').selectOption('t6_augment_smg1');
     await expect(page.locator('#augment-0')).not.toContainText('Karpov');
@@ -155,7 +156,6 @@ test('melee augments can be edited and removed after losing a slot unlock', asyn
   await page.getByRole('button', { name: 'Configure Melee Augmentation Limit · level 3', exact: true }).click();
   await page.locator('#level-craftingtrack').fill('3');
   await page.locator('#level-craftingtrack').press('Tab');
-  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots3').check();
   await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
   await page.locator('#augment-0').selectOption('t6_augment_melee1');
   await page.locator('#roll-0').fill('100');
@@ -186,8 +186,6 @@ test('a single augment in a later position stays editable within the reduced slo
   await page.getByRole('button', { name: 'Configure Melee Augmentation Limit · level 30', exact: true }).click();
   await page.locator('#level-craftingtrack').fill('30');
   await page.locator('#level-craftingtrack').press('Tab');
-  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots3').check();
-  await page.locator('#trait-Crafting_CraftingKeystone_MeleeWeaponAugmentSlots32').check();
   await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
   await page.locator('#augment-1').selectOption('t6_augment_melee1');
   await page.getByRole('button', { name: 'Progression', exact: true }).click();
@@ -200,7 +198,118 @@ test('a single augment in a later position stays editable within the reduced slo
   await expect(page.locator('#build-status')).toHaveText('Build valid');
 });
 
-test('skill prerequisites, cumulative costs, purchased traits and reductions preserve valid builds', () => {
+test('specialization levels activate every eligible trait without purchase state', () => {
+  const state = Build.initial(data);
+  for (const track of data.tracks) {
+    for (const level of [0, 1, 10, 50, 100]) {
+      state.levels[track.id] = level;
+      const active = Build.selectedTraits(data, state).filter(trait => trait.track === track.name);
+      expect(active.map(trait => trait.id)).toEqual(track.keystones.filter(trait => trait.level <= level).map(trait => trait.id));
+    }
+    state.levels[track.id] = 0;
+  }
+  state.levels.combattrack = 50;
+  expect(Build.budget(data, state)).toBe(28);
+  expect(Build.calculate(data, state).combat).toEqual({ level: 50, damageBonus: 0.5, mitigationBonus: 0.25, healthBonus: 20, staminaBonus: 30 });
+  state.levels.combattrack = 100;
+  expect(Build.budget(data, state)).toBe(55);
+  expect(Build.calculate(data, state).combat).toEqual({ level: 100, damageBonus: 1, mitigationBonus: 0.5, healthBonus: 55, staminaBonus: 55 });
+  state.levels.combattrack = 0;
+  expect(Build.selectedTraits(data, state)).toEqual([]);
+  expect(Build.budget(data, state)).toBe(1);
+});
+
+test('Combat damage applies once after equipment grades and augments without changing carried weapons or defenses', () => {
+  let state = Build.initial(data);
+  state = Build.equip(data, state, 'hotbar1', id('A Dart for Every Man')).state;
+  state = Build.equip(data, state, 'hotbar2', id('Leech’s Maw')).state;
+  state = Build.equip(data, state, 'hands', id('Circuit Gauntlets')).state;
+  const damage = (slot, key) => Build.calculate(data, state).equipment[slot].stats.find(stat => stat.key === key).value;
+  state.levels.combattrack = 50;
+  close(damage('hotbar1', 'damagePerShot'), 64.2);
+  close(damage('hotbar2', 'damagePerHit'), 205.725);
+  close(damage('hands', 'armorValue'), 263);
+  close(damage('hotbar1', 'shieldDamagePerShot'), 25);
+  expect(damage('hotbar1', 'dps')).toBeNull();
+  state.equipment.hotbar1.grade = 1;
+  close(damage('hotbar1', 'damagePerShot'), 68.7);
+  state.equipment.hotbar1.grade = 0;
+  state.levels.craftingtrack = 10;
+  state.equipment.hotbar1.augments = [{ id: 't6_augment_smg1', grade: 3, roll: 100 }];
+  close(damage('hotbar1', 'damagePerShot'), 60.99);
+  close(damage('hotbar2', 'damagePerHit'), 205.725);
+  expect(Build.calculate(data, state).errors).toEqual([]);
+  state.levels.combattrack = 100;
+  close(damage('hotbar1', 'damagePerShot'), 81.32);
+  state.levels.combattrack = 0;
+  close(damage('hotbar1', 'damagePerShot'), 40.66);
+  state.equipment.hotbar1.augments = [];
+  close(damage('hotbar1', 'damagePerShot'), 42.8);
+  close(damage('hotbar1', 'dps'), 428);
+});
+
+for (const width of [1440, 390]) {
+  test(`Combat and Crafting levels automatically update traits and weapon damage at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.goto(url);
+    await page.locator('#gear-hotbar1').selectOption(id('A Dart for Every Man'));
+    await page.getByRole('button', { name: 'Progression', exact: true }).click();
+    await page.locator('#level-combattrack').fill('50');
+    await page.locator('#level-combattrack').press('Tab');
+    await expect(page.locator('#point-count')).toHaveText('0 / 28 skill points');
+    await expect(page.locator('#combat-damage')).toHaveText('50%');
+    await expect(page.locator('#combat-mitigation')).toHaveText('25%');
+    await expect(page.locator('#combat-health')).toHaveText('+20');
+    await expect(page.locator('#combat-stamina')).toHaveText('+30');
+    await expect(page.locator('#track-rows input[type="checkbox"]')).toHaveCount(0);
+    const combat = page.locator('.track').filter({ has: page.getByRole('heading', { name: 'Combat', exact: true }) });
+    await combat.locator('summary').click();
+    await expect(combat.locator('summary')).toHaveText('Traits · 20 active');
+    await combat.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: testInfo.outputPath(`automatic-traits-${width}.png`) });
+    await page.getByRole('button', { name: 'Equipment', exact: true }).click();
+    await page.getByRole('button', { name: 'Quickbar 1 augments', exact: true }).click();
+    const damage = page.locator('#item-stat-rows tr').filter({ has: page.getByRole('rowheader', { name: 'Damage Per Shot', exact: true }) });
+    await expect(damage.locator('td').first()).toHaveText('64.2');
+    await expect(damage).toContainText('Combat level 50 (+50% damage)');
+    await page.getByRole('button', { name: 'Configure Ranged Augmentation Limit · level 1', exact: true }).click();
+    await expect(page.locator('#level-craftingtrack')).toBeFocused();
+    await page.locator('#level-craftingtrack').fill('1');
+    await page.locator('#level-craftingtrack').press('Tab');
+    await page.getByRole('button', { name: 'Return to Quickbar 1 augments', exact: true }).click();
+    await expect(page.locator('#augment-0')).toBeEnabled();
+    await page.locator('#augment-0').selectOption('t6_augment_smg1');
+    await page.locator('#augment-grade-0').selectOption('3');
+    await page.locator('#roll-0').fill('100');
+    await page.locator('#roll-0').press('Tab');
+    await expect(damage.locator('td').first()).toHaveText('60.99');
+    if (width === 390) {
+      await page.locator('#stats-heading').scrollIntoViewIfNeeded();
+      await page.screenshot({ path: testInfo.outputPath('combat-summary-390.png') });
+      await damage.scrollIntoViewIfNeeded();
+    }
+    await page.screenshot({ path: testInfo.outputPath(`combat-damage-${width}.png`), fullPage: width === 1440 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
+    await page.getByRole('button', { name: 'Progression', exact: true }).click();
+    await page.locator('#level-combattrack').fill('100');
+    await page.locator('#level-combattrack').press('Tab');
+    await expect(page.locator('#point-count')).toHaveText('0 / 55 skill points');
+    await expect(damage.locator('td').first()).toHaveText('81.32');
+    await page.locator('#level-combattrack').fill('0');
+    await page.locator('#level-combattrack').press('Tab');
+    await expect(damage.locator('td').first()).toHaveText('40.66');
+    await expect(page.locator('#combat-damage')).toHaveText('0%');
+    await page.getByRole('button', { name: 'Equipment', exact: true }).click();
+    await page.locator('#augment-0').selectOption('');
+    await expect(damage.locator('td').first()).toHaveText('42.8');
+    expect(errors).toEqual([]);
+  });
+}
+
+test('skill prerequisites, cumulative costs, automatic traits and reductions preserve valid builds', () => {
   let state = Build.initial(data);
   expect(Build.rank(data, state, 'skills-ability-assaultseeker', 1).error).toContain('prerequisite');
   state = Build.rank(data, state, 'skills-attribute-weaponry1', 1).state;
@@ -219,10 +328,7 @@ test('skill prerequisites, cumulative costs, purchased traits and reductions pre
   state = Build.rank(data, state, 'skills-attribute-blade1', 0).state;
   expect(Build.validate(data, state)).toEqual([]);
   state.levels.combattrack = 100;
-  expect(Build.budget(data, state)).toBe(1);
-  state.traits = data.tracks.find(track => track.id === 'combattrack').keystones
-    .filter(trait => trait.skillPointsGranted).map(trait => trait.id);
-  expect(Build.budget(data, state)).toBe(55); // 1 character point + 54 purchased combat points.
+  expect(Build.budget(data, state)).toBe(55); // 1 character point + 54 automatic Combat points.
   state.levels.combattrack = 0;
   expect(Build.budget(data, state)).toBe(1);
 });
@@ -240,7 +346,6 @@ test('weapon-family augments, minimum grades, penalties and unknown formulas are
   close(graded.find(stat => stat.key === 'effectiveDps').value, 348.93);
   state.equipment.hotbar1.grade = 0;
   state.levels.craftingtrack = 1;
-  state.traits = ['Crafting_CraftingKeystone_RangedWeaponAugmentSlots1'];
   state.equipment.hotbar1.augments = [{ id: 't6_augment_smg1', grade: 3, roll: 100 }];
   const result = Build.calculate(data, state);
   const stats = result.equipment.hotbar1.stats;
@@ -255,7 +360,7 @@ test('weapon-family augments, minimum grades, penalties and unknown formulas are
   state.equipment.hotbar1.augments[0].grade = 1;
   expect(Build.validate(data, state).join(' ')).toContain('incompatible augment or grade');
   state.equipment.hotbar1.augments[0].grade = 3;
-  state.traits = [];
+  state.levels.craftingtrack = 0;
   expect(Build.validate(data, state).join(' ')).toContain('augmentation limit');
 });
 
@@ -355,16 +460,15 @@ test('editor works offline, updates totals, filters gear, rejects invalid skills
   await context.close();
 });
 
-test('augmentation and trait controls support keyboard focus and update source-backed values', async ({ page }) => {
+test('specialization levels automatically unlock augmentation and update source-backed values', async ({ page }) => {
   await page.goto(url);
   await page.getByLabel('Hands equipment', { exact: true }).selectOption(id('Circuit Gauntlets'));
   await page.getByRole('button', { name: 'Progression', exact: true }).click();
   await page.getByLabel('Crafting level', { exact: true }).fill('10');
   await page.getByLabel('Crafting level', { exact: true }).press('Tab');
   const track = page.locator('.track').filter({ has: page.getByRole('heading', { name: 'Crafting', exact: true }) });
-  await track.getByText('Traits · 0 purchased', { exact: true }).click();
-  await page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10').check();
-  await expect(page.locator('#trait-Crafting_CraftingKeystone_ArmoirAugmentSlots10')).toBeFocused();
+  await track.getByText('Traits · 5 active', { exact: true }).click();
+  await expect(track.getByRole('checkbox')).toHaveCount(0);
   await page.getByRole('button', { name: 'Equipment', exact: true }).click();
   await page.locator('#augmentation summary').click();
   await page.locator('#augment-0').selectOption('t6_augment_armor6');
@@ -437,10 +541,6 @@ test('choosing later augment slots first remains safe through cloned build edits
   await page.locator('#character-level').press('Tab');
   await page.getByLabel('Crafting level', { exact: true }).fill('100');
   await page.getByLabel('Crafting level', { exact: true }).press('Tab');
-  await page.locator('#traits-craftingtrack summary').click();
-  for (const suffix of ['ArmoirAugmentSlots10', 'ArmoirAugmentSlots42', 'RangedWeaponAugmentSlots1', 'RangedWeaponAugmentSlots33', 'RangedWeaponAugmentSlots87']) {
-    await page.locator(`#trait-Crafting_CraftingKeystone_${suffix}`).check();
-  }
   await page.getByRole('button', { name: 'Equipment', exact: true }).click();
   await page.locator('#augmentation summary').click();
   await page.locator('#augment-1').selectOption('t6_augment_armor6');
