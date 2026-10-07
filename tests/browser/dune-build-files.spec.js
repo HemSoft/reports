@@ -239,6 +239,7 @@ test('unlearned draft abilities and techniques stay visible and can be cleared',
     await expect(page.locator(`${selector} option:checked`)).toContainText('not learned');
   }
   await expect(page.locator('#errors')).toContainText('must be learned');
+  await page.locator('#ability-selectors').scrollIntoViewIfNeeded();
   await page.screenshot({ path: testInfo.outputPath('loaded-unlearned-draft.png') });
   expect((await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze()).violations).toEqual([]);
   await page.locator('#ability-0').selectOption('');
