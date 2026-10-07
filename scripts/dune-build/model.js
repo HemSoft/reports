@@ -151,6 +151,16 @@ const DuneBuild = (() => {
     return errors.length ? { error: errors[0] } : { state: next };
   }
 
+  function mode(data, state, gameMode) {
+    const next = clone(state);
+    next.gameMode = gameMode;
+    for (const skill of data.skills.filter(skill => !skill.gameModes.includes(gameMode))) next.ranks[skill.id] = 0;
+    for (const skill of disconnected(data, next)) next.ranks[skill.id] = 0;
+    next.abilities = next.abilities.map(id => next.ranks[id] ? id : '');
+    next.techniques = next.techniques.map(id => next.ranks[id] ? id : '');
+    return next;
+  }
+
   // Explicit translation from game attribute names to the catalog's presentation keys.
   const aliases = {
     ArmorValue: ['armorValue'], Damage: ['damagePerShot', 'damagePerHit', 'heavyAttackDamage', 'heavyAttackDamageUnshielded'],
@@ -234,6 +244,6 @@ const DuneBuild = (() => {
   }
 
   return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
-    selectedTraits, budget, points, disconnected, augmentLimit, validate, equip, rank, itemStats, modifiers, calculate, clone };
+    selectedTraits, budget, points, disconnected, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
 })();
 if (typeof module !== 'undefined') module.exports = DuneBuild;

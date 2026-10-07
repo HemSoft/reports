@@ -226,13 +226,37 @@ test('augmentation and trait controls support keyboard focus and update source-b
   await expect(page.locator('#armor-total')).toHaveText('Unavailable');
 });
 
+test('switching modes removes incompatible and orphaned skills while keeping learned roots', async ({ page }) => {
+  await page.goto(url);
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#character-level').fill('30');
+  await page.locator('#character-level').press('Tab');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await page.locator('#skill-tree').selectOption('Planetologist');
+  await page.locator('#rank-skills-ability-suspensorpad').selectOption('1');
+  await page.locator('#rank-skills-attribute-explorer1').selectOption('1');
+  await page.locator('#rank-skills-attribute-explorer3').selectOption('1');
+  await page.locator('#ability-0').selectOption('skills-ability-suspensorpad');
+  await page.getByRole('button', { name: 'Progression', exact: true }).click();
+  await page.locator('#game-mode').selectOption('singleplayer');
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+  await expect(page.locator('#point-count')).toHaveText('1 / 30 skill points');
+  await page.getByRole('button', { name: 'Skills', exact: true }).click();
+  await expect(page.locator('#rank-skills-attribute-explorer3')).toHaveValue('0');
+  await expect(page.locator('#rank-skills-ability-suspensorpad')).toHaveValue('1');
+  await expect(page.locator('#ability-0')).toHaveValue('skills-ability-suspensorpad');
+  await page.locator('#rank-skills-attribute-explorer6').selectOption('1');
+  await page.locator('#rank-skills-attribute-explorer3').selectOption('1');
+  await expect(page.locator('#build-status')).toHaveText('Build valid');
+});
+
 test('desktop and mobile editor states fit their viewports and pass accessibility checks', async ({ page }, testInfo) => {
   await page.goto(url);
   for (const width of [1440, 1000, 768, 390, 320]) {
     await page.setViewportSize({ width, height: width === 1440 ? 900 : 844 });
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     for (const view of ['Equipment', 'Skills', 'Progression']) {
       await page.getByRole('button', { name: view, exact: true }).click();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
       const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
       expect(scan.violations).toEqual([]);
     }

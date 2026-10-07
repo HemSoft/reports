@@ -198,6 +198,16 @@ const DuneBuild = (() => {
     return errors.length ? { error: errors[0] } : { state: next };
   }
 
+  function mode(data, state, gameMode) {
+    const next = clone(state);
+    next.gameMode = gameMode;
+    for (const skill of data.skills.filter(skill => !skill.gameModes.includes(gameMode))) next.ranks[skill.id] = 0;
+    for (const skill of disconnected(data, next)) next.ranks[skill.id] = 0;
+    next.abilities = next.abilities.map(id => next.ranks[id] ? id : '');
+    next.techniques = next.techniques.map(id => next.ranks[id] ? id : '');
+    return next;
+  }
+
   // Explicit translation from game attribute names to the catalog's presentation keys.
   const aliases = {
     ArmorValue: ['armorValue'], Damage: ['damagePerShot', 'damagePerHit', 'heavyAttackDamage', 'heavyAttackDamageUnshielded'],
@@ -281,7 +291,7 @@ const DuneBuild = (() => {
   }
 
   return { slots, bodySlots, initial, itemById, skillById, itemGroup, compatibleItems, compatibleAugments,
-    selectedTraits, budget, points, disconnected, augmentLimit, validate, equip, rank, itemStats, modifiers, calculate, clone };
+    selectedTraits, budget, points, disconnected, augmentLimit, validate, equip, rank, mode, itemStats, modifiers, calculate, clone };
 })();
 if (typeof module !== 'undefined') module.exports = DuneBuild;
 
@@ -503,9 +513,8 @@ if (typeof module !== 'undefined') module.exports = DuneBuild;
     render(); notify('Unlocked ability slots updated.');
   });
   $('#game-mode').addEventListener('change', event => {
-    state.gameMode = event.target.value;
-    for (const skill of data.skills.filter(skill => !skill.gameModes.includes(state.gameMode))) state.ranks[skill.id] = 0;
-    render(); notify('Game mode updated. Unavailable skills removed.');
+    state = DuneBuild.mode(data, state, event.target.value);
+    render(); notify('Game mode updated. Unavailable and disconnected skills removed.');
   });
   document.addEventListener('click', event => {
     const button = event.target.closest('button');

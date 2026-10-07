@@ -216,9 +216,8 @@
     render(); notify('Unlocked ability slots updated.');
   });
   $('#game-mode').addEventListener('change', event => {
-    state.gameMode = event.target.value;
-    for (const skill of data.skills.filter(skill => !skill.gameModes.includes(state.gameMode))) state.ranks[skill.id] = 0;
-    render(); notify('Game mode updated. Unavailable skills removed.');
+    state = DuneBuild.mode(data, state, event.target.value);
+    render(); notify('Game mode updated. Unavailable and disconnected skills removed.');
   });
   document.addEventListener('click', event => {
     const button = event.target.closest('button');

@@ -59,4 +59,5 @@ class BuildEditorPublicationTests(unittest.TestCase):
             self.assertTrue(augment["stats"])
             for stat in augment["stats"]:
                 self.assertIn(stat["operation"], ("add", "multiply", "set"))
+                self.assertTrue(stat["values"])
                 self.assertTrue(all(1 <= row["quality"] <= 5 for row in stat["values"]))

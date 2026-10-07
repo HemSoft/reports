@@ -105,6 +105,8 @@ skill cannot disconnect learned nodes from their tree's learned starting node.
 Ranks use cumulative costs. Abilities and techniques must be learned, fit their
 separate three-slot lists, and cannot repeat within a list. The user sets one to
 three unlocked ability slots to match completed story unlocks.
+Switching game modes removes incompatible skills and any descendants left
+disconnected, while preserving learned roots and other valid allocations.
 
 The effect ledger shows selected-rank values for learned passives, equipped
 abilities/techniques, track-level passive curves and purchased traits. Conditional
