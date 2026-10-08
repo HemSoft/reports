@@ -26,6 +26,38 @@ PUBLIC_DUNE_FILES = {
     "editions/dune-awakening-build-editor/2026-10-06/payload.json",
     "editions/dune-awakening-build-editor/2026-10-06/report.html",
 }
+# Exact scopes required by the subscription-backed SFL reviewer jobs.
+SFL_REVIEWER_PERMISSIONS = {
+    "invalidate-review-request": {
+        "checks": "write",
+        "contents": "read",
+        "issues": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    },
+    "observe": {
+        "actions": "read",
+        "checks": "write",
+        "contents": "read",
+        "issues": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    },
+    "invalidate-pull-context": {
+        "actions": "read",
+        "checks": "write",
+        "contents": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    },
+    "invalidate-base-advance": {
+        "actions": "read",
+        "checks": "write",
+        "contents": "read",
+        "pull-requests": "read",
+        "statuses": "write",
+    },
+}
 SCRIPT_FILES = {
     "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.js": "node_modules/chart.js/dist/chart.umd.js",
 }
@@ -155,6 +187,8 @@ def check_policy():
                 expected = {"pages": "write", "id-token": "write"}
             elif path.stem == "pages" and name == "archive":
                 expected = {"contents": "write"}  # Commits editions to the published branch.
+            elif path.stem == "sfl-pr-review-auto":
+                expected = SFL_REVIEWER_PERMISSIONS.get(name, expected)
             if permissions != expected:
                 raise ValueError(f"Unexpected permissions in {path.name}/{name}")
 

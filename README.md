@@ -563,3 +563,7 @@ before comparing results or changing a budget.
 - Python 3.10+ and the pinned `tzdata` package in `requirements.txt`.
 - GitHub CLI (`gh`) authenticated with repository access.
 - Local repository clones in `D:\github\HemSoft` (automatically cross-referenced with GitHub remote metadata).
+
+### SFL reviewer workflow validation
+
+The reviewer requires job-specific read and check/status write scopes. The security policy checks those exact scopes while retaining the Pages permissions restrictions. Workflow lint uses pinned actionlint 1.7.12. Its known `queue: max` parsing gap is accepted only at the canonical reviewer location and only when the manifest and complete workflow bytes match `.sfl/lint-contract.json`; other lint findings and tool failures remain blocking. After a verified SFL upgrade, update the contract from the qualified installed workflow before merging.

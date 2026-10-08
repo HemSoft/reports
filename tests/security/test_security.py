@@ -174,6 +174,32 @@ class SecurityChecks(unittest.TestCase):
                                 check_security.check_policy()
                     path.unlink()
 
+    def test_reviewer_permissions_are_job_specific_and_cannot_expand(self):
+        import yaml
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            workflows = root / ".github/workflows"
+            workflows.mkdir(parents=True)
+            path = workflows / "sfl-pr-review-auto.yml"
+            for name, scopes in check_security.SFL_REVIEWER_PERMISSIONS.items():
+                workflow = {"jobs": {name: {"permissions": dict(scopes), "steps": []}}}
+                path.write_text(yaml.safe_dump(workflow), encoding="utf-8")
+                with patch.object(check_security, "ROOT", root):
+                    check_security.check_policy()
+                    workflow["jobs"][name]["permissions"]["contents"] = "write"
+                    path.write_text(yaml.safe_dump(workflow), encoding="utf-8")
+                    with self.assertRaisesRegex(ValueError, "Unexpected permissions"):
+                        check_security.check_policy()
+                other = workflows / "other.yml"
+                path.unlink()
+                workflow["jobs"][name]["permissions"] = dict(scopes)
+                other.write_text(yaml.safe_dump(workflow), encoding="utf-8")
+                with patch.object(check_security, "ROOT", root):
+                    with self.assertRaisesRegex(ValueError, "Unexpected permissions"):
+                        check_security.check_policy()
+                other.unlink()
+
     def test_unicode_file_secret_is_detected(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
