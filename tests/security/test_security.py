@@ -13,6 +13,48 @@ from scripts import check_security
 
 
 class SecurityChecks(unittest.TestCase):
+    def test_sfl_public_metadata_exemptions_preserve_other_secret_findings(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            subprocess.run(["git", "init", str(root)], check=True, capture_output=True)
+            for filename in (
+                ".sfl/lint-contract.json",
+                ".sfl/sfl.json",
+                ".github/workflows/sfl-pr-review-auto.yml",
+            ):
+                target = root / filename
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes((check_security.ROOT / filename).read_bytes())
+            subprocess.run(["git", "-C", str(root), "add", "."], check=True)
+            target = root / ".sfl/lint-contract.json"
+            original = target.read_text()
+            with patch.object(check_security, "ROOT", root):
+                check_security.scan_secrets()
+                public = check_security.SFL_PUBLIC_SOURCE_SHA
+                credential = "ghp_" + "".join(chr(65 + (index * 7) % 26) for index in range(36))
+                for field, value in (("unrelated", public), ("credential", credential)):
+                    with self.subTest(field=field):
+                        modified = json.loads(original)
+                        modified[field] = value
+                        target.write_text(json.dumps(modified, indent=2) + "\n")
+                        with self.assertRaisesRegex(ValueError, "Secret scan"):
+                            check_security.scan_secrets()
+                target.write_text(original)
+                other = root / "unrelated.json"
+                other.write_text(json.dumps({"source_sha": public}, indent=2))
+                subprocess.run(["git", "-C", str(root), "add", str(other)], check=True)
+                with self.assertRaisesRegex(ValueError, "Secret scan"):
+                    check_security.scan_secrets()
+                other.unlink()
+                target.write_text(original.replace('"source_sha":', '"duplicate":'))
+                with self.assertRaisesRegex(ValueError, "Secret scan"):
+                    check_security.scan_secrets()
+                target.write_text(original)
+                workflow = root / ".github/workflows/sfl-pr-review-auto.yml"
+                workflow.write_bytes(workflow.read_bytes() + b"\n# unreviewed mutation\n")
+                with self.assertRaisesRegex(ValueError, "Secret scan"):
+                    check_security.scan_secrets()
+
     def test_dune_public_values_are_exempt_only_in_their_exact_snapshot_files(self):
         payload_path = next(
             path for path in check_security.PUBLIC_DUNE_FILES if path.endswith(".json")

@@ -26,6 +26,13 @@ PUBLIC_DUNE_FILES = {
     "editions/dune-awakening-build-editor/2026-10-06/payload.json",
     "editions/dune-awakening-build-editor/2026-10-06/report.html",
 }
+# Independently verified signed SFL release metadata, not credential values.
+# Keep exemptions bound to these public values, exact JSON fields and lines.
+SFL_PUBLIC_RELEASE_VERSION = "2.1.0-rc.29"
+SFL_PUBLIC_SOURCE_SHA = "f07ab8ca3d58a7a5a6bbf88ff1bc8e3a359b6e53"  # pragma: allowlist secret
+SFL_PUBLIC_WORKFLOW_SHA256 = (
+    "0e6d328043d3b0dc320e08fd3629b0d7cf8d5a687444d3e8853d00a70c108e60"  # pragma: allowlist secret
+)
 # Exact scopes required by the subscription-backed SFL reviewer jobs.
 SFL_REVIEWER_PERMISSIONS = {
     "invalidate-review-request": {
@@ -193,6 +200,50 @@ def check_policy():
                 raise ValueError(f"Unexpected permissions in {path.name}/{name}")
 
 
+def verified_sfl_metadata_findings():
+    """Identify only exact public metadata on the reviewed workflow's lines."""
+    contract_path = ROOT / ".sfl/lint-contract.json"
+    manifest_path = ROOT / ".sfl/sfl.json"
+    workflow_path = ROOT / ".github/workflows/sfl-pr-review-auto.yml"
+    if not all(path.is_file() for path in (contract_path, manifest_path, workflow_path)):
+        return {}
+    contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if (
+        contract.get("version") != SFL_PUBLIC_RELEASE_VERSION
+        or manifest.get("version") != SFL_PUBLIC_RELEASE_VERSION
+        or contract.get("source_sha") != SFL_PUBLIC_SOURCE_SHA
+        or manifest.get("sourceSha") != SFL_PUBLIC_SOURCE_SHA
+        or contract.get("workflow_sha256") != SFL_PUBLIC_WORKFLOW_SHA256
+        or hashlib.sha256(workflow_path.read_bytes()).hexdigest() != SFL_PUBLIC_WORKFLOW_SHA256
+    ):
+        return {}
+    fields = {
+        ".sfl/lint-contract.json": {
+            "source_sha": SFL_PUBLIC_SOURCE_SHA,
+            "workflow_sha256": SFL_PUBLIC_WORKFLOW_SHA256,
+        },
+        ".sfl/sfl.json": {"sourceSha": SFL_PUBLIC_SOURCE_SHA},
+    }
+    verified = {}
+    for filename, values in fields.items():
+        content = (ROOT / filename).read_text(encoding="utf-8")
+        lines = content.splitlines()
+        verified[filename] = set()
+        for field, value in values.items():
+            pattern = rf'^\s*"{re.escape(field)}":\s*"{re.escape(value)}",?\s*$'
+            matches = [
+                number for number, line in enumerate(lines, 1) if re.fullmatch(pattern, line)
+            ]
+            # detect-secrets deduplicates equal values within a file. A second
+            # occurrence outside the public field must revoke the exemption.
+            if len(matches) == 1 and content.count(f'"{value}"') == 1:
+                verified[filename].add(
+                    (matches[0], hashlib.sha1(value.encode(), usedforsecurity=False).hexdigest())
+                )
+    return verified
+
+
 def scan_secrets(digest_pattern=None, verified_vendor=()):
     """Scan tracked files without network verification; never print secret values."""
     command = [sys.executable, "-X", "utf8", "-m", "detect_secrets", "scan", "--no-verify"]
@@ -207,13 +258,21 @@ def scan_secrets(digest_pattern=None, verified_vendor=()):
         check=True,
         timeout=120,
     )
+    verified_sfl = verified_sfl_metadata_findings()
     findings = {
         filename: [
             item
             for item in items
             if not (
-                filename.replace("\\", "/") in PUBLIC_DUNE_FILES
-                and item.get("hashed_secret") in PUBLIC_DUNE_FINGERPRINTS
+                (
+                    filename.replace("\\", "/") in PUBLIC_DUNE_FILES
+                    and item.get("hashed_secret") in PUBLIC_DUNE_FINGERPRINTS
+                )
+                or (
+                    item.get("type") == "Hex High Entropy String"
+                    and (item.get("line_number"), item.get("hashed_secret"))
+                    in verified_sfl.get(filename.replace("\\", "/"), set())
+                )
             )
         ]
         for filename, items in json.loads(result.stdout)["results"].items()
