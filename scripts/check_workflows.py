@@ -22,6 +22,13 @@ def check_workflows(root=ROOT):
         or hashlib.sha256(workflow.read_bytes()).hexdigest() != contract["workflow_sha256"]
     ):
         raise ValueError("Reviewer workflow differs from its reviewed lint contract")
+    queue_lines = [
+        index
+        for index, line in enumerate(workflow.read_text().splitlines(), 1)
+        if line == "      queue: max"
+    ]
+    if len(queue_lines) != 1:
+        raise ValueError("Reviewed workflow must contain exactly one observer queue setting")
     result = subprocess.run(
         [
             "go",
@@ -46,7 +53,7 @@ def check_workflows(root=ROOT):
             item["filepath"] != ".github/workflows/sfl-pr-review-auto.yml"
             or item["kind"] != "syntax-check"
             or item["message"] != MESSAGE
-            or item["line"] != 243
+            or item["line"] != queue_lines[0]
             or item["column"] != 7
         ):
             raise ValueError("Workflow lint finding: " + json.dumps(item))

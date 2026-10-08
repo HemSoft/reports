@@ -19,7 +19,7 @@ class WorkflowLintTests(unittest.TestCase):
         (self.root / ".sfl").mkdir()
         (self.root / ".github/workflows").mkdir(parents=True)
         self.workflow = self.root / ".github/workflows/sfl-pr-review-auto.yml"
-        self.workflow.write_bytes(b"reviewed fixture bytes")
+        self.workflow.write_bytes(b"reviewed fixture bytes\n      queue: max\n")
         self.manifest = {"version": "fixture", "sourceSha": "reviewed-source"}
         (self.root / ".sfl/sfl.json").write_text(json.dumps(self.manifest))
         self.contract = {
@@ -32,7 +32,7 @@ class WorkflowLintTests(unittest.TestCase):
             "filepath": ".github/workflows/sfl-pr-review-auto.yml",
             "kind": "syntax-check",
             "message": MESSAGE,
-            "line": 243,
+            "line": 2,
             "column": 7,
         }
 
@@ -56,6 +56,18 @@ class WorkflowLintTests(unittest.TestCase):
                     self.run_with([{**self.diagnostic, key: value}])
         with self.assertRaisesRegex(ValueError, "duplicate"):
             self.run_with([self.diagnostic, self.diagnostic])
+
+    def test_queue_setting_is_unique_even_with_an_updated_hash(self):
+        for content in (b"reviewed fixture without queue", b"      queue: max\n      queue: max\n"):
+            self.workflow.write_bytes(content)
+            contract = {**self.contract, "workflow_sha256": hashlib.sha256(content).hexdigest()}
+            (self.root / ".sfl/lint-contract.json").write_text(json.dumps(contract))
+            with (
+                self.assertRaisesRegex(ValueError, "exactly one observer queue"),
+                patch("scripts.check_workflows.subprocess.run") as tool,
+            ):
+                check_workflows(self.root)
+            tool.assert_not_called()
 
     def test_changed_deployment_cannot_reuse_the_contract(self):
         for changes in ({"version": "new"}, {"sourceSha": "new"}):
