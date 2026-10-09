@@ -1,12 +1,12 @@
 import subprocess
 import json
 
-# Get all repos of HemSoft
+# Get all repos of hemsoft-dev
 cmd = [
     "gh",
     "repo",
     "list",
-    "HemSoft",
+    "hemsoft-dev",
     "--limit",
     "100",
     "--json",
@@ -15,7 +15,7 @@ cmd = [
 res = subprocess.run(cmd, capture_output=True, text=True, errors="replace")
 remote_repos = json.loads(res.stdout)
 
-print(f"Total remote repos for HemSoft: {len(remote_repos)}")
+print(f"Total remote repos for hemsoft-dev: {len(remote_repos)}")
 recent_remote = [r for r in remote_repos if r.get("pushedAt") and r.get("pushedAt") >= "2026-06-13"]
 print(f"Remote repos with pushed_at >= 2026-06-13: {len(recent_remote)}")
 for r in sorted(recent_remote, key=lambda x: x["pushedAt"], reverse=True):

@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 import tempfile
 import unittest
@@ -58,6 +59,9 @@ def page(nodes, total=None, cursor=None, has_next=False):
 
 class TestGithubPagination(unittest.TestCase):
     def setUp(self):
+        owner_scope = patch.dict(os.environ, REPORT_GITHUB_OWNERS="HemSoft")
+        owner_scope.start()
+        self.addCleanup(owner_scope.stop)
         self.start, self.end = get_date_range(start_str="2026-09-01", end_str="2026-09-07")
 
     def test_more_than_100_repositories_and_500_old_events_are_retained(self):
