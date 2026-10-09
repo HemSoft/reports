@@ -5,7 +5,7 @@ from zoneinfo import ZoneInfo
 EDT = ZoneInfo("America/New_York")
 START_ISO = "2026-06-13T00:00:00Z"
 
-repos_cmd = ["gh", "repo", "list", "HemSoft", "--limit", "100", "--json", "name,isPrivate"]
+repos_cmd = ["gh", "repo", "list", "hemsoft-dev", "--limit", "100", "--json", "name,isPrivate"]
 repos_res = subprocess.run(repos_cmd, capture_output=True, text=True)
 all_repos = json.loads(repos_res.stdout)
 
@@ -20,7 +20,7 @@ for r in all_repos:
         "pr",
         "list",
         "--repo",
-        f"HemSoft/{name}",
+        f"hemsoft-dev/{name}",
         "--state",
         "all",
         "--limit",
@@ -49,7 +49,7 @@ for r in all_repos:
         "issue",
         "list",
         "--repo",
-        f"HemSoft/{name}",
+        f"hemsoft-dev/{name}",
         "--state",
         "all",
         "--limit",

@@ -1,6 +1,7 @@
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -55,6 +56,9 @@ def repo_record():
 
 class TestCollectionFailures(unittest.TestCase):
     def setUp(self):
+        owner_scope = patch.dict(os.environ, REPORT_GITHUB_OWNERS="HemSoft")
+        owner_scope.start()
+        self.addCleanup(owner_scope.stop)
         self.start, self.end = get_date_range(start_str="2026-09-01", end_str="2026-09-07")
 
     def test_each_github_source_rejects_failure_timeout_and_invalid_json(self):

@@ -7,13 +7,13 @@ EDT = ZoneInfo("America/New_York")
 START_DATE = datetime(2026, 6, 13, 0, 0, 0, tzinfo=EDT)
 START_UTC = START_DATE.astimezone(ZoneInfo("UTC")).strftime("%Y-%m-%dT%H:%M:%SZ")
 
-# 1. Fetch PRs created or updated in HemSoft org or by HemSoft
+# 1. Fetch PRs created or updated in the hemsoft-dev organization
 print("Fetching PRs...")
 pr_cmd = [
     "gh",
     "search",
     "prs",
-    "user:HemSoft created:>=2026-06-13",
+    "org:hemsoft-dev created:>=2026-06-13",
     "--limit",
     "100",
     "--json",
@@ -29,7 +29,7 @@ issue_cmd = [
     "gh",
     "search",
     "issues",
-    "user:HemSoft created:>=2026-06-13",
+    "org:hemsoft-dev created:>=2026-06-13",
     "--limit",
     "100",
     "--json",
@@ -39,13 +39,13 @@ issue_res = subprocess.run(issue_cmd, capture_output=True, text=True, errors="re
 issues = json.loads(issue_res.stdout) if issue_res.returncode == 0 else []
 print(f"Found {len(issues)} Issues created since 2026-06-13.")
 
-# 3. Check all repos in HemSoft for remote commits
+# 3. Check all repos in hemsoft-dev for remote commits
 print("Fetching repos list...")
 repos_cmd = [
     "gh",
     "repo",
     "list",
-    "HemSoft",
+    "hemsoft-dev",
     "--limit",
     "100",
     "--json",
