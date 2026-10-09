@@ -1363,7 +1363,7 @@ def build_html_report(analytics_data, home_href=None):
   <!-- FOOTER -->
   <footer>
     <div>
-      <strong>HemSoft Developments</strong> · <a href="https://github.com/HemSoft/reports">Report source</a>
+      <strong>HemSoft Developments</strong> · <a href="https://github.com/hemsoft-dev/reports">Report source</a>
     </div>
     <div>
       Audited Period: {range_info["start_formatted"]} – {range_info["end_formatted"]}

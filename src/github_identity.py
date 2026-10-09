@@ -9,7 +9,8 @@ REPOSITORY = re.compile(r"[A-Za-z0-9_.-]+\Z")
 
 def github_owners():
     owners = [
-        owner.strip() for owner in os.environ.get("REPORT_GITHUB_OWNERS", "HemSoft").split(",")
+        owner.strip()
+        for owner in os.environ.get("REPORT_GITHUB_OWNERS", "HemSoft,hemsoft-dev").split(",")
     ]
     if any(not OWNER.fullmatch(owner) for owner in owners):
         raise ValueError("REPORT_GITHUB_OWNERS must contain comma-separated GitHub owner names")
@@ -19,7 +20,7 @@ def github_owners():
 
 
 def repository_identity(name, canonical=None):
-    canonical = canonical if canonical is not None else f"HemSoft/{name}"
+    canonical = canonical if canonical is not None else f"hemsoft-dev/{name}"
     parts = canonical.split("/")
     if (
         len(parts) != 2

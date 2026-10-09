@@ -213,7 +213,7 @@ PAGE = """<!DOCTYPE html>
   {archive}
 </main>
 <footer><div class="wrap"><span>HemSoft Developments</span>
-  <a href="https://github.com/HemSoft/reports">Source on GitHub</a>
+  <a href="https://github.com/hemsoft-dev/reports">Source on GitHub</a>
 </div></footer>
 </body>
 </html>

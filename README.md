@@ -15,7 +15,7 @@ The main-only **Verify organization reporting credential** workflow verifies
 the existing `REPORTS_PAT` belongs to HemSoft, has classic `repo` scope and can
 read the designated private organization pilot. It performs GET requests only
 and never prints credential values. An unsuccessful verification remains a
-mandatory gate in [SFL migration #138](https://github.com/HemSoft/set-it-free-loop/issues/138).
+mandatory gate in [SFL migration #138](https://github.com/hemsoft-dev/set-it-free-loop/issues/138).
 
 The tool generates standalone interactive HTML dashboards with Three.js 3D bar models and Chart.js analytics.
 
