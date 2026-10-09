@@ -20,7 +20,13 @@ def github_owners():
 
 
 def repository_identity(name, canonical=None):
-    canonical = canonical if canonical is not None else f"hemsoft-dev/{name}"
+    if canonical is None:
+        owner = (
+            "HemSoft"
+            if name.lower() in {"now-leadership-group", "set-it-free-loop-site"}
+            else "hemsoft-dev"
+        )
+        canonical = f"{owner}/{name}"
     parts = canonical.split("/")
     if (
         len(parts) != 2
