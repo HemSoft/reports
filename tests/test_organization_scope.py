@@ -14,6 +14,13 @@ from src.template import build_html_report
 
 
 class OrganizationScopeTests(unittest.TestCase):
+    def test_default_scope_keeps_retained_repositories_and_organization(self):
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(github_owners(), ["HemSoft", "hemsoft-dev"])
+        self.assertEqual(repository_identity("hs-buddy"), "hemsoft-dev/hs-buddy")
+        for name in ("now-leadership-group", "set-it-free-loop-site"):
+            self.assertEqual(repository_identity(name), f"HemSoft/{name}")
+
     def test_owners_are_enumerated_with_independent_pagination(self):
         personal = repository("retained")
         org = [
