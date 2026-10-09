@@ -1,11 +1,11 @@
 # HemSoft productivity audit tool
 
-Automated audit reporting engine for engineering throughput, pull request velocity, code churn, and temporal cadence across `github.com/HemSoft` repositories.
+Automated audit reporting engine for engineering throughput, pull request velocity, code churn, and temporal cadence across `github.com/HemSoft` and `github.com/hemsoft-dev` repositories.
 
-Local collection defaults to the personal HemSoft account. Set
-`REPORT_GITHUB_OWNERS` to a comma-separated owner list to include organization
-repositories. The Pages build uses `HemSoft,hemsoft-dev`, preserving coverage
-of retained personal repositories through the organization transfer. Every owner
+Local collection and the Pages build default to `HemSoft,hemsoft-dev`, preserving
+coverage of retained personal repositories through the organization transfer. Set
+`REPORT_GITHUB_OWNERS` to a comma-separated owner list to override that scope.
+The credential must be able to read the selected private organization repositories. Every owner
 is enumerated completely; duplicate repository basenames across selected owners
 stop collection before cloning rather than mixing their activity. Cache reuse
 requires the same owner list. Repository and commit links use the collected
